@@ -233,23 +233,6 @@
             font-style: italic;
         }
         
-        .bold-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 6px;
-            border: 1px solid #e9ecef;
-        }
-        
-        .bold-option label {
-            margin-bottom: 0;
-            font-weight: normal;
-            cursor: pointer;
-        }
-        
         footer {
             text-align: center;
             margin-top: 30px;
@@ -269,36 +252,13 @@
             align-items: center;
             gap: 10px;
         }
-        
-        .formatting-help {
-            background-color: #f8f9fa;
-            border-left: 4px solid #3498db;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-        }
-        
-        .formatting-help h3 {
-            color: #2c3e50;
-            margin-bottom: 8px;
-            font-size: 1rem;
-        }
-        
-        .formatting-help ul {
-            padding-left: 20px;
-        }
-        
-        .formatting-help li {
-            margin-bottom: 5px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1><i class="fas fa-industry"></i> Production Report Generator</h1>
-            <p class="subtitle">Fill in the form below to generate a production report that can be copied to WhatsApp</p>
+            <p class="subtitle">Fill in the form below to generate a production report for WhatsApp</p>
         </header>
         
         <div class="app-container">
@@ -306,19 +266,19 @@
                 <h2 class="section-title"><i class="fas fa-edit"></i> Input Details</h2>
                 
                 <div class="form-group">
-                    <label for="site">Site Area (HA)</label>
-                    <input type="text" id="site" value="9.0ha">
+                    <label for="site">Site Area</label>
+                    <input type="text" id="site" placeholder="e.g., 9.0ha">
                 </div>
                 
                 <div class="date-inputs">
                     <div class="form-group">
                         <label for="reportDate">Report Date</label>
-                        <input type="date" id="reportDate" value="2025-12-01">
+                        <input type="date" id="reportDate">
                     </div>
                     
                     <div class="form-group">
                         <label for="blastDate">Blasting Date</label>
-                        <input type="date" id="blastDate" value="2025-12-01">
+                        <input type="date" id="blastDate">
                     </div>
                 </div>
                 
@@ -326,12 +286,10 @@
                     <label>Drilling (Today)</label>
                     <div style="display: flex; gap: 15px;">
                         <div style="flex: 1;">
-                            <input type="number" id="holes" value="0" min="0">
-                            <div class="field-note">Holes</div>
+                            <input type="number" id="holes" placeholder="Holes" min="0">
                         </div>
                         <div style="flex: 1;">
-                            <input type="number" id="feet" value="0.00" step="0.01" min="0">
-                            <div class="field-note">Feet</div>
+                            <input type="number" id="feet" placeholder="Feet" step="0.01" min="0">
                         </div>
                     </div>
                 </div>
@@ -340,76 +298,57 @@
                     <label>Production Summary (Tons)</label>
                     <div class="production-grades">
                         <div>
-                            <input type="number" id="totalTons" value="0.00" step="0.01" min="0">
-                            <div class="field-note">Total</div>
+                            <input type="number" id="totalTons" placeholder="Total" step="0.01" min="0">
                         </div>
                         <div>
-                            <input type="number" id="aGrade" value="0.00" step="0.01" min="0">
-                            <div class="field-note">A-Grade (Boulders)</div>
+                            <input type="number" id="aGrade" placeholder="A-Grade" step="0.01" min="0">
                         </div>
                         <div>
-                            <input type="number" id="bGrade" value="0.00" step="0.01" min="0">
-                            <div class="field-note">B-Grade (GSB)</div>
+                            <input type="number" id="bGrade" placeholder="B-Grade" step="0.01" min="0">
                         </div>
                         <div>
-                            <input type="number" id="weatherRock" value="0.00" step="0.01" min="0">
-                            <div class="field-note">Weather Rock</div>
+                            <input type="number" id="weatherRock" placeholder="Weather Rock" step="0.01" min="0">
                         </div>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="compressors">Compressors (Nos.)</label>
-                    <input type="number" id="compressors" value="0" min="0">
+                    <input type="number" id="compressors" placeholder="Number of compressors" min="0">
                 </div>
                 
                 <div class="form-group">
                     <label for="nmr">No. of NMR</label>
-                    <input type="number" id="nmr" value="0" min="0">
-                </div>
-                
-                <div class="bold-option">
-                    <input type="checkbox" id="boldTitles" checked>
-                    <label for="boldTitles">Make section titles bold in WhatsApp (uses *asterisks*)</label>
+                    <input type="number" id="nmr" placeholder="Number of NMR" min="0">
                 </div>
                 
                 <button class="update-btn" id="updateBtn">
                     <i class="fas fa-sync-alt"></i> Update Report
                 </button>
-                
-                <div class="formatting-help">
-                    <h3><i class="fas fa-info-circle"></i> WhatsApp Formatting Tips</h3>
-                    <ul>
-                        <li><strong>*Text*</strong> - Makes text <strong>bold</strong></li>
-                        <li><strong>_Text_</strong> - Makes text <em>italic</em></li>
-                        <li><strong>~Text~</strong> - <strike>Strikes through</strike> text</li>
-                        <li>For best results, copy and paste directly into WhatsApp</li>
-                    </ul>
-                </div>
             </section>
             
             <section class="output-section">
                 <h2 class="section-title"><i class="fas fa-file-alt"></i> Output Report</h2>
                 
                 <div class="output-display" id="reportOutput">
-<span class="bold-text">PRODUCTION REPORT(9HA)</span> 🚀
-<span class="bold-text">Date:</span> 01-12-2025
-<span class="bold-text">Site:</span> 9.0ha
+PRODUCTION REPORT 🚀
+Date: 
+Site: 
 
-<span class="bold-text">DRILLING (Today)</span>
-✅ *Holes: 00
-✅ *Feet: 00.00ft
+DRILLING (Today)
+✅ Holes: 
+✅ Feet: ft
 
-<span class="bold-text">PRODUCTION SUMMARY</span>
-📦 *Total:  00.00 Tons
- ▫ A-Grade (Boulders): 00.00 T
-▫ B-Grade (GSB): 0.0 T
-▫ Weather Rock: 0.0 T
+PRODUCTION SUMMARY
+📦 Total:  Tons
+ ▫ A-Grade (Boulders):  T
+▫ B-Grade (GSB):  T
+▫ Weather Rock:  T
 
-<span class="bold-text">ACTIVITY & EQUIPMENT</span>
-💥 Blasting: Done (01-12-2025)
-🔧 Compressors: 00 Nos.
-👷 No of NMR: 0
+ACTIVITY & EQUIPMENT
+💥 Blasting: Done ()
+🔧 Compressors:  Nos.
+👷 No of NMR: 
                 </div>
                 
                 <div class="button-group">
@@ -426,16 +365,12 @@
                         <i class="fab fa-whatsapp"></i>
                         <span>After copying, paste directly into WhatsApp to share the report</span>
                     </div>
-                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
-                        <i class="fas fa-lightbulb"></i> Titles will appear bold in WhatsApp when the "Make section titles bold" option is checked
-                    </p>
                 </div>
             </section>
         </div>
         
         <footer>
-            <p>Production Report Generator &copy; 2025 | Designed for easy WhatsApp sharing</p>
-            <p>Simply fill the form, click "Update Report", then "Copy to Clipboard"</p>
+            <p>Production Report Generator &copy; 2025</p>
         </footer>
     </div>
     
@@ -457,7 +392,6 @@
         const weatherRockInput = document.getElementById('weatherRock');
         const compressorsInput = document.getElementById('compressors');
         const nmrInput = document.getElementById('nmr');
-        const boldTitlesCheckbox = document.getElementById('boldTitles');
         const reportOutput = document.getElementById('reportOutput');
         const copyBtn = document.getElementById('copyBtn');
         const resetBtn = document.getElementById('resetBtn');
@@ -481,87 +415,84 @@
         
         // Format number to two decimal places
         function formatNumber(num) {
+            if (num === '' || isNaN(num)) return '';
             return parseFloat(num).toFixed(2);
         }
         
-        // Generate the report text with optional bold formatting
+        // Generate the report text with bold formatting (always enabled)
         function generateReport() {
-            const reportDate = formatDate(reportDateInput.value);
-            const blastDate = formatDate(blastDateInput.value);
-            const site = siteInput.value;
-            const holes = String(holesInput.value).padStart(2, '0');
-            const feet = formatNumber(feetInput.value);
-            const totalTons = formatNumber(totalTonsInput.value);
-            const aGrade = formatNumber(aGradeInput.value);
-            const bGrade = formatNumber(bGradeInput.value);
-            const weatherRock = formatNumber(weatherRockInput.value);
-            const compressors = String(compressorsInput.value).padStart(2, '0');
-            const nmr = nmrInput.value;
-            const useBold = boldTitlesCheckbox.checked;
+            const reportDate = reportDateInput.value ? formatDate(reportDateInput.value) : '';
+            const blastDate = blastDateInput.value ? formatDate(blastDateInput.value) : '';
+            const site = siteInput.value || '';
+            const holes = holesInput.value !== '' ? String(holesInput.value).padStart(2, '0') : '';
+            const feet = feetInput.value !== '' ? formatNumber(feetInput.value) : '';
+            const totalTons = totalTonsInput.value !== '' ? formatNumber(totalTonsInput.value) : '';
+            const aGrade = aGradeInput.value !== '' ? formatNumber(aGradeInput.value) : '';
+            const bGrade = bGradeInput.value !== '' ? formatNumber(bGradeInput.value) : '';
+            const weatherRock = weatherRockInput.value !== '' ? formatNumber(weatherRockInput.value) : '';
+            const compressors = compressorsInput.value !== '' ? String(compressorsInput.value).padStart(2, '0') : '';
+            const nmr = nmrInput.value || '';
             
-            // Create bold titles using WhatsApp formatting (*text*)
-            const titleMain = useBold ? "*PRODUCTION REPORT(9HA)*" : "PRODUCTION REPORT(9HA)";
-            const titleDate = useBold ? "*Date:*" : "Date:";
-            const titleSite = useBold ? "*Site:*" : "Site:";
-            const titleDrilling = useBold ? "*DRILLING (Today)*" : "DRILLING (Today)";
-            const titleProduction = useBold ? "*PRODUCTION SUMMARY*" : "PRODUCTION SUMMARY";
-            const titleActivity = useBold ? "*ACTIVITY & EQUIPMENT*" : "ACTIVITY & EQUIPMENT";
+            // Always use bold titles for WhatsApp formatting (*text*)
+            const titleMain = "*PRODUCTION REPORT*";
+            const titleDate = "*Date:*";
+            const titleSite = "*Site:*";
+            const titleDrilling = "*DRILLING (Today)*";
+            const titleProduction = "*PRODUCTION SUMMARY*";
+            const titleActivity = "*ACTIVITY & EQUIPMENT*";
             
             return `${titleMain} 🚀
 ${titleDate} ${reportDate}
 ${titleSite} ${site}
 
 ${titleDrilling}
-✅ *Holes: ${holes}
-✅ *Feet: ${feet}ft
+✅ Holes: ${holes}
+✅ Feet: ${feet}${feet ? 'ft' : ''}
 
 ${titleProduction}
-📦 *Total:  ${totalTons} Tons
- ▫ A-Grade (Boulders): ${aGrade} T
-▫ B-Grade (GSB): ${bGrade} T
-▫ Weather Rock: ${weatherRock} T
+📦 Total: ${totalTons}${totalTons ? ' Tons' : ''}
+ ▫ A-Grade (Boulders): ${aGrade}${aGrade ? ' T' : ''}
+▫ B-Grade (GSB): ${bGrade}${bGrade ? ' T' : ''}
+▫ Weather Rock: ${weatherRock}${weatherRock ? ' T' : ''}
 
 ${titleActivity}
-💥 Blasting: Done (${blastDate})
-🔧 Compressors: ${compressors} Nos.
+💥 Blasting: Done${blastDate ? ` (${blastDate})` : ''}
+🔧 Compressors: ${compressors}${compressors ? ' Nos.' : ''}
 👷 No of NMR: ${nmr}`;
         }
         
         // Update the report display with HTML for preview
         function updateReport() {
-            const reportDate = formatDate(reportDateInput.value);
-            const blastDate = formatDate(blastDateInput.value);
-            const site = siteInput.value;
-            const holes = String(holesInput.value).padStart(2, '0');
-            const feet = formatNumber(feetInput.value);
-            const totalTons = formatNumber(totalTonsInput.value);
-            const aGrade = formatNumber(aGradeInput.value);
-            const bGrade = formatNumber(bGradeInput.value);
-            const weatherRock = formatNumber(weatherRockInput.value);
-            const compressors = String(compressorsInput.value).padStart(2, '0');
-            const nmr = nmrInput.value;
+            const reportDate = reportDateInput.value ? formatDate(reportDateInput.value) : '';
+            const blastDate = blastDateInput.value ? formatDate(blastDateInput.value) : '';
+            const site = siteInput.value || '';
+            const holes = holesInput.value !== '' ? String(holesInput.value).padStart(2, '0') : '';
+            const feet = feetInput.value !== '' ? formatNumber(feetInput.value) : '';
+            const totalTons = totalTonsInput.value !== '' ? formatNumber(totalTonsInput.value) : '';
+            const aGrade = aGradeInput.value !== '' ? formatNumber(aGradeInput.value) : '';
+            const bGrade = bGradeInput.value !== '' ? formatNumber(bGradeInput.value) : '';
+            const weatherRock = weatherRockInput.value !== '' ? formatNumber(weatherRockInput.value) : '';
+            const compressors = compressorsInput.value !== '' ? String(compressorsInput.value).padStart(2, '0') : '';
+            const nmr = nmrInput.value || '';
             
-            // Create HTML preview with highlighted bold text
-            const useBold = boldTitlesCheckbox.checked;
-            const boldClass = useBold ? 'bold-text' : '';
-            
-            reportOutput.innerHTML = `<span class="${boldClass}">PRODUCTION REPORT(9HA)</span> 🚀
-<span class="${boldClass}">Date:</span> ${reportDate}
-<span class="${boldClass}">Site:</span> ${site}
+            // Always show titles as bold in preview
+            reportOutput.innerHTML = `<span class="bold-text">PRODUCTION REPORT</span> 🚀
+<span class="bold-text">Date:</span> ${reportDate}
+<span class="bold-text">Site:</span> ${site}
 
-<span class="${boldClass}">DRILLING (Today)</span>
-✅ *Holes: ${holes}
-✅ *Feet: ${feet}ft
+<span class="bold-text">DRILLING (Today)</span>
+✅ Holes: ${holes}
+✅ Feet: ${feet}${feet ? 'ft' : ''}
 
-<span class="${boldClass}">PRODUCTION SUMMARY</span>
-📦 *Total:  ${totalTons} Tons
- ▫ A-Grade (Boulders): ${aGrade} T
-▫ B-Grade (GSB): ${bGrade} T
-▫ Weather Rock: ${weatherRock} T
+<span class="bold-text">PRODUCTION SUMMARY</span>
+📦 Total: ${totalTons}${totalTons ? ' Tons' : ''}
+ ▫ A-Grade (Boulders): ${aGrade}${aGrade ? ' T' : ''}
+▫ B-Grade (GSB): ${bGrade}${bGrade ? ' T' : ''}
+▫ Weather Rock: ${weatherRock}${weatherRock ? ' T' : ''}
 
-<span class="${boldClass}">ACTIVITY & EQUIPMENT</span>
-💥 Blasting: Done (${blastDate})
-🔧 Compressors: ${compressors} Nos.
+<span class="bold-text">ACTIVITY & EQUIPMENT</span>
+💥 Blasting: Done${blastDate ? ` (${blastDate})` : ''}
+🔧 Compressors: ${compressors}${compressors ? ' Nos.' : ''}
 👷 No of NMR: ${nmr}`;
         }
         
@@ -585,20 +516,19 @@ ${titleActivity}
                 });
         }
         
-        // Reset form to default values
+        // Reset form to empty values
         function resetForm() {
-            siteInput.value = "9.0ha";
+            siteInput.value = "";
             reportDateInput.value = todayFormatted;
             blastDateInput.value = todayFormatted;
-            holesInput.value = "0";
-            feetInput.value = "0.00";
-            totalTonsInput.value = "0.00";
-            aGradeInput.value = "0.00";
-            bGradeInput.value = "0.00";
-            weatherRockInput.value = "0.00";
-            compressorsInput.value = "0";
-            nmrInput.value = "0";
-            boldTitlesCheckbox.checked = true;
+            holesInput.value = "";
+            feetInput.value = "";
+            totalTonsInput.value = "";
+            aGradeInput.value = "";
+            bGradeInput.value = "";
+            weatherRockInput.value = "";
+            compressorsInput.value = "";
+            nmrInput.value = "";
             
             updateReport();
         }
@@ -607,15 +537,14 @@ ${titleActivity}
         updateBtn.addEventListener('click', updateReport);
         copyBtn.addEventListener('click', copyToClipboard);
         resetBtn.addEventListener('click', resetForm);
-        boldTitlesCheckbox.addEventListener('change', updateReport);
         
         // Update report when any input changes
-        const allInputs = document.querySelectorAll('input:not(#boldTitles), select');
+        const allInputs = document.querySelectorAll('input, select');
         allInputs.forEach(input => {
             input.addEventListener('input', updateReport);
         });
         
-        // Initialize with default report
+        // Initialize with empty report
         updateReport();
     </script>
 </body>
