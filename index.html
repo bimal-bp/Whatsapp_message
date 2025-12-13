@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Production Report Generator</title>
+    <title>Complete Production Report Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -21,7 +21,7 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
@@ -57,7 +57,7 @@
             margin-bottom: 30px;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .app-container {
                 grid-template-columns: 1fr;
             }
@@ -129,7 +129,7 @@
             flex: 1;
         }
         
-        .production-grades {
+        .grid-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
@@ -146,9 +146,9 @@
             white-space: pre-wrap;
             line-height: 1.5;
             margin-bottom: 20px;
+            font-size: 0.9rem;
         }
         
-        /* Highlight bold titles in the preview */
         .output-display .bold-text {
             font-weight: bold;
             color: #f1c40f;
@@ -252,74 +252,386 @@
             align-items: center;
             gap: 10px;
         }
+        
+        .report-type-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .report-type-btn {
+            flex: 1;
+            background-color: #ecf0f1;
+            color: #7f8c8d;
+            border: 2px solid #ddd;
+        }
+        
+        .report-type-btn.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+        
+        .input-sections-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .input-sections-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .mine-inputs, .plant-inputs {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .mine-inputs h3, .plant-inputs h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mine-inputs h3 i {
+            color: #e74c3c;
+        }
+        
+        .plant-inputs h3 i {
+            color: #2ecc71;
+        }
+        
+        .sub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .remark-input {
+            margin-top: 15px;
+        }
+        
+        .remark-input textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .mtd-inputs {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        
+        .mtd-inputs label {
+            font-size: 0.9rem;
+            color: #3498db;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-industry"></i> Production Report Generator</h1>
-            <p class="subtitle">Fill in the form below to generate a production report for WhatsApp</p>
+            <h1><i class="fas fa-industry"></i> Complete Production Report Generator</h1>
+            <p class="subtitle">Generate comprehensive mine and plant operations reports for WhatsApp</p>
         </header>
         
         <div class="app-container">
             <section class="input-section">
                 <h2 class="section-title"><i class="fas fa-edit"></i> Input Details</h2>
                 
-                <div class="form-group">
-                    <label for="site">Site Area</label>
-                    <input type="text" id="site" placeholder="e.g., 9.0ha">
+                <div class="report-type-toggle">
+                    <button class="report-type-btn active" id="basicBtn">Basic Report</button>
+                    <button class="report-type-btn" id="fullBtn">Full Report</button>
                 </div>
                 
-                <div class="date-inputs">
+                <div id="basicInputs">
                     <div class="form-group">
-                        <label for="reportDate">Report Date</label>
-                        <input type="date" id="reportDate">
+                        <label for="site">Site Area</label>
+                        <input type="text" id="site" placeholder="e.g., 9.0ha">
+                    </div>
+                    
+                    <div class="date-inputs">
+                        <div class="form-group">
+                            <label for="reportDate">Report Date</label>
+                            <input type="date" id="reportDate">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="blastDate">Blasting Date</label>
+                            <input type="date" id="blastDate">
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="blastDate">Blasting Date</label>
-                        <input type="date" id="blastDate">
+                        <label>Drilling (Today)</label>
+                        <div class="grid-row">
+                            <div>
+                                <input type="number" id="holes" placeholder="Holes" min="0">
+                            </div>
+                            <div>
+                                <input type="number" id="feet" placeholder="Feet" step="0.01" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Production Summary (Tons)</label>
+                        <div class="grid-row">
+                            <div>
+                                <input type="number" id="totalTons" placeholder="Total" step="0.01" min="0">
+                            </div>
+                            <div>
+                                <input type="number" id="aGrade" placeholder="A-Grade" step="0.01" min="0">
+                            </div>
+                            <div>
+                                <input type="number" id="bGrade" placeholder="B-Grade" step="0.01" min="0">
+                            </div>
+                            <div>
+                                <input type="number" id="weatherRock" placeholder="Weather Rock" step="0.01" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="compressors">Compressors (Nos.)</label>
+                        <input type="number" id="compressors" placeholder="Number of compressors" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nmr">No. of NMR</label>
+                        <input type="number" id="nmr" placeholder="Number of NMR" min="0">
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label>Drilling (Today)</label>
-                    <div style="display: flex; gap: 15px;">
-                        <div style="flex: 1;">
-                            <input type="number" id="holes" placeholder="Holes" min="0">
-                        </div>
-                        <div style="flex: 1;">
-                            <input type="number" id="feet" placeholder="Feet" step="0.01" min="0">
+                <div id="fullInputs" style="display: none;">
+                    <div class="form-group">
+                        <label for="siteFull">Site Area</label>
+                        <input type="text" id="siteFull" placeholder="e.g., 9.0ha">
+                    </div>
+                    
+                    <div class="date-inputs">
+                        <div class="form-group">
+                            <label for="reportDateFull">Report Date</label>
+                            <input type="date" id="reportDateFull">
                         </div>
                     </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Production Summary (Tons)</label>
-                    <div class="production-grades">
-                        <div>
-                            <input type="number" id="totalTons" placeholder="Total" step="0.01" min="0">
+                    
+                    <div class="input-sections-container">
+                        <div class="mine-inputs">
+                            <h3><i class="fas fa-mountain"></i> Mine Operation</h3>
+                            
+                            <div class="form-group">
+                                <label>No. of Compressors</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="compressorsFTD" placeholder="FTD" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="compressorsMTD" placeholder="MTD" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>No. of NMR</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="nmrFTD" placeholder="FTD" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="nmrMTD" placeholder="MTD" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>No. of Holes</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="holesFTD" placeholder="FTD" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="holesMTD" placeholder="MTD" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Total Feetage</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="feetageFTD" placeholder="FTD" step="0.01" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="feetageMTD" placeholder="MTD" step="0.01" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Production (Tons)</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="productionFTD" placeholder="FTD" step="0.01" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="productionMTD" placeholder="MTD" step="0.01" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>% of Recovery</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="recoveryFTD" placeholder="FTD" step="0.1" min="0" max="100">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="recoveryMTD" placeholder="MTD" step="0.1" min="0" max="100">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>% of Breaking</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="breakingFTD" placeholder="FTD" step="0.1" min="0" max="100">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="breakingMTD" placeholder="MTD" step="0.1" min="0" max="100">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group remark-input">
+                                <label for="mineRemark">Remark (Mine)</label>
+                                <textarea id="mineRemark" placeholder="e.g., Staggered Blasting Pattern"></textarea>
+                            </div>
                         </div>
-                        <div>
-                            <input type="number" id="aGrade" placeholder="A-Grade" step="0.01" min="0">
-                        </div>
-                        <div>
-                            <input type="number" id="bGrade" placeholder="B-Grade" step="0.01" min="0">
-                        </div>
-                        <div>
-                            <input type="number" id="weatherRock" placeholder="Weather Rock" step="0.01" min="0">
+                        
+                        <div class="plant-inputs">
+                            <h3><i class="fas fa-industry"></i> Plant Operation</h3>
+                            
+                            <div class="form-group">
+                                <label>Production (Tons)</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="plantProdFTD" placeholder="FTD" step="0.01" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="plantProdMTD" placeholder="MTD" step="0.01" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Running Hrs.</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="runningHrsFTD" placeholder="FTD" step="0.1" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="runningHrsMTD" placeholder="MTD" step="0.1" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>TPH</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="tphFTD" placeholder="FTD" step="0.01" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="tphMTD" placeholder="MTD" step="0.01" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Maintenance Hrs.</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="maintenanceFTD" placeholder="FTD" step="0.1" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="maintenanceMTD" placeholder="MTD" step="0.1" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Breakdown Hrs.</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="breakdownFTD" placeholder="FTD" step="0.1" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="breakdownMTD" placeholder="MTD" step="0.1" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Power Cut Hrs.</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="powerCutFTD" placeholder="FTD" step="0.1" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="powerCutMTD" placeholder="MTD" step="0.1" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Boulder Jam Hrs.</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="boulderJamFTD" placeholder="FTD" step="0.1" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="boulderJamMTD" placeholder="MTD" step="0.1" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>No Feed Hrs.</label>
+                                <div class="sub-grid">
+                                    <div>
+                                        <input type="number" id="noFeedFTD" placeholder="FTD" step="0.1" min="0">
+                                    </div>
+                                    <div>
+                                        <input type="number" id="noFeedMTD" placeholder="MTD" step="0.1" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group remark-input">
+                                <label for="plantRemark">Remark (Plant)</label>
+                                <textarea id="plantRemark" placeholder="e.g., Normal operation"></textarea>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="compressors">Compressors (Nos.)</label>
-                    <input type="number" id="compressors" placeholder="Number of compressors" min="0">
-                </div>
-                
-                <div class="form-group">
-                    <label for="nmr">No. of NMR</label>
-                    <input type="number" id="nmr" placeholder="Number of NMR" min="0">
                 </div>
                 
                 <button class="update-btn" id="updateBtn">
@@ -331,21 +643,21 @@
                 <h2 class="section-title"><i class="fas fa-file-alt"></i> Output Report</h2>
                 
                 <div class="output-display" id="reportOutput">
-PRODUCTION REPORT 🚀
-Date: 
-Site: 
+*PRODUCTION REPORT* 🚀
+*Date:* 
+*Site:* 
 
-DRILLING (Today)
+*DRILLING (Today)*
 ✅ Holes: 
 ✅ Feet: ft
 
-PRODUCTION SUMMARY
+*PRODUCTION SUMMARY*
 📦 Total:  Tons
  ▫ A-Grade (Boulders):  T
 ▫ B-Grade (GSB):  T
 ▫ Weather Rock:  T
 
-ACTIVITY & EQUIPMENT
+*ACTIVITY & EQUIPMENT*
 💥 Blasting: Done ()
 🔧 Compressors:  Nos.
 👷 No of NMR: 
@@ -355,7 +667,7 @@ ACTIVITY & EQUIPMENT
                     <button class="copy-btn" id="copyBtn">
                         <i class="far fa-copy"></i> Copy to Clipboard
                     </button>
-                    <button class="reset-btn" id="resetBtn">
+                    <button class="resetBtn" id="resetBtn">
                         <i class="fas fa-redo"></i> Reset Form
                     </button>
                 </div>
@@ -370,7 +682,8 @@ ACTIVITY & EQUIPMENT
         </div>
         
         <footer>
-            <p>Production Report Generator &copy; 2025</p>
+            <p>Complete Production Report Generator &copy; 2025</p>
+            <p>Includes both Mine and Plant Operations</p>
         </footer>
     </div>
     
@@ -381,6 +694,12 @@ ACTIVITY & EQUIPMENT
 
     <script>
         // DOM Elements
+        const basicBtn = document.getElementById('basicBtn');
+        const fullBtn = document.getElementById('fullBtn');
+        const basicInputs = document.getElementById('basicInputs');
+        const fullInputs = document.getElementById('fullInputs');
+        
+        // Basic report elements
         const reportDateInput = document.getElementById('reportDate');
         const blastDateInput = document.getElementById('blastDate');
         const siteInput = document.getElementById('site');
@@ -392,17 +711,62 @@ ACTIVITY & EQUIPMENT
         const weatherRockInput = document.getElementById('weatherRock');
         const compressorsInput = document.getElementById('compressors');
         const nmrInput = document.getElementById('nmr');
+        
+        // Full report elements
+        const siteFullInput = document.getElementById('siteFull');
+        const reportDateFullInput = document.getElementById('reportDateFull');
+        
+        // Mine operation elements
+        const compressorsFTDInput = document.getElementById('compressorsFTD');
+        const compressorsMTDInput = document.getElementById('compressorsMTD');
+        const nmrFTDInput = document.getElementById('nmrFTD');
+        const nmrMTDInput = document.getElementById('nmrMTD');
+        const holesFTDInput = document.getElementById('holesFTD');
+        const holesMTDInput = document.getElementById('holesMTD');
+        const feetageFTDInput = document.getElementById('feetageFTD');
+        const feetageMTDInput = document.getElementById('feetageMTD');
+        const productionFTDInput = document.getElementById('productionFTD');
+        const productionMTDInput = document.getElementById('productionMTD');
+        const recoveryFTDInput = document.getElementById('recoveryFTD');
+        const recoveryMTDInput = document.getElementById('recoveryMTD');
+        const breakingFTDInput = document.getElementById('breakingFTD');
+        const breakingMTDInput = document.getElementById('breakingMTD');
+        const mineRemarkInput = document.getElementById('mineRemark');
+        
+        // Plant operation elements
+        const plantProdFTDInput = document.getElementById('plantProdFTD');
+        const plantProdMTDInput = document.getElementById('plantProdMTD');
+        const runningHrsFTDInput = document.getElementById('runningHrsFTD');
+        const runningHrsMTDInput = document.getElementById('runningHrsMTD');
+        const tphFTDInput = document.getElementById('tphFTD');
+        const tphMTDInput = document.getElementById('tphMTD');
+        const maintenanceFTDInput = document.getElementById('maintenanceFTD');
+        const maintenanceMTDInput = document.getElementById('maintenanceMTD');
+        const breakdownFTDInput = document.getElementById('breakdownFTD');
+        const breakdownMTDInput = document.getElementById('breakdownMTD');
+        const powerCutFTDInput = document.getElementById('powerCutFTD');
+        const powerCutMTDInput = document.getElementById('powerCutMTD');
+        const boulderJamFTDInput = document.getElementById('boulderJamFTD');
+        const boulderJamMTDInput = document.getElementById('boulderJamMTD');
+        const noFeedFTDInput = document.getElementById('noFeedFTD');
+        const noFeedMTDInput = document.getElementById('noFeedMTD');
+        const plantRemarkInput = document.getElementById('plantRemark');
+        
+        // Output elements
         const reportOutput = document.getElementById('reportOutput');
         const copyBtn = document.getElementById('copyBtn');
         const resetBtn = document.getElementById('resetBtn');
         const updateBtn = document.getElementById('updateBtn');
         const notification = document.getElementById('notification');
         
+        let currentReportType = 'basic';
+        
         // Set today's date as default
         const today = new Date();
         const todayFormatted = today.toISOString().split('T')[0];
         reportDateInput.value = todayFormatted;
         blastDateInput.value = todayFormatted;
+        reportDateFullInput.value = todayFormatted;
         
         // Format date from YYYY-MM-DD to DD-MM-YYYY
         function formatDate(dateString) {
@@ -413,92 +777,134 @@ ACTIVITY & EQUIPMENT
             return `${day}-${month}-${year}`;
         }
         
-        // Format number to two decimal places
-        function formatNumber(num) {
+        // Format number with commas for thousands
+        function formatNumberWithCommas(num) {
             if (num === '' || isNaN(num)) return '';
-            return parseFloat(num).toFixed(2);
+            return parseFloat(num).toLocaleString('en-IN');
         }
         
-        // Generate the report text with bold formatting (always enabled)
-        function generateReport() {
+        // Format percentage
+        function formatPercentage(num) {
+            if (num === '' || isNaN(num)) return '';
+            return parseFloat(num).toFixed(1) + '%';
+        }
+        
+        // Generate basic report
+        function generateBasicReport() {
             const reportDate = reportDateInput.value ? formatDate(reportDateInput.value) : '';
             const blastDate = blastDateInput.value ? formatDate(blastDateInput.value) : '';
             const site = siteInput.value || '';
             const holes = holesInput.value !== '' ? String(holesInput.value).padStart(2, '0') : '';
-            const feet = feetInput.value !== '' ? formatNumber(feetInput.value) : '';
-            const totalTons = totalTonsInput.value !== '' ? formatNumber(totalTonsInput.value) : '';
-            const aGrade = aGradeInput.value !== '' ? formatNumber(aGradeInput.value) : '';
-            const bGrade = bGradeInput.value !== '' ? formatNumber(bGradeInput.value) : '';
-            const weatherRock = weatherRockInput.value !== '' ? formatNumber(weatherRockInput.value) : '';
+            const feet = feetInput.value !== '' ? parseFloat(feetInput.value).toFixed(2) : '';
+            const totalTons = totalTonsInput.value !== '' ? parseFloat(totalTonsInput.value).toFixed(2) : '';
+            const aGrade = aGradeInput.value !== '' ? parseFloat(aGradeInput.value).toFixed(2) : '';
+            const bGrade = bGradeInput.value !== '' ? parseFloat(bGradeInput.value).toFixed(2) : '';
+            const weatherRock = weatherRockInput.value !== '' ? parseFloat(weatherRockInput.value).toFixed(2) : '';
             const compressors = compressorsInput.value !== '' ? String(compressorsInput.value).padStart(2, '0') : '';
             const nmr = nmrInput.value || '';
             
-            // Always use bold titles for WhatsApp formatting (*text*)
-            const titleMain = "*PRODUCTION REPORT*";
-            const titleDate = "*Date:*";
-            const titleSite = "*Site:*";
-            const titleDrilling = "*DRILLING (Today)*";
-            const titleProduction = "*PRODUCTION SUMMARY*";
-            const titleActivity = "*ACTIVITY & EQUIPMENT*";
-            
-            return `${titleMain} 🚀
-${titleDate} ${reportDate}
-${titleSite} ${site}
+            return `*PRODUCTION REPORT* 🚀
+*Date:* ${reportDate}
+*Site:* ${site}
 
-${titleDrilling}
+*DRILLING (Today)*
 ✅ Holes: ${holes}
 ✅ Feet: ${feet}${feet ? 'ft' : ''}
 
-${titleProduction}
+*PRODUCTION SUMMARY*
 📦 Total: ${totalTons}${totalTons ? ' Tons' : ''}
  ▫ A-Grade (Boulders): ${aGrade}${aGrade ? ' T' : ''}
 ▫ B-Grade (GSB): ${bGrade}${bGrade ? ' T' : ''}
 ▫ Weather Rock: ${weatherRock}${weatherRock ? ' T' : ''}
 
-${titleActivity}
+*ACTIVITY & EQUIPMENT*
 💥 Blasting: Done${blastDate ? ` (${blastDate})` : ''}
 🔧 Compressors: ${compressors}${compressors ? ' Nos.' : ''}
 👷 No of NMR: ${nmr}`;
         }
         
-        // Update the report display with HTML for preview
+        // Generate full report
+        function generateFullReport() {
+            const reportDate = reportDateFullInput.value ? formatDate(reportDateFullInput.value) : '';
+            const site = siteFullInput.value || '';
+            
+            // Mine operation values
+            const compressorsFTD = compressorsFTDInput.value !== '' ? formatNumberWithCommas(compressorsFTDInput.value) : '';
+            const compressorsMTD = compressorsMTDInput.value !== '' ? formatNumberWithCommas(compressorsMTDInput.value) : '';
+            const nmrFTD = nmrFTDInput.value !== '' ? formatNumberWithCommas(nmrFTDInput.value) : '';
+            const nmrMTD = nmrMTDInput.value !== '' ? formatNumberWithCommas(nmrMTDInput.value) : '';
+            const holesFTD = holesFTDInput.value !== '' ? formatNumberWithCommas(holesFTDInput.value) : '';
+            const holesMTD = holesMTDInput.value !== '' ? formatNumberWithCommas(holesMTDInput.value) : '';
+            const feetageFTD = feetageFTDInput.value !== '' ? formatNumberWithCommas(parseFloat(feetageFTDInput.value).toFixed(2)) : '';
+            const feetageMTD = feetageMTDInput.value !== '' ? formatNumberWithCommas(parseFloat(feetageMTDInput.value).toFixed(2)) : '';
+            const productionFTD = productionFTDInput.value !== '' ? formatNumberWithCommas(parseFloat(productionFTDInput.value).toFixed(2)) : '';
+            const productionMTD = productionMTDInput.value !== '' ? formatNumberWithCommas(parseFloat(productionMTDInput.value).toFixed(2)) : '';
+            const recoveryFTD = recoveryFTDInput.value !== '' ? formatPercentage(recoveryFTDInput.value) : '';
+            const recoveryMTD = recoveryMTDInput.value !== '' ? formatPercentage(recoveryMTDInput.value) : '';
+            const breakingFTD = breakingFTDInput.value !== '' ? formatPercentage(breakingFTDInput.value) : '';
+            const breakingMTD = breakingMTDInput.value !== '' ? formatPercentage(breakingMTDInput.value) : '';
+            const mineRemark = mineRemarkInput.value || '';
+            
+            // Plant operation values
+            const plantProdFTD = plantProdFTDInput.value !== '' ? formatNumberWithCommas(parseFloat(plantProdFTDInput.value).toFixed(2)) : '';
+            const plantProdMTD = plantProdMTDInput.value !== '' ? formatNumberWithCommas(parseFloat(plantProdMTDInput.value).toFixed(2)) : '';
+            const runningHrsFTD = runningHrsFTDInput.value !== '' ? parseFloat(runningHrsFTDInput.value).toFixed(1) : '';
+            const runningHrsMTD = runningHrsMTDInput.value !== '' ? parseFloat(runningHrsMTDInput.value).toFixed(1) : '';
+            const tphFTD = tphFTDInput.value !== '' ? parseFloat(tphFTDInput.value).toFixed(2) : '';
+            const tphMTD = tphMTDInput.value !== '' ? parseFloat(tphMTDInput.value).toFixed(2) : '';
+            const maintenanceFTD = maintenanceFTDInput.value !== '' ? parseFloat(maintenanceFTDInput.value).toFixed(1) : '';
+            const maintenanceMTD = maintenanceMTDInput.value !== '' ? parseFloat(maintenanceMTDInput.value).toFixed(1) : '';
+            const breakdownFTD = breakdownFTDInput.value !== '' ? parseFloat(breakdownFTDInput.value).toFixed(1) : '';
+            const breakdownMTD = breakdownMTDInput.value !== '' ? parseFloat(breakdownMTDInput.value).toFixed(1) : '';
+            const powerCutFTD = powerCutFTDInput.value !== '' ? parseFloat(powerCutFTDInput.value).toFixed(1) : '';
+            const powerCutMTD = powerCutMTDInput.value !== '' ? parseFloat(powerCutMTDInput.value).toFixed(1) : '';
+            const boulderJamFTD = boulderJamFTDInput.value !== '' ? parseFloat(boulderJamFTDInput.value).toFixed(1) : '';
+            const boulderJamMTD = boulderJamMTDInput.value !== '' ? parseFloat(boulderJamMTDInput.value).toFixed(1) : '';
+            const noFeedFTD = noFeedFTDInput.value !== '' ? parseFloat(noFeedFTDInput.value).toFixed(1) : '';
+            const noFeedMTD = noFeedMTDInput.value !== '' ? parseFloat(noFeedMTDInput.value).toFixed(1) : '';
+            const plantRemark = plantRemarkInput.value || '';
+            
+            // Format the report with proper spacing for alignment
+            return `*COMPLETE PRODUCTION REPORT* 🏭
+*Date:* ${reportDate}
+*Site:* ${site}
+
+*MINE OPERATION* ⛏️\t\t\t*PLANT OPERATION* 🏗️
+\t\tFTD\tMTD\t\t\tFTD\tMTD
+No. of Compressors\t\t${compressorsFTD}\t${compressorsMTD}\tProduction\t\t${plantProdFTD}\t${plantProdMTD}
+No. of NMR\t\t${nmrFTD}\t${nmrMTD}\tRunning Hrs.\t\t${runningHrsFTD}\t${runningHrsMTD}
+No. of Holes\t\t${holesFTD}\t${holesMTD}\tTPH\t\t${tphFTD}\t${tphMTD}
+Total Feetage\t\t${feetageFTD}\t${feetageMTD}\tMaintenance Hrs\t\t${maintenanceFTD}\t${maintenanceMTD}
+Production\t\t${productionFTD}\t${productionMTD}\tBreakdown Hrs.\t\t${breakdownFTD}\t${breakdownMTD}
+% of Recovery\t\t${recoveryFTD}\t${recoveryMTD}\tPower Cut Hrs.\t\t${powerCutFTD}\t${powerCutMTD}
+% of Breaking\t\t${breakingFTD}\t${breakingMTD}\tBoulder Jam Hrs.\t\t${boulderJamFTD}\t${boulderJamMTD}
+Remark\t${mineRemark}\t\tNo Feed Hrs.\t\t${noFeedFTD}\t${noFeedMTD}
+\t\t\t\tRemark\t\t${plantRemark}`;
+        }
+        
+        // Update the report display
         function updateReport() {
-            const reportDate = reportDateInput.value ? formatDate(reportDateInput.value) : '';
-            const blastDate = blastDateInput.value ? formatDate(blastDateInput.value) : '';
-            const site = siteInput.value || '';
-            const holes = holesInput.value !== '' ? String(holesInput.value).padStart(2, '0') : '';
-            const feet = feetInput.value !== '' ? formatNumber(feetInput.value) : '';
-            const totalTons = totalTonsInput.value !== '' ? formatNumber(totalTonsInput.value) : '';
-            const aGrade = aGradeInput.value !== '' ? formatNumber(aGradeInput.value) : '';
-            const bGrade = bGradeInput.value !== '' ? formatNumber(bGradeInput.value) : '';
-            const weatherRock = weatherRockInput.value !== '' ? formatNumber(weatherRockInput.value) : '';
-            const compressors = compressorsInput.value !== '' ? String(compressorsInput.value).padStart(2, '0') : '';
-            const nmr = nmrInput.value || '';
+            let reportText, displayText;
             
-            // Always show titles as bold in preview
-            reportOutput.innerHTML = `<span class="bold-text">PRODUCTION REPORT</span> 🚀
-<span class="bold-text">Date:</span> ${reportDate}
-<span class="bold-text">Site:</span> ${site}
-
-<span class="bold-text">DRILLING (Today)</span>
-✅ Holes: ${holes}
-✅ Feet: ${feet}${feet ? 'ft' : ''}
-
-<span class="bold-text">PRODUCTION SUMMARY</span>
-📦 Total: ${totalTons}${totalTons ? ' Tons' : ''}
- ▫ A-Grade (Boulders): ${aGrade}${aGrade ? ' T' : ''}
-▫ B-Grade (GSB): ${bGrade}${bGrade ? ' T' : ''}
-▫ Weather Rock: ${weatherRock}${weatherRock ? ' T' : ''}
-
-<span class="bold-text">ACTIVITY & EQUIPMENT</span>
-💥 Blasting: Done${blastDate ? ` (${blastDate})` : ''}
-🔧 Compressors: ${compressors}${compressors ? ' Nos.' : ''}
-👷 No of NMR: ${nmr}`;
+            if (currentReportType === 'basic') {
+                reportText = generateBasicReport();
+                displayText = reportText.replace(/\*/g, '<span class="bold-text">').replace(/\*/g, '</span>');
+            } else {
+                reportText = generateFullReport();
+                // Create HTML display for full report with proper formatting
+                displayText = reportText
+                    .replace(/\*/g, '<span class="bold-text">')
+                    .replace(/\*/g, '</span>')
+                    .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;')
+                    .replace(/\n/g, '<br>');
+            }
+            
+            reportOutput.innerHTML = displayText;
         }
         
         // Copy report to clipboard
         function copyToClipboard() {
-            const reportText = generateReport();
+            const reportText = currentReportType === 'basic' ? generateBasicReport() : generateFullReport();
             
             navigator.clipboard.writeText(reportText)
                 .then(() => {
@@ -516,19 +922,79 @@ ${titleActivity}
                 });
         }
         
-        // Reset form to empty values
+        // Reset form based on current report type
         function resetForm() {
-            siteInput.value = "";
-            reportDateInput.value = todayFormatted;
-            blastDateInput.value = todayFormatted;
-            holesInput.value = "";
-            feetInput.value = "";
-            totalTonsInput.value = "";
-            aGradeInput.value = "";
-            bGradeInput.value = "";
-            weatherRockInput.value = "";
-            compressorsInput.value = "";
-            nmrInput.value = "";
+            if (currentReportType === 'basic') {
+                siteInput.value = "";
+                reportDateInput.value = todayFormatted;
+                blastDateInput.value = todayFormatted;
+                holesInput.value = "";
+                feetInput.value = "";
+                totalTonsInput.value = "";
+                aGradeInput.value = "";
+                bGradeInput.value = "";
+                weatherRockInput.value = "";
+                compressorsInput.value = "";
+                nmrInput.value = "";
+            } else {
+                siteFullInput.value = "";
+                reportDateFullInput.value = todayFormatted;
+                
+                // Reset mine inputs
+                compressorsFTDInput.value = "";
+                compressorsMTDInput.value = "";
+                nmrFTDInput.value = "";
+                nmrMTDInput.value = "";
+                holesFTDInput.value = "";
+                holesMTDInput.value = "";
+                feetageFTDInput.value = "";
+                feetageMTDInput.value = "";
+                productionFTDInput.value = "";
+                productionMTDInput.value = "";
+                recoveryFTDInput.value = "";
+                recoveryMTDInput.value = "";
+                breakingFTDInput.value = "";
+                breakingMTDInput.value = "";
+                mineRemarkInput.value = "";
+                
+                // Reset plant inputs
+                plantProdFTDInput.value = "";
+                plantProdMTDInput.value = "";
+                runningHrsFTDInput.value = "";
+                runningHrsMTDInput.value = "";
+                tphFTDInput.value = "";
+                tphMTDInput.value = "";
+                maintenanceFTDInput.value = "";
+                maintenanceMTDInput.value = "";
+                breakdownFTDInput.value = "";
+                breakdownMTDInput.value = "";
+                powerCutFTDInput.value = "";
+                powerCutMTDInput.value = "";
+                boulderJamFTDInput.value = "";
+                boulderJamMTDInput.value = "";
+                noFeedFTDInput.value = "";
+                noFeedMTDInput.value = "";
+                plantRemarkInput.value = "";
+            }
+            
+            updateReport();
+        }
+        
+        // Switch between basic and full report modes
+        function switchReportType(type) {
+            currentReportType = type;
+            
+            if (type === 'basic') {
+                basicBtn.classList.add('active');
+                fullBtn.classList.remove('active');
+                basicInputs.style.display = 'block';
+                fullInputs.style.display = 'none';
+            } else {
+                basicBtn.classList.remove('active');
+                fullBtn.classList.add('active');
+                basicInputs.style.display = 'none';
+                fullInputs.style.display = 'block';
+            }
             
             updateReport();
         }
@@ -537,14 +1003,16 @@ ${titleActivity}
         updateBtn.addEventListener('click', updateReport);
         copyBtn.addEventListener('click', copyToClipboard);
         resetBtn.addEventListener('click', resetForm);
+        basicBtn.addEventListener('click', () => switchReportType('basic'));
+        fullBtn.addEventListener('click', () => switchReportType('full'));
         
         // Update report when any input changes
-        const allInputs = document.querySelectorAll('input, select');
+        const allInputs = document.querySelectorAll('input, textarea, select');
         allInputs.forEach(input => {
             input.addEventListener('input', updateReport);
         });
         
-        // Initialize with empty report
+        // Initialize with basic report
         updateReport();
     </script>
 </body>
