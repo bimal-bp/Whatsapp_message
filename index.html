@@ -3,176 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mine and Plant Operation Report</title>
+    <title>SGX - Selected Sections - MIS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 20px; 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: space-around; 
+        body {
+            font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+            background: #eaeaea;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        .container {
+            width: 1200px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .flex {
+            display: flex;
             gap: 20px;
+            margin-bottom: 20px;
         }
-        h1 {
+        .left50 { width: 50%; }
+        .right50 { width: 50%; }
+        .left60 { width: 60%; }
+        .right40 { width: 40%; }
+        table {
             width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px 10px;
+            font-size: 14px;
             text-align: center;
-            background-color: orange;
+            vertical-align: middle;
+        }
+        th {
+            font-weight: 600;
+        }
+        .left { text-align: left; }
+        .center { text-align: center; }
+        .subheader {
+            background: #f47b2a;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .thick th, .thick td {
+            border-width: 2px;
+        }
+        .total {
+            font-weight: bold;
+            border-top: 2px solid #000;
+        }
+        .orangeText {
+            color: #f47b2a;
+            font-weight: bold;
+        }
+        .bigTotal {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .godown-header {
+            background: #f47b2a;
+            color: #ffffff !important;
+        }
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            margin: 0 12px;
+            background: #f47b2a;
             color: white;
-            padding: 15px;
-            margin: 0 0 30px 0;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
             border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
-        .section {
-            flex: 1 1 300px;
-            max-width: 450px;
+        .whatsapp-btn {
+            background: #25D366;
         }
-        h2 { 
-            background-color: #f0f0f0; 
-            padding: 10px; 
-            margin: 0 0 10px 0;
-            text-align: center;
+        .whatsapp-btn img {
+            width: 28px;
+            height: 28px;
+            vertical-align: middle;
+            margin-right: 10px;
         }
-        .box {
-            border: 2px solid #333;
-            border-radius: 10px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+        .pdf-btn {
+            background: #dc3545;
         }
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            font-size: 0.9em;
+        @media(max-width:900px) {
+            .container { width: 100%; border: none; padding: 10px; }
+            .flex { flex-direction: column; }
+            .left50, .right50, .left60, .right40 { width: 100%; }
+            .controls .btn { display: block; margin: 10px auto; width: 90%; }
         }
-        th, td { 
-            border: 1px solid black; 
-            padding: 6px; 
-            text-align: center; 
-        }
-        th { background-color: #e0e0e0; }
-        
         @media print {
-            @page { size: landscape; margin: 10mm; }
-            body { margin: 0; gap: 10px; }
-            .section { page-break-inside: avoid; }
+            body { background: #fff; margin: 0; padding: 20px; }
+            .controls { display: none; }
+            .container { width: 100% !important; border: none; box-shadow: none; margin: 0; padding: 0; }
+            @page { margin: 1cm; }
         }
     </style>
 </head>
 <body>
-    <h1>Mine and Plant Operation Report</h1>
-    
-    <div class="section">
-        <h2>Mine Operation</h2>
-        <div class="box">
-            <table>
-                <tr><th>Parameter</th><th>FTD</th><th>MTD</th></tr>
-                <tr><td>No. of Compressors</td><td>9</td><td>183</td></tr>
-                <tr><td>No. of NMR</td><td>9</td><td>183</td></tr>
-                <tr><td>No. of Holes</td><td>600</td><td>11,702</td></tr>
-                <tr><td>Total Feetage</td><td>3,266</td><td>63,066</td></tr>
-                <tr><td>Production</td><td>2,612</td><td>50,453</td></tr>
-                <tr><td>% of Recovery</td><td>83%</td><td>83%</td></tr>
-                <tr><td>% of Breaking</td><td>23%</td><td>20%</td></tr>
-                <tr><td>Remark</td><td colspan="2">Staggered Blasting Pattern</td></tr>
-            </table>
+    <div class="controls">
+        <div class="btn pdf-btn" onclick="window.print()">Download High-Quality PDF (Recommended)</div>
+        <div class="btn" ondblclick="downloadReport()">Double-click container or click here → High-Quality PNG</div>
+        <div class="btn whatsapp-btn" onclick="shareOnWhatsApp()">
+            <img src="https://p.kindpng.com/picc/s/551-5510229_whatsapp-share-button-png-transparent-png.png" alt="WhatsApp">
+            Share Report on WhatsApp
         </div>
     </div>
-    
-    <div class="section">
-        <h2>Plant Operation</h2>
-        <div class="box">
-            <table>
-                <tr><th>Parameter</th><th>FTD</th><th>MTD</th></tr>
-                <tr><td>Production</td><td>1,865</td><td>31,987</td></tr>
-                <tr><td>Running Hrs.</td><td>10.2</td><td>169.9</td></tr>
-                <tr><td>TPH</td><td>183</td><td>188</td></tr>
-                <tr><td>Maintenance Hrs</td><td>3.5</td><td>64</td></tr>
-                <tr><td>Breakdown Hrs</td><td>0</td><td>6</td></tr>
-                <tr><td>Power Cut Hrs</td><td>3.8</td><td>95.6</td></tr>
-                <tr><td>Boulder Jam Hrs</td><td>0.5</td><td>20.9</td></tr>
-                <tr><td>No Feed Hrs</td><td>2.5</td><td>34</td></tr>
-            </table>
+
+    <div class="container" ondblclick="downloadReport()">
+        <!-- Mine Operation + Plant Operation -->
+        <div class="flex">
+            <div class="left50">
+                <table>
+                    <tr><th colspan="3" class="subheader">Mine Operation</th></tr>
+                    <tr><th></th><th>FTD</th><th>MTD</th></tr>
+                    <tr><td class="left">No. of Compressors</td><td>9</td><td>183</td></tr>
+                    <tr><td class="left">No. of NMR</td><td>9</td><td>183</td></tr>
+                    <tr><td class="left">No. of Holes</td><td>600</td><td>11,702</td></tr>
+                    <tr><td class="left">Total Feetage</td><td>3,266</td><td>63,066</td></tr>
+                    <tr><td class="left">Production</td><td>2,612</td><td>50,453</td></tr>
+                    <tr><td class="left">% of Recovery</td><td>83%</td><td>83%</td></tr>
+                    <tr><td class="left">% of Breaking</td><td>23%</td><td>20%</td></tr>
+                    <tr><td class="left">Remark</td><td colspan="2" class="left">Staggered Blasting Pattern</td></tr>
+                </table>
+            </div>
+            <div class="right50">
+                <table>
+                    <tr><th colspan="3" class="subheader">Plant Operation</th></tr>
+                    <tr><th></th><th>FTD</th><th>MTD</th></tr>
+                    <tr><td class="left">Production</td><td>1865</td><td>31,987</td></tr>
+                    <tr><td class="left">Running Hrs.</td><td>10.2</td><td>169.9</td></tr>
+                    <tr><td class="left">TPH</td><td>183</td><td>188</td></tr>
+                    <tr><td class="left">Maintenance Hrs</td><td>3.5</td><td>64</td></tr>
+                    <tr><td class="left">Breakdown Hrs</td><td>0</td><td>6</td></tr>
+                    <tr><td class="left">Power Cut Hrs</td><td>3.8</td><td>95.6</td></tr>
+                    <tr><td class="left">Boulder Jam Hrs</td><td>0.5</td><td>20.9</td></tr>
+                    <tr><td class="left">No Feed Hrs</td><td>2.5</td><td>34</td></tr>
+                </table>
+            </div>
         </div>
-    </div>
-    
-    <div class="section">
-        <h2>Boulder Transportation</h2>
-        <div class="box">
-            <table>
-                <tr><th></th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
-                <tr><td>Trips</td><td>395</td><td>493</td><td>-</td><td>1,368</td></tr>
-                <tr><td>Tonnage</td><td>936</td><td>1,417</td><td>2,353</td><td>32,757</td></tr>
-            </table>
+
+        <!-- Boulder Transportation + Vehicle Wise Trips -->
+        <div class="flex">
+            <div class="left60">
+                <table class="thick">
+                    <tr><th colspan="5" class="subheader">Boulder Transportation</th></tr>
+                    <tr><th></th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
+                    <tr><td class="left"><b>Trips</b></td><td>39</td><td>54</td><td>93</td><td>1,368</td></tr>
+                    <tr><td class="left"><b>Tonnage</b></td><td>936</td><td>1,417</td><td>2,353</td><td>32,757</td></tr>
+                </table>
+
+                <table>
+                    <tr><th colspan="5" class="subheader">Vehicle Wise Trips</th></tr>
+                    <tr><th>Vehicle No</th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
+                    <tr><td class="left">AP39UQ0095</td><td>0</td><td>0</td><td>0</td><td>57</td></tr>
+                    <tr><td class="left">AP39UQ0097</td><td>5</td><td>5</td><td>10</td><td>95</td></tr>
+                    <tr><td class="left">AP39UW9880</td><td>6</td><td>6</td><td>12</td><td>152</td></tr>
+                    <tr><td class="left">AP39UW9881</td><td>5</td><td>4</td><td>9</td><td>135</td></tr>
+                    <tr><td class="left">AP39UY4651</td><td>1</td><td>5</td><td>6</td><td>127</td></tr>
+                    <tr><td class="left">AP39UY4652</td><td>5</td><td>6</td><td>11</td><td>144</td></tr>
+                    <tr><td class="left">AP39WC0926</td><td>0</td><td>5</td><td>5</td><td>136</td></tr>
+                    <tr><td class="left">AP39WC0927</td><td>5</td><td>4</td><td>9</td><td>101</td></tr>
+                    <tr><td class="left">AP39WC0928</td><td>6</td><td>6</td><td>12</td><td>154</td></tr>
+                    <tr><td class="left">AP39WF2052</td><td>3</td><td>7</td><td>10</td><td>118</td></tr>
+                    <tr><td class="left">AP39WF2057</td><td>3</td><td>6</td><td>9</td><td>149</td></tr>
+                    <tr><td class="left">AP39WF2058</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr class="total"><td class="left"><b>Total</b></td><td><b>39</b></td><td><b>54</b></td><td><b>93</b></td><td><b>1,368</b></td></tr>
+                </table>
+            </div>
+            <div class="right40">
+                <!-- Production + Godown Stock -->
+                <table>
+                    <tr><th colspan="3" class="subheader">Production</th></tr>
+                    <tr><th>Material</th><th>FTD</th><th>MTD</th></tr>
+                    <tr><td class="left">10 MM</td><td>381.6</td><td>3,722.4</td></tr>
+                    <tr><td class="left">20 MM</td><td>593.6</td><td>5,790.4</td></tr>
+                    <tr><td class="left">V-Sand</td><td>296.8</td><td>2,895.2</td></tr>
+                    <tr><td class="left">Rivo Sand</td><td>763.2</td><td>7,444.8</td></tr>
+                    <tr><td class="left">Slurry</td><td>84.8</td><td>827.2</td></tr>
+                    <tr class="total"><td class="left"><b>Total</b></td><td><b>2120</b></td><td><b>20,680</b></td></tr>
+                </table>
+
+                <table>
+                    <tr><th colspan="2" class="subheader godown-header">Godown Stock</th></tr>
+                    <tr><td class="left">10 MM</td><td>130</td></tr>
+                    <tr><td class="left">20 MM</td><td>4,250</td></tr>
+                    <tr><td class="left">Rivo Sand</td><td>18,420</td></tr>
+                    <tr><td class="left">Railway Ballast</td><td>2,000</td></tr>
+                    <tr><td class="left">VSI</td><td>17,235</td></tr>
+                    <tr class="total"><td class="left bigTotal"><b>Total</b></td><td class="bigTotal"><b>42,035</b></td></tr>
+                </table>
+            </div>
         </div>
+
+        <!-- Dispatch -->
+        <table class="thick">
+            <tr><th colspan="4" class="subheader">Dispatch</th></tr>
+            <tr><th class="left">Material</th><th>Day</th><th>Night</th><th>Total</th></tr>
+            <tr><td class="left">10 MM</td><td>10</td><td>45</td><td>55</td></tr>
+            <tr><td class="left">20 MM</td><td>20</td><td>265</td><td>285</td></tr>
+            <tr><td class="left">40-65 MM</td><td>24</td><td>258</td><td>282</td></tr>
+            <tr><td class="left">Rivo</td><td>620</td><td>25</td><td>645</td></tr>
+            <tr><td class="left">M Sand</td><td>0</td><td>251</td><td>251</td></tr>
+            <tr><td class="left">Scalpin</td><td>0</td><td>120</td><td>120</td></tr>
+            <tr class="total"><td class="left"><b>Total Qty</b></td><td></td><td></td><td>1,043</td></tr>
+            <tr class="total"><td class="left"><b>Total Vehicles</b></td><td></td><td></td><td>28</td></tr>
+            <tr><td class="left" colspan="4">REMARK : -</td></tr>
+        </table>
     </div>
-    
-    <div class="section">
-        <h2>Vehicle Wise Trips</h2>
-        <div class="box">
-            <table>
-                <tr><th>Vehicle No</th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
-                <tr><td>AP39UQ0095</td><td>0</td><td>0</td><td>0</td><td>57</td></tr>
-                <tr><td>AP39UQ0097</td><td>55</td><td>10</td><td>95</td><td>-</td></tr>
-                <tr><td>AP39UW9880</td><td>66</td><td>12</td><td>152</td><td>-</td></tr>
-                <tr><td>AP39UW9881</td><td>54</td><td>9</td><td>135</td><td>-</td></tr>
-                <tr><td>AP39UY4651</td><td>15</td><td>6</td><td>127</td><td>-</td></tr>
-                <tr><td>AP39UY4652</td><td>56</td><td>11</td><td>144</td><td>-</td></tr>
-                <tr><td>AP39WC0926</td><td>0</td><td>55</td><td>136</td><td>-</td></tr>
-                <tr><td>AP39WC0927</td><td>54</td><td>9</td><td>101</td><td>-</td></tr>
-                <tr><td>AP39WC0928</td><td>66</td><td>12</td><td>154</td><td>-</td></tr>
-                <tr><td>AP39WF2052</td><td>37</td><td>10</td><td>118</td><td>-</td></tr>
-                <tr><td>AP39WF2057</td><td>36</td><td>9</td><td>149</td><td>-</td></tr>
-                <tr><td>AP39WF2058</td><td>0</td><td>0</td><td>0</td><td>-</td></tr>
-                <tr><td>Total</td><td>395</td><td>493</td><td>1,368</td><td>-</td></tr>
-            </table>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2>Production Material</h2>
-        <div class="box">
-            <table>
-                <tr><th>Material</th><th>FTD</th><th>MTD</th></tr>
-                <tr><td>10 MM</td><td>381.6</td><td>3,722.4</td></tr>
-                <tr><td>20 MM</td><td>593.6</td><td>5,790.4</td></tr>
-                <tr><td>V-Sand</td><td>296.8</td><td>2,895.2</td></tr>
-                <tr><td>Rivo Sand</td><td>763.2</td><td>7,444.8</td></tr>
-                <tr><td>Slurry</td><td>84.8</td><td>827.2</td></tr>
-                <tr><td>Total</td><td>2,120</td><td>20,680</td></tr>
-            </table>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2>Godown Stock</h2>
-        <div class="box">
-            <table>
-                <tr><th>Material</th><th>Stock</th></tr>
-                <tr><td>10 MM</td><td>130</td></tr>
-                <tr><td>20 MM</td><td>4,250</td></tr>
-                <tr><td>Rivo Sand</td><td>18,420</td></tr>
-                <tr><td>Railway Ballast</td><td>2,000</td></tr>
-                <tr><td>VSI</td><td>17,235</td></tr>
-                <tr><td>Total</td><td>42,035</td></tr>
-            </table>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2>Dispatch</h2>
-        <div class="box">
-            <table>
-                <tr><th>Material</th><th>Day</th><th>Night</th><th>Total</th></tr>
-                <tr><td>10 MM</td><td>104</td><td>55</td><td>520</td></tr>
-                <tr><td>20 MM</td><td>2,026</td><td>528</td><td>5,540</td></tr>
-                <tr><td>40-65 MM</td><td>245</td><td>258</td><td>282</td></tr>
-                <tr><td>Rivo</td><td>620</td><td>25</td><td>645</td></tr>
-                <tr><td>M Sand</td><td>0</td><td>251</td><td>251</td></tr>
-                <tr><td>Scalpin</td><td>0</td><td>120</td><td>120</td></tr>
-                <tr><td>Total Qty</td><td colspan="3">-</td><td>1,043</td></tr>
-                <tr><td>Total Vehicles</td><td colspan="4">28</td></tr>
-            </table>
-        </div>
-    </div>
+
+    <script>
+        const today = "15-12-2025";
+
+        async function downloadReport() {
+            const element = document.querySelector('.container');
+            document.querySelector('.controls').style.display = 'none';
+
+            try {
+                const canvas = await html2canvas(element, {
+                    scale: 3,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    width: element.scrollWidth,
+                    height: element.scrollHeight,
+                    windowWidth: element.scrollWidth,
+                    windowHeight: element.scrollHeight
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = `SGX-Selected-MIS-Report-${today}.png`;
+                link.click();
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Failed to generate PNG. Use the PDF option for best quality.');
+            } finally {
+                document.querySelector('.controls').style.display = 'block';
+            }
+        }
+
+        async function shareOnWhatsApp() {
+            const element = document.querySelector('.container');
+            document.querySelector('.controls').style.display = 'none';
+
+            try {
+                const canvas = await html2canvas(element, {
+                    scale: 3,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff'
+                });
+
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], `SGX-Selected-MIS-Report-${today}.png`, { type: 'image/png' });
+
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: 'SGX Selected MIS Report',
+                            text: `SGX Selected Sections Report for ${today}`
+                        });
+                    } else {
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = `SGX-Selected-MIS-Report-${today}.png`;
+                        link.click();
+                        alert('Image downloaded. Please share it manually on WhatsApp.');
+                    }
+                }, 'image/png');
+            } catch (err) {
+                alert('Sharing failed. Try downloading instead.');
+            } finally {
+                document.querySelector('.controls').style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
