@@ -5,205 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mine and Plant Operation Report</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { 
-            text-align: center; 
-            background-color: orange; 
-            color: white; 
-            padding: 15px; 
-            margin-bottom: 30px; 
-            border-radius: 8px; 
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: space-around; 
+            gap: 20px;
         }
-        h2 { background-color: #f0f0f0; padding: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th, td { border: 1px solid black; padding: 8px; text-align: center; }
+        h1 {
+            width: 100%;
+            text-align: center;
+            background-color: orange;
+            color: white;
+            padding: 15px;
+            margin: 0 0 30px 0;
+            border-radius: 8px;
+        }
+        .section {
+            flex: 1 1 300px;
+            max-width: 450px;
+        }
+        h2 { 
+            background-color: #f0f0f0; 
+            padding: 10px; 
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+        .box {
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: 0.9em;
+        }
+        th, td { 
+            border: 1px solid black; 
+            padding: 6px; 
+            text-align: center; 
+        }
         th { background-color: #e0e0e0; }
+        
+        @media print {
+            @page { size: landscape; margin: 10mm; }
+            body { margin: 0; gap: 10px; }
+            .section { page-break-inside: avoid; }
+        }
     </style>
 </head>
 <body>
     <h1>Mine and Plant Operation Report</h1>
-    <h2>Mine Operation</h2>
-    <table>
-        <tr><th>Parameter</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>No. of Compressors</td><td>9</td><td>183</td></tr>
-        <tr><td>No. of NMR</td><td>9</td><td>183</td></tr>
-        <tr><td>No. of Holes</td><td>600</td><td>11,702</td></tr>
-        <tr><td>Total Feetage</td><td>3,266</td><td>63,066</td></tr>
-        <tr><td>Production</td><td>2,612</td><td>50,453</td></tr>
-        <tr><td>% of Recovery</td><td>83%</td><td>83%</td></tr>
-        <tr><td>% of Breaking</td><td>23%</td><td>20%</td></tr>
-        <tr><td>Remark</td><td colspan="2">Staggered Blasting Pattern</td></tr>
-    </table>
-    <h2>Plant Operation</h2>
-    <table>
-        <tr><th>Parameter</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>Production</td><td>1,865</td><td>31,987</td></tr>
-        <tr><td>Running Hrs.</td><td>10.2</td><td>169.9</td></tr>
-        <tr><td>TPH</td><td>183</td><td>188</td></tr>
-        <tr><td>Maintenance Hrs</td><td>3.5</td><td>64</td></tr>
-        <tr><td>Breakdown Hrs</td><td>0</td><td>6</td></tr>
-        <tr><td>Power Cut Hrs</td><td>3.8</td><td>95.6</td></tr>
-        <tr><td>Boulder Jam Hrs</td><td>0.5</td><td>20.9</td></tr>
-        <tr><td>No Feed Hrs</td><td>2.5</td><td>34</td></tr>
-    </table>
-    <h2>Boulder Transportation</h2>
-    <table>
-        <tr><th></th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>Trips</td><td>395</td><td>493</td><td>-</td><td>1,368</td></tr>
-        <tr><td>Tonnage</td><td>936</td><td>1,417</td><td>2,353</td><td>32,757</td></tr>
-    </table>
-    <h2>Vehicle Wise Trips</h2>
-    <table>
-        <tr><th>Vehicle No</th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>AP39UQ0095</td><td>0</td><td>0</td><td>0</td><td>57</td></tr>
-        <tr><td>AP39UQ0097</td><td>55</td><td>10</td><td>95</td><td>-</td></tr>
-        <tr><td>AP39UW9880</td><td>66</td><td>12</td><td>152</td><td>-</td></tr>
-        <tr><td>AP39UW9881</td><td>54</td><td>9</td><td>135</td><td>-</td></tr>
-        <tr><td>AP39UY4651</td><td>15</td><td>6</td><td>127</td><td>-</td></tr>
-        <tr><td>AP39UY4652</td><td>56</td><td>11</td><td>144</td><td>-</td></tr>
-        <tr><td>AP39WC0926</td><td>0</td><td>55</td><td>136</td><td>-</td></tr>
-        <tr><td>AP39WC0927</td><td>54</td><td>9</td><td>101</td><td>-</td></tr>
-        <tr><td>AP39WC0928</td><td>66</td><td>12</td><td>154</td><td>-</td></tr>
-        <tr><td>AP39WF2052</td><td>37</td><td>10</td><td>118</td><td>-</td></tr>
-        <tr><td>AP39WF2057</td><td>36</td><td>9</td><td>149</td><td>-</td></tr>
-        <tr><td>AP39WF2058</td><td>0</td><td>0</td><td>0</td><td>-</td></tr>
-        <tr><td>Total</td><td>395</td><td>493</td><td>1,368</td><td>-</td></tr>
-    </table>
-    <h2>Production Material</h2>
-    <table>
-        <tr><th>Material</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>10 MM</td><td>381.6</td><td>3,722.4</td></tr>
-        <tr><td>20 MM</td><td>593.6</td><td>5,790.4</td></tr>
-        <tr><td>V-Sand</td><td>296.8</td><td>2,895.2</td></tr>
-        <tr><td>Rivo Sand</td><td>763.2</td><td>7,444.8</td></tr>
-        <tr><td>Slurry</td><td>84.8</td><td>827.2</td></tr>
-        <tr><td>Total</td><td>2,120</td><td>20,680</td></tr>
-    </table>
-    <h2>Godown Stock</h2>
-    <table>
-        <tr><th>Material</th><th>Stock</th></tr>
-        <tr><td>10 MM</td><td>130</td></tr>
-        <tr><td>20 MM</td><td>4,250</td></tr>
-        <tr><td>Rivo Sand</td><td>18,420</td></tr>
-        <tr><td>Railway Ballast</td><td>2,000</td></tr>
-        <tr><td>VSI</td><td>17,235</td></tr>
-        <tr><td>Total</td><td>42,035</td></tr>
-    </table>
-    <h2>Dispatch</h2>
-    <table>
-        <tr><th>Material</th><th>Day</th><th>Night</th><th>Total</th></tr>
-        <tr><td>10 MM</td><td>104</td><td>55</td><td>520</td></tr>
-        <tr><td>20 MM</td><td>2,026</td><td>528</td><td>5,540</td></tr>
-        <tr><td>40-65 MM</td><td>245</td><td>258</td><td>282</td></tr>
-        <tr><td>Rivo</td><td>620</td><td>25</td><td>645</td></tr>
-        <tr><td>M Sand</td><td>0</td><td>251</td><td>251</td></tr>
-        <tr><td>Scalpin</td><td>0</td><td>120</td><td>120</td></tr>
-        <tr><td>Total Qty</td><td colspan="3">-</td><td>1,043</td></tr>
-        <tr><td>Total Vehicles</td><td colspan="4">28</td></tr>
-    </table>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mine and Plant Operation Report</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { 
-            text-align: center; 
-            background-color: orange; 
-            color: white; 
-            padding: 15px; 
-            margin-bottom: 30px; 
-            border-radius: 8px; 
-        }
-        h2 { background-color: #f0f0f0; padding: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th, td { border: 1px solid black; padding: 8px; text-align: center; }
-        th { background-color: #e0e0e0; }
-    </style>
-</head>
-<body>
-    <h1>Mine and Plant Operation Report</h1>
-    <h2>Mine Operation</h2>
-    <table>
-        <tr><th>Parameter</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>No. of Compressors</td><td>9</td><td>183</td></tr>
-        <tr><td>No. of NMR</td><td>9</td><td>183</td></tr>
-        <tr><td>No. of Holes</td><td>600</td><td>11,702</td></tr>
-        <tr><td>Total Feetage</td><td>3,266</td><td>63,066</td></tr>
-        <tr><td>Production</td><td>2,612</td><td>50,453</td></tr>
-        <tr><td>% of Recovery</td><td>83%</td><td>83%</td></tr>
-        <tr><td>% of Breaking</td><td>23%</td><td>20%</td></tr>
-        <tr><td>Remark</td><td colspan="2">Staggered Blasting Pattern</td></tr>
-    </table>
-    <h2>Plant Operation</h2>
-    <table>
-        <tr><th>Parameter</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>Production</td><td>1,865</td><td>31,987</td></tr>
-        <tr><td>Running Hrs.</td><td>10.2</td><td>169.9</td></tr>
-        <tr><td>TPH</td><td>183</td><td>188</td></tr>
-        <tr><td>Maintenance Hrs</td><td>3.5</td><td>64</td></tr>
-        <tr><td>Breakdown Hrs</td><td>0</td><td>6</td></tr>
-        <tr><td>Power Cut Hrs</td><td>3.8</td><td>95.6</td></tr>
-        <tr><td>Boulder Jam Hrs</td><td>0.5</td><td>20.9</td></tr>
-        <tr><td>No Feed Hrs</td><td>2.5</td><td>34</td></tr>
-    </table>
-    <h2>Boulder Transportation</h2>
-    <table>
-        <tr><th></th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>Trips</td><td>395</td><td>493</td><td>-</td><td>1,368</td></tr>
-        <tr><td>Tonnage</td><td>936</td><td>1,417</td><td>2,353</td><td>32,757</td></tr>
-    </table>
-    <h2>Vehicle Wise Trips</h2>
-    <table>
-        <tr><th>Vehicle No</th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>AP39UQ0095</td><td>0</td><td>0</td><td>0</td><td>57</td></tr>
-        <tr><td>AP39UQ0097</td><td>55</td><td>10</td><td>95</td><td>-</td></tr>
-        <tr><td>AP39UW9880</td><td>66</td><td>12</td><td>152</td><td>-</td></tr>
-        <tr><td>AP39UW9881</td><td>54</td><td>9</td><td>135</td><td>-</td></tr>
-        <tr><td>AP39UY4651</td><td>15</td><td>6</td><td>127</td><td>-</td></tr>
-        <tr><td>AP39UY4652</td><td>56</td><td>11</td><td>144</td><td>-</td></tr>
-        <tr><td>AP39WC0926</td><td>0</td><td>55</td><td>136</td><td>-</td></tr>
-        <tr><td>AP39WC0927</td><td>54</td><td>9</td><td>101</td><td>-</td></tr>
-        <tr><td>AP39WC0928</td><td>66</td><td>12</td><td>154</td><td>-</td></tr>
-        <tr><td>AP39WF2052</td><td>37</td><td>10</td><td>118</td><td>-</td></tr>
-        <tr><td>AP39WF2057</td><td>36</td><td>9</td><td>149</td><td>-</td></tr>
-        <tr><td>AP39WF2058</td><td>0</td><td>0</td><td>0</td><td>-</td></tr>
-        <tr><td>Total</td><td>395</td><td>493</td><td>1,368</td><td>-</td></tr>
-    </table>
-    <h2>Production Material</h2>
-    <table>
-        <tr><th>Material</th><th>FTD</th><th>MTD</th></tr>
-        <tr><td>10 MM</td><td>381.6</td><td>3,722.4</td></tr>
-        <tr><td>20 MM</td><td>593.6</td><td>5,790.4</td></tr>
-        <tr><td>V-Sand</td><td>296.8</td><td>2,895.2</td></tr>
-        <tr><td>Rivo Sand</td><td>763.2</td><td>7,444.8</td></tr>
-        <tr><td>Slurry</td><td>84.8</td><td>827.2</td></tr>
-        <tr><td>Total</td><td>2,120</td><td>20,680</td></tr>
-    </table>
-    <h2>Godown Stock</h2>
-    <table>
-        <tr><th>Material</th><th>Stock</th></tr>
-        <tr><td>10 MM</td><td>130</td></tr>
-        <tr><td>20 MM</td><td>4,250</td></tr>
-        <tr><td>Rivo Sand</td><td>18,420</td></tr>
-        <tr><td>Railway Ballast</td><td>2,000</td></tr>
-        <tr><td>VSI</td><td>17,235</td></tr>
-        <tr><td>Total</td><td>42,035</td></tr>
-    </table>
-    <h2>Dispatch</h2>
-    <table>
-        <tr><th>Material</th><th>Day</th><th>Night</th><th>Total</th></tr>
-        <tr><td>10 MM</td><td>104</td><td>55</td><td>520</td></tr>
-        <tr><td>20 MM</td><td>2,026</td><td>528</td><td>5,540</td></tr>
-        <tr><td>40-65 MM</td><td>245</td><td>258</td><td>282</td></tr>
-        <tr><td>Rivo</td><td>620</td><td>25</td><td>645</td></tr>
-        <tr><td>M Sand</td><td>0</td><td>251</td><td>251</td></tr>
-        <tr><td>Scalpin</td><td>0</td><td>120</td><td>120</td></tr>
-        <tr><td>Total Qty</td><td colspan="3">-</td><td>1,043</td></tr>
-        <tr><td>Total Vehicles</td><td colspan="4">28</td></tr>
-    </table>
+    
+    <div class="section">
+        <h2>Mine Operation</h2>
+        <div class="box">
+            <table>
+                <tr><th>Parameter</th><th>FTD</th><th>MTD</th></tr>
+                <tr><td>No. of Compressors</td><td>9</td><td>183</td></tr>
+                <tr><td>No. of NMR</td><td>9</td><td>183</td></tr>
+                <tr><td>No. of Holes</td><td>600</td><td>11,702</td></tr>
+                <tr><td>Total Feetage</td><td>3,266</td><td>63,066</td></tr>
+                <tr><td>Production</td><td>2,612</td><td>50,453</td></tr>
+                <tr><td>% of Recovery</td><td>83%</td><td>83%</td></tr>
+                <tr><td>% of Breaking</td><td>23%</td><td>20%</td></tr>
+                <tr><td>Remark</td><td colspan="2">Staggered Blasting Pattern</td></tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Plant Operation</h2>
+        <div class="box">
+            <table>
+                <tr><th>Parameter</th><th>FTD</th><th>MTD</th></tr>
+                <tr><td>Production</td><td>1,865</td><td>31,987</td></tr>
+                <tr><td>Running Hrs.</td><td>10.2</td><td>169.9</td></tr>
+                <tr><td>TPH</td><td>183</td><td>188</td></tr>
+                <tr><td>Maintenance Hrs</td><td>3.5</td><td>64</td></tr>
+                <tr><td>Breakdown Hrs</td><td>0</td><td>6</td></tr>
+                <tr><td>Power Cut Hrs</td><td>3.8</td><td>95.6</td></tr>
+                <tr><td>Boulder Jam Hrs</td><td>0.5</td><td>20.9</td></tr>
+                <tr><td>No Feed Hrs</td><td>2.5</td><td>34</td></tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Boulder Transportation</h2>
+        <div class="box">
+            <table>
+                <tr><th></th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
+                <tr><td>Trips</td><td>395</td><td>493</td><td>-</td><td>1,368</td></tr>
+                <tr><td>Tonnage</td><td>936</td><td>1,417</td><td>2,353</td><td>32,757</td></tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Vehicle Wise Trips</h2>
+        <div class="box">
+            <table>
+                <tr><th>Vehicle No</th><th>Day</th><th>Night</th><th>FTD</th><th>MTD</th></tr>
+                <tr><td>AP39UQ0095</td><td>0</td><td>0</td><td>0</td><td>57</td></tr>
+                <tr><td>AP39UQ0097</td><td>55</td><td>10</td><td>95</td><td>-</td></tr>
+                <tr><td>AP39UW9880</td><td>66</td><td>12</td><td>152</td><td>-</td></tr>
+                <tr><td>AP39UW9881</td><td>54</td><td>9</td><td>135</td><td>-</td></tr>
+                <tr><td>AP39UY4651</td><td>15</td><td>6</td><td>127</td><td>-</td></tr>
+                <tr><td>AP39UY4652</td><td>56</td><td>11</td><td>144</td><td>-</td></tr>
+                <tr><td>AP39WC0926</td><td>0</td><td>55</td><td>136</td><td>-</td></tr>
+                <tr><td>AP39WC0927</td><td>54</td><td>9</td><td>101</td><td>-</td></tr>
+                <tr><td>AP39WC0928</td><td>66</td><td>12</td><td>154</td><td>-</td></tr>
+                <tr><td>AP39WF2052</td><td>37</td><td>10</td><td>118</td><td>-</td></tr>
+                <tr><td>AP39WF2057</td><td>36</td><td>9</td><td>149</td><td>-</td></tr>
+                <tr><td>AP39WF2058</td><td>0</td><td>0</td><td>0</td><td>-</td></tr>
+                <tr><td>Total</td><td>395</td><td>493</td><td>1,368</td><td>-</td></tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Production Material</h2>
+        <div class="box">
+            <table>
+                <tr><th>Material</th><th>FTD</th><th>MTD</th></tr>
+                <tr><td>10 MM</td><td>381.6</td><td>3,722.4</td></tr>
+                <tr><td>20 MM</td><td>593.6</td><td>5,790.4</td></tr>
+                <tr><td>V-Sand</td><td>296.8</td><td>2,895.2</td></tr>
+                <tr><td>Rivo Sand</td><td>763.2</td><td>7,444.8</td></tr>
+                <tr><td>Slurry</td><td>84.8</td><td>827.2</td></tr>
+                <tr><td>Total</td><td>2,120</td><td>20,680</td></tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Godown Stock</h2>
+        <div class="box">
+            <table>
+                <tr><th>Material</th><th>Stock</th></tr>
+                <tr><td>10 MM</td><td>130</td></tr>
+                <tr><td>20 MM</td><td>4,250</td></tr>
+                <tr><td>Rivo Sand</td><td>18,420</td></tr>
+                <tr><td>Railway Ballast</td><td>2,000</td></tr>
+                <tr><td>VSI</td><td>17,235</td></tr>
+                <tr><td>Total</td><td>42,035</td></tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Dispatch</h2>
+        <div class="box">
+            <table>
+                <tr><th>Material</th><th>Day</th><th>Night</th><th>Total</th></tr>
+                <tr><td>10 MM</td><td>104</td><td>55</td><td>520</td></tr>
+                <tr><td>20 MM</td><td>2,026</td><td>528</td><td>5,540</td></tr>
+                <tr><td>40-65 MM</td><td>245</td><td>258</td><td>282</td></tr>
+                <tr><td>Rivo</td><td>620</td><td>25</td><td>645</td></tr>
+                <tr><td>M Sand</td><td>0</td><td>251</td><td>251</td></tr>
+                <tr><td>Scalpin</td><td>0</td><td>120</td><td>120</td></tr>
+                <tr><td>Total Qty</td><td colspan="3">-</td><td>1,043</td></tr>
+                <tr><td>Total Vehicles</td><td colspan="4">28</td></tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
