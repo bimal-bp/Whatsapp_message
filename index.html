@@ -9,6 +9,9 @@
     font-family: Calibri, Arial, sans-serif;
     margin: 10px; /* Reduced margin to gain more space */
     background-color: #f0f0f0;
+    border: 4px solid bold black; /* Full outside bold border for the entire page */
+    padding: 15px; /* Optional: adds some inner spacing so content doesn't touch the border */
+    box-sizing: border-box;
   }
   table {
     border-collapse: collapse;
@@ -70,13 +73,15 @@
     font-weight: bold;
   }
   @media print {
-    body { margin: 0; }
+    body { 
+      margin: 0; 
+      border: none; /* Remove page border when printing to avoid double borders */
+    }
     @page { size: A4 landscape; }
   }
 </style>
 </head>
 <body>
-
 <div class="main-container">
   <table class="left-table">
     <tr>
@@ -132,7 +137,7 @@
   </table>
   <table class="achievements-table">
     <tr>
-      <th colspan="3">Achievements</th>
+      <th colspan="3">Achievements (Target: Compressors = 17, Holes = 1000)</th>
     </tr>
     <tr>
       <th>Parameter</th>
