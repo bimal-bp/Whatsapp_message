@@ -7,7 +7,7 @@
 <style>
   body {
     font-family: Calibri, Arial, sans-serif;
-    margin: 20px;
+    margin: 10px; /* Reduced margin to gain more space */
     background-color: #f0f0f0;
   }
   table {
@@ -16,7 +16,7 @@
   }
   td, th {
     border: 1px solid black;
-    padding: 4px; /* Reduced padding for tighter fit */
+    padding: 4px;
     text-align: center;
   }
   input {
@@ -26,21 +26,14 @@
     background: transparent;
     font-family: Calibri, Arial, sans-serif;
     box-sizing: border-box;
-    padding: 2px 4px; /* Small internal padding for better usability */
-    font-size: 14px; /* Slightly smaller font to save space */
+    padding: 2px 4px;
+    font-size: 14px;
   }
   input[type="number"] {
     -moz-appearance: textfield;
   }
   input[type="date"], input[type="time"] {
     font-size: 14px;
-  }
-  .header td {
-    font-size: 28px;
-    font-weight: bold;
-  }
-  .date-row td {
-    text-align: right;
   }
   .target-row {
     background-color: #ffdab9;
@@ -83,21 +76,7 @@
 </style>
 </head>
 <body>
-<table>
-  <tr class="header">
-    <td colspan="3">Quarry MIS</td>
-  </tr>
-  <tr class="date-row">
-    <td colspan="2"></td>
-    <td>Date : <input type="date" value="2025-12-19"></td>
-  </tr>
-</table>
-<table>
-  <tr class="target-row">
-    <td colspan="2">Target</td>
-    <td>1000 Holes / 17 Compressor</td>
-  </tr>
-</table>
+
 <div class="main-container">
   <table class="left-table">
     <tr>
