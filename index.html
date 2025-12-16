@@ -1,705 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quarry MIS - Excel Style</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Calibri', Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap: 20px;
-        }
-        
-        /* Excel-like styling */
-        .table-container {
-            border: 1px solid #000;
-            background-color: white;
-            margin-bottom: 20px;
-            overflow: auto;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-        
-        th, td {
-            border: 1px solid #000;
-            padding: 8px 10px;
-            text-align: left;
-            height: 40px;
-            vertical-align: middle;
-        }
-        
-        th {
-            text-align: center;
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        
-        input, select {
-            width: 100%;
-            border: none;
-            outline: none;
-            padding: 5px;
-            font-size: 14px;
-            font-family: 'Calibri', Arial, sans-serif;
-            background-color: transparent;
-        }
-        
-        input:focus, select:focus {
-            background-color: #e6f7ff;
-        }
-        
-        /* Header section */
-        .header-row {
-            background-color: #fff;
-            border-bottom: 2px solid #000;
-            font-weight: bold;
-            font-size: 24px;
-            text-align: center;
-        }
-        
-        .date-input {
-            font-size: 16px;
-            text-align: right;
-            padding-right: 20px;
-        }
-        
-        /* Target row */
-        .target-row {
-            background-color: #ffcc99;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        /* Left table */
-        .left-table {
-            grid-column: 1;
-        }
-        
-        /* Achievements table */
-        .achievements {
-            grid-column: 2;
-            border: 2px solid #008000 !important;
-        }
-        
-        .achievements th {
-            background-color: #e6ffe6;
-        }
-        
-        /* Area Wise Compressor table */
-        .area-compressor {
-            grid-column: 1;
-        }
-        
-        .area-title {
-            background-color: #ffff99;
-            text-align: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        /* Weekly Trials table */
-        .weekly-trials {
-            grid-column: 2;
-            border: 2px solid #0066cc !important;
-        }
-        
-        .weekly-trials th {
-            background-color: #e6f2ff;
-        }
-        
-        /* Loading Time Log */
-        .loading-log {
-            grid-column: 1 / span 2;
-            width: 100%;
-        }
-        
-        .full-width {
-            grid-column: 1 / span 2;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 1200px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            
-            .left-table, .achievements, .area-compressor, .weekly-trials, .loading-log {
-                grid-column: 1;
-            }
-        }
-        
-        /* Excel-like tab navigation */
-        .tab-container {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-        }
-        
-        .tab {
-            padding: 10px 20px;
-            background-color: #f1f1f1;
-            border: 1px solid #ccc;
-            border-bottom: none;
-            cursor: pointer;
-            margin-right: 5px;
-            border-radius: 5px 5px 0 0;
-            font-weight: bold;
-        }
-        
-        .tab.active {
-            background-color: white;
-            border-bottom: 1px solid white;
-            margin-bottom: -1px;
-        }
-        
-        /* Action buttons */
-        .action-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn.print {
-            background-color: #2196F3;
-        }
-        
-        .btn.export {
-            background-color: #FF9800;
-        }
-        
-        .btn.save {
-            background-color: #009688;
-        }
-        
-        .btn:hover {
-            opacity: 0.9;
-        }
-        
-        /* Scrollable container for Excel-like experience */
-        .scroll-container {
-            overflow: auto;
-            max-height: 70vh;
-        }
-        
-        .section-title {
-            font-weight: bold;
-            font-size: 18px;
-            padding: 10px;
-            text-align: center;
-            background-color: #f2f2f2;
-            border-bottom: 1px solid #000;
-        }
-        
-        /* Highlight editable cells */
-        td.editable {
-            position: relative;
-        }
-        
-        td.editable:after {
-            content: "";
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 5px solid #ccc;
-            opacity: 0.5;
-        }
-        
-        /* Number input styling */
-        input[type="number"] {
-            text-align: right;
-        }
-        
-        /* Print styles */
-        @media print {
-            body {
-                padding: 0;
-                background-color: white;
-            }
-            
-            .tab-container, .action-buttons {
-                display: none;
-            }
-            
-            .container {
-                max-width: 100%;
-                grid-gap: 10px;
-            }
-            
-            .table-container {
-                border: 1px solid #000;
-                page-break-inside: avoid;
-            }
-            
-            .scroll-container {
-                max-height: none;
-                overflow: visible;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quarry MIS</title>
+<style>
+  body {
+    font-family: Calibri, Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0f0f0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td, th {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+  input {
+    border: none;
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    font-family: Calibri, Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  .header td {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .date-row td {
+    text-align: right;
+  }
+  .target-row {
+    background-color: #ffdab9;
+  }
+  .target-row td {
+    text-align: left;
+  }
+  .main-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  .left-table, .achievements-table {
+    flex: 1;
+  }
+  .achievements-table {
+    border: 3px solid green;
+  }
+  .bottom-container {
+    display: flex;
+    gap: 20px;
+  }
+  .area-compressor, .weekly-trials {
+    flex: 1;
+  }
+  .weekly-trials {
+    border: 3px solid blue;
+  }
+  .loading-log {
+    margin-top: 30px;
+  }
+  .yellow-bg {
+    background-color: yellow;
+    font-weight: bold;
+  }
+  @media print {
+    body { margin: 0; }
+    @page { size: A4 landscape; }
+  }
+</style>
 </head>
 <body>
-    <div class="tab-container">
-        <div class="tab active" onclick="switchTab('main')">Main Dashboard</div>
-        <div class="tab" onclick="switchTab('reports')">Reports</div>
-        <div class="tab" onclick="switchTab('settings')">Settings</div>
-    </div>
-    
-    <div class="action-buttons">
-        <button class="btn save" onclick="saveData()">
-            <i class="fas fa-save"></i> Save Data
-        </button>
-        <button class="btn export" onclick="exportToExcel()">
-            <i class="fas fa-file-excel"></i> Export to Excel
-        </button>
-        <button class="btn print" onclick="printPage()">
-            <i class="fas fa-print"></i> Print
-        </button>
-    </div>
-    
-    <div class="scroll-container">
-        <div class="container">
-            <!-- Header Section -->
-            <div class="full-width table-container">
-                <table>
-                    <tr class="header-row">
-                        <td colspan="3">Quarry MIS</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="target-row">
-                            Target: 1000 Holes / 17 Compressor
-                        </td>
-                        <td class="date-input">
-                            Date: <input type="date" id="current-date" value="2025-12-19">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            
-            <!-- Left Table: FTD / MTD -->
-            <div class="left-table table-container">
-                <div class="section-title">FTD / MTD Performance</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>FTD</th>
-                            <th>MTD</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Quarry Running Hrs</td>
-                            <td class="editable"><input type="number" value="8.5"></td>
-                            <td class="editable"><input type="number" value="125.5"></td>
-                        </tr>
-                        <tr>
-                            <td>Compressors</td>
-                            <td class="editable"><input type="number" value="12"></td>
-                            <td class="editable"><input type="number" value="175"></td>
-                        </tr>
-                        <tr>
-                            <td>NMR</td>
-                            <td class="editable"><input type="number" value="85"></td>
-                            <td class="editable"><input type="number" value="1240"></td>
-                        </tr>
-                        <tr>
-                            <td>Holes</td>
-                            <td class="editable"><input type="number" value="92"></td>
-                            <td class="editable"><input type="number" value="1350"></td>
-                        </tr>
-                        <tr>
-                            <td>Feets</td>
-                            <td class="editable"><input type="number" value="450"></td>
-                            <td class="editable"><input type="number" value="6800"></td>
-                        </tr>
-                        <tr>
-                            <td>Production</td>
-                            <td class="editable"><input type="number" value="4500"></td>
-                            <td class="editable"><input type="number" value="67500"></td>
-                        </tr>
-                        <tr>
-                            <td>Boulder transport to plant</td>
-                            <td class="editable"><input type="number" value="120"></td>
-                            <td class="editable"><input type="number" value="1800"></td>
-                        </tr>
-                        <tr>
-                            <td>Loading Hrs</td>
-                            <td class="editable"><input type="number" value="7.5"></td>
-                            <td class="editable"><input type="number" value="112.5"></td>
-                        </tr>
-                        <tr>
-                            <td>Breaking Hrs</td>
-                            <td class="editable"><input type="number" value="6.5"></td>
-                            <td class="editable"><input type="number" value="97.5"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Achievements Table -->
-            <div class="achievements table-container">
-                <div class="section-title">Achievements</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Ach %</th>
-                            <th>Gap</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Compressors</td>
-                            <td class="editable"><input type="number" value="70.6"></td>
-                            <td class="editable"><input type="number" value="5"></td>
-                        </tr>
-                        <tr>
-                            <td>Holes</td>
-                            <td class="editable"><input type="number" value="92"></td>
-                            <td class="editable"><input type="number" value="80"></td>
-                        </tr>
-                        <tr>
-                            <td>Boulder transport to plant</td>
-                            <td class="editable"><input type="number" value="75"></td>
-                            <td class="editable"><input type="number" value="30"></td>
-                        </tr>
-                        <tr>
-                            <td>Recovery</td>
-                            <td class="editable"><input type="number" value="85"></td>
-                            <td class="editable"><input type="number" value="15"></td>
-                        </tr>
-                        <tr>
-                            <td>Breaking</td>
-                            <td class="editable"><input type="number" value="88"></td>
-                            <td class="editable"><input type="number" value="12"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Area Wise Compressor Table -->
-            <div class="area-compressor table-container">
-                <table>
-                    <tr class="area-title">
-                        <td colspan="3">Area Wise Compressor</td>
-                    </tr>
-                    <tr>
-                        <th>Area</th>
-                        <th>FTD</th>
-                        <th>MTD</th>
-                    </tr>
-                    <tr>
-                        <td>9 Ha - Pit 3</td>
-                        <td class="editable"><input type="number" value="3"></td>
-                        <td class="editable"><input type="number" value="45"></td>
-                    </tr>
-                    <tr>
-                        <td>Bench 1</td>
-                        <td class="editable"><input type="number" value="2"></td>
-                        <td class="editable"><input type="number" value="30"></td>
-                    </tr>
-                    <tr>
-                        <td>Bench 2</td>
-                        <td class="editable"><input type="number" value="2"></td>
-                        <td class="editable"><input type="number" value="28"></td>
-                    </tr>
-                    <tr>
-                        <td>Bench 3</td>
-                        <td class="editable"><input type="number" value="2"></td>
-                        <td class="editable"><input type="number" value="29"></td>
-                    </tr>
-                    <tr>
-                        <td>Bench 4</td>
-                        <td class="editable"><input type="number" value="1"></td>
-                        <td class="editable"><input type="number" value="15"></td>
-                    </tr>
-                    <tr>
-                        <td>Pit-2</td>
-                        <td class="editable"><input type="number" value="2"></td>
-                        <td class="editable"><input type="number" value="28"></td>
-                    </tr>
-                </table>
-            </div>
-            
-            <!-- Weekly Trials Table -->
-            <div class="weekly-trials table-container">
-                <div class="section-title">Weekly Trials</div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Date</td>
-                            <td class="editable"><input type="date" value="2025-12-15"></td>
-                        </tr>
-                        <tr>
-                            <td>Area</td>
-                            <td class="editable"><input type="text" value="Bench 1"></td>
-                        </tr>
-                        <tr>
-                            <td>Compressors</td>
-                            <td class="editable"><input type="number" value="2"></td>
-                        </tr>
-                        <tr>
-                            <td>NMR</td>
-                            <td class="editable"><input type="number" value="95"></td>
-                        </tr>
-                        <tr>
-                            <td>Holes</td>
-                            <td class="editable"><input type="number" value="105"></td>
-                        </tr>
-                        <tr>
-                            <td>Feets</td>
-                            <td class="editable"><input type="number" value="510"></td>
-                        </tr>
-                        <tr>
-                            <td>Production</td>
-                            <td class="editable"><input type="number" value="5200"></td>
-                        </tr>
-                        <tr>
-                            <td>Recovery %</td>
-                            <td class="editable"><input type="number" value="88"></td>
-                        </tr>
-                        <tr>
-                            <td>Breaking %</td>
-                            <td class="editable"><input type="number" value="90"></td>
-                        </tr>
-                        <tr>
-                            <td>Total Trips</td>
-                            <td class="editable"><input type="number" value="25"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Loading Time Log -->
-            <div class="loading-log full-width table-container">
-                <div class="section-title">Loading Time Log</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Shift</th>
-                            <th>Loading Start Time</th>
-                            <th>Tipper Available</th>
-                            <th>Loading Ending Time</th>
-                            <th>Remark</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Morning</td>
-                            <td class="editable"><input type="time" value="08:00"></td>
-                            <td class="editable"><input type="number" value="12"></td>
-                            <td class="editable"><input type="time" value="16:00"></td>
-                            <td class="editable"><input type="text" value="Normal operation"></td>
-                        </tr>
-                        <tr>
-                            <td>Afternoon</td>
-                            <td class="editable"><input type="time" value="16:00"></td>
-                            <td class="editable"><input type="number" value="10"></td>
-                            <td class="editable"><input type="time" value="00:00"></td>
-                            <td class="editable"><input type="text" value="2 tippers breakdown"></td>
-                        </tr>
-                        <tr>
-                            <td>Night</td>
-                            <td class="editable"><input type="time" value="00:00"></td>
-                            <td class="editable"><input type="number" value="8"></td>
-                            <td class="editable"><input type="time" value="08:00"></td>
-                            <td class="editable"><input type="text" value="Reduced workforce"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        // Tab navigation
-        function switchTab(tabName) {
-            // Update active tab
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // In a real application, you would load different content based on the tab
-            // For this demo, we'll just show an alert
-            if (tabName === 'reports') {
-                alert('Reports tab would show historical data and analytics. This is a demo - main dashboard remains active.');
-                // Switch back to main tab for demo purposes
-                setTimeout(() => {
-                    tabs[0].classList.add('active');
-                    event.target.classList.remove('active');
-                }, 100);
-            } else if (tabName === 'settings') {
-                alert('Settings tab would allow configuration. This is a demo - main dashboard remains active.');
-                // Switch back to main tab for demo purposes
-                setTimeout(() => {
-                    tabs[0].classList.add('active');
-                    event.target.classList.remove('active');
-                }, 100);
-            }
-        }
-        
-        // Auto-calculate achievement percentages (simplified example)
-        function calculateAchievements() {
-            // In a real application, this would calculate based on target vs actual
-            // For this demo, we'll just update a few values
-            const targetHoles = 1000;
-            const actualHoles = document.querySelectorAll('input[type="number"]')[3].value;
-            const achievement = (actualHoles / targetHoles * 100).toFixed(1);
-            
-            // Update holes achievement
-            document.querySelectorAll('input[type="number"]')[11].value = achievement;
-            document.querySelectorAll('input[type="number"]')[12].value = (targetHoles - actualHoles).toFixed(0);
-            
-            // Show calculation message
-            console.log('Achievement calculated: ' + achievement + '% for Holes');
-        }
-        
-        // Save data to localStorage
-        function saveData() {
-            const inputs = document.querySelectorAll('input, select');
-            const data = {};
-            
-            inputs.forEach((input, index) => {
-                data[`field_${index}`] = input.value;
-            });
-            
-            localStorage.setItem('quarryMISData', JSON.stringify(data));
-            alert('Data saved successfully to browser storage!');
-        }
-        
-        // Load data from localStorage
-        function loadData() {
-            const savedData = localStorage.getItem('quarryMISData');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                const inputs = document.querySelectorAll('input, select');
-                
-                inputs.forEach((input, index) => {
-                    if (data[`field_${index}`]) {
-                        input.value = data[`field_${index}`];
-                    }
-                });
-                
-                console.log('Data loaded from browser storage');
-            }
-        }
-        
-        // Export to Excel (simplified - in real app would use a library)
-        function exportToExcel() {
-            alert('In a real application, this would export all data to an Excel file.\nFor this demo, data can be saved using the "Save Data" button.');
-            // Trigger calculation before export
-            calculateAchievements();
-        }
-        
-        // Print the page
-        function printPage() {
-            window.print();
-        }
-        
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set today's date as default if not already set
-            const dateField = document.getElementById('current-date');
-            if (dateField && !dateField.value) {
-                const today = new Date().toISOString().split('T')[0];
-                dateField.value = today;
-            }
-            
-            // Load any saved data
-            loadData();
-            
-            // Add event listeners to inputs for auto-calculation
-            const numberInputs = document.querySelectorAll('input[type="number"]');
-            numberInputs.forEach(input => {
-                input.addEventListener('change', calculateAchievements);
-            });
-            
-            // Initial calculation
-            calculateAchievements();
-            
-            // Add Excel-like cell navigation with keyboard
-            document.addEventListener('keydown', function(e) {
-                const activeElement = document.activeElement;
-                if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'SELECT') {
-                    const cell = activeElement.closest('td');
-                    if (cell) {
-                        let nextCell;
-                        
-                        switch(e.key) {
-                            case 'ArrowDown':
-                                e.preventDefault();
-                                nextCell = cell.parentElement.nextElementSibling?.children[cell.cellIndex];
-                                break;
-                            case 'ArrowUp':
-                                e.preventDefault();
-                                nextCell = cell.parentElement.previousElementSibling?.children[cell.cellIndex];
-                                break;
-                            case 'ArrowRight':
-                                e.preventDefault();
-                                nextCell = cell.nextElementSibling;
-                                break;
-                            case 'ArrowLeft':
-                                e.preventDefault();
-                                nextCell = cell.previousElementSibling;
-                                break;
-                            case 'Tab':
-                                // Let default tab behavior happen
-                                return;
-                        }
-                        
-                        if (nextCell) {
-                            const input = nextCell.querySelector('input, select');
-                            if (input) {
-                                input.focus();
-                                if (input.select) input.select();
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    </script>
+<table>
+  <tr class="header">
+    <td colspan="3">Quarry MIS</td>
+  </tr>
+  <tr class="date-row">
+    <td colspan="2"></td>
+    <td>Date : <input type="date" value="2025-12-19"></td>
+  </tr>
+</table>
+
+<table>
+  <tr class="target-row">
+    <td colspan="2">Target</td>
+    <td>1000 Holes / 17 Compressor</td>
+  </tr>
+</table>
+
+<div class="main-container">
+  <table class="left-table">
+    <tr>
+      <th>Parameter</th>
+      <th>FTD</th>
+      <th>MTD</th>
+    </tr>
+    <tr>
+      <td>Quarry Running Hrs</td>
+      <td><input type="number" step="0.01"></td>
+      <td><input type="number" step="0.01"></td>
+    </tr>
+    <tr>
+      <td>Compressors</td>
+      <td><input type="number" id="ftd_comp"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>NMR</td>
+      <td><input type="number" step="0.01"></td>
+      <td><input type="number" step="0.01"></td>
+    </tr>
+    <tr>
+      <td>Holes</td>
+      <td><input type="number" id="ftd_holes"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Feets</td>
+      <td><input type="number"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Production</td>
+      <td><input type="number"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Boulder transport to plant</td>
+      <td><input type="number" id="ftd_boulder"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Loading Hrs</td>
+      <td><input type="number" step="0.01"></td>
+      <td><input type="number" step="0.01"></td>
+    </tr>
+    <tr>
+      <td>Breaking Hrs</td>
+      <td><input type="number" step="0.01"></td>
+      <td><input type="number" step="0.01"></td>
+    </tr>
+  </table>
+
+  <table class="achievements-table">
+    <tr>
+      <th colspan="3">Achievements</th>
+    </tr>
+    <tr>
+      <th>Parameter</th>
+      <th>Ach %</th>
+      <th>Gap</th>
+    </tr>
+    <tr>
+      <td>Compressors</td>
+      <td><input type="number" id="ach_comp" step="0.01" readonly></td>
+      <td><input type="number" id="gap_comp" step="0.01" readonly></td>
+    </tr>
+    <tr>
+      <td>Holes</td>
+      <td><input type="number" id="ach_holes" step="0.01" readonly></td>
+      <td><input type="number" id="gap_holes" step="0.01" readonly></td>
+    </tr>
+    <tr>
+      <td>Boulder transport to plant</td>
+      <td><input type="number" id="ach_boulder" step="0.01"></td>
+      <td><input type="number" id="gap_boulder" step="0.01"></td>
+    </tr>
+    <tr>
+      <td>Recovery</td>
+      <td><input type="number" step="0.01"></td>
+      <td><input type="number" step="0.01"></td>
+    </tr>
+    <tr>
+      <td>Breaking</td>
+      <td><input type="number" step="0.01"></td>
+      <td><input type="number" step="0.01"></td>
+    </tr>
+  </table>
+</div>
+
+<div class="bottom-container">
+  <table class="area-compressor">
+    <tr class="yellow-bg">
+      <td colspan="3">Area Wise Compressor</td>
+    </tr>
+    <tr>
+      <th>Area</th>
+      <th>FTD</th>
+      <th>MTD</th>
+    </tr>
+    <tr>
+      <td>9 Ha – Pit 3</td>
+      <td><input type="number"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Bench 1</td>
+      <td><input type="number"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Bench 2</td>
+      <td><input type="number"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Bench 3</td>
+      <td><input type="number"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Bench 4</td>
+      <td><input type="number"></td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Pit-2</td>
+      <td><input type="number"></td>
+      <td><input type="number"></td>
+    </tr>
+  </table>
+
+  <table class="weekly-trials">
+    <tr>
+      <th colspan="2">Weekly Trials</th>
+    </tr>
+    <tr>
+      <td>Date</td>
+      <td><input type="date"></td>
+    </tr>
+    <tr>
+      <td>Area</td>
+      <td><input type="text"></td>
+    </tr>
+    <tr>
+      <td>Compressors</td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>NMR</td>
+      <td><input type="number" step="0.01"></td>
+    </tr>
+    <tr>
+      <td>Holes</td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Feets</td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Production</td>
+      <td><input type="number"></td>
+    </tr>
+    <tr>
+      <td>Recovery %</td>
+      <td><input type="number" step="0.01"></td>
+    </tr>
+    <tr>
+      <td>Breaking %</td>
+      <td><input type="number" step="0.01"></td>
+    </tr>
+    <tr>
+      <td>Total Trips</td>
+      <td><input type="number"></td>
+    </tr>
+  </table>
+</div>
+
+<table class="loading-log">
+  <tr>
+    <th>Shift</th>
+    <th>Loading Start Time</th>
+    <th>Tipper Available</th>
+    <th>Loading Ending Time</th>
+    <th>Remark</th>
+  </tr>
+  <tr>
+    <td>Morning</td>
+    <td><input type="time"></td>
+    <td><input type="text"></td>
+    <td><input type="time"></td>
+    <td><input type="text"></td>
+  </tr>
+  <tr>
+    <td>Afternoon</td>
+    <td><input type="time"></td>
+    <td><input type="text"></td>
+    <td><input type="time"></td>
+    <td><input type="text"></td>
+  </tr>
+  <tr>
+    <td>Night</td>
+    <td><input type="time"></td>
+    <td><input type="text"></td>
+    <td><input type="time"></td>
+    <td><input type="text"></td>
+  </tr>
+</table>
+
+<script>
+  const targetComp = 17;
+  const targetHoles = 1000;
+
+  function updateAchievements() {
+    const ftdComp = parseFloat(document.getElementById('ftd_comp').value) || 0;
+    const ftdHoles = parseFloat(document.getElementById('ftd_holes').value) || 0;
+
+    const achComp = targetComp > 0 ? (ftdComp / targetComp) * 100 : 0;
+    const gapComp = 100 - achComp;
+
+    const achHoles = targetHoles > 0 ? (ftdHoles / targetHoles) * 100 : 0;
+    const gapHoles = 100 - achHoles;
+
+    document.getElementById('ach_comp').value = achComp.toFixed(2);
+    document.getElementById('gap_comp').value = gapComp.toFixed(2);
+    document.getElementById('ach_holes').value = achHoles.toFixed(2);
+    document.getElementById('gap_holes').value = gapHoles.toFixed(2);
+  }
+
+  document.getElementById('ftd_comp').addEventListener('input', updateAchievements);
+  document.getElementById('ftd_holes').addEventListener('input', updateAchievements);
+
+  // Initial calculation
+  updateAchievements();
+</script>
+
 </body>
 </html>
