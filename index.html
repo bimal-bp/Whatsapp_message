@@ -39,7 +39,7 @@
             flex-direction: column;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 380px;
+            height: 400px;
         }
         .card:hover {
             transform: translateY(-6px);
@@ -86,6 +86,10 @@
         .value-large { font-size: 22px; font-weight: 700; }
         .ftd-value { color: #ea580c; }
         .mtd-value { color: #1e40af; }
+        .gap-value {
+            color: #dc2626;
+            font-weight: 700;
+        }
         .percentage-cell {
             font-size: 16px;
             font-weight: 600;
@@ -95,14 +99,24 @@
         }
         .percentage-ftd { background: #fed7aa; color: #c2410c; }
         .percentage-mtd { background: #dbeafe; color: #1d4ed8; }
+        .separator-row {
+            border-top: 2px dashed #e2e8f0;
+        }
+        .separator-label {
+            font-weight: 700;
+            color: #475569;
+            background-color: #f8fafc;
+            padding: 8px;
+            text-align: center;
+        }
         /* Completion Line */
         .completion-line {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 40px;
-            margin-top: 20px;
-            font-size: 20px;
+            margin-top: 15px;
+            font-size: 18px;
             font-weight: 700;
         }
         .completion-ftd { color: #ea580c; }
@@ -150,8 +164,23 @@
             justify-content: center;
             box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
         }
-        .donut-center-value { font-size: 24px; font-weight: 700; color: #ea580c; }
-        .donut-center-label { font-size: 13px; color: #64748b; }
+        .donut-center-value { 
+            font-size: 18px; 
+            font-weight: 700; 
+            color: #ea580c; 
+            line-height: 1.2;
+        }
+        .donut-center-label { 
+            font-size: 12px; 
+            color: #64748b; 
+            margin-top: 4px;
+        }
+        .donut-center-mtd { 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: #1e40af;
+            margin-top: 2px;
+        }
         /* Bar Graph */
         .bar-container {
             display: flex;
@@ -166,7 +195,7 @@
         }
         .card:hover .bar { transform: scaleY(1.1); transition: transform 0.4s ease; }
         .achieved-bar { background: linear-gradient(to top, #1e40af, #60a5fa); }
-        .gap-bar { background: linear-gradient(to top, #6b7280, #9ca3af); }
+        .gap-bar { background: linear-gradient(to top, #dc2626, #f87171); }
         .bar-value {
             position: absolute;
             top: -26px;
@@ -229,18 +258,37 @@
                             </tr>
                             <tr>
                                 <td><strong>Gap</strong></td>
-                                <td class="ftd-value">315</td>
-                                <td class="mtd-value">2,645</td>
+                                <td class="gap-value">-315</td>
+                                <td class="gap-value">-2,645</td>
                             </tr>
                             <tr>
                                 <td><strong>Completion</strong></td>
                                 <td><span class="percentage-cell percentage-ftd">68.50%</span></td>
                                 <td><span class="percentage-cell percentage-mtd">82.50%</span></td>
                             </tr>
+                            <!-- Separator Row -->
+                            <tr class="separator-row">
+                                <td colspan="3" class="separator-label">COMPRESSOR</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Units</strong></td>
+                                <td class="ftd-value">13</td>
+                                <td class="mtd-value">390</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gap</strong></td>
+                                <td class="gap-value">-4</td>
+                                <td class="gap-value">-120</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Completion</strong></td>
+                                <td><span class="percentage-cell percentage-ftd">76.47%</span></td>
+                                <td><span class="percentage-cell percentage-mtd">76.47%</span></td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="completion-line">
-                        <span class="completion-ftd">Completion 68.50%</span>
+                        <span class="completion-ftd">Drilling: 68.50%</span>
                         <span class="completion-arrow">→</span>
                         <span class="completion-mtd">82.50%</span>
                     </div>
@@ -271,7 +319,7 @@
                                     <div class="bar-label">Achieved</div>
                                 </div>
                                 <div>
-                                    <div class="bar gap-bar" style="height: 40px;"><div class="bar-value">2,645</div></div>
+                                    <div class="bar gap-bar" style="height: 40px;"><div class="bar-value">-2,645</div></div>
                                     <div class="bar-label">Gap</div>
                                 </div>
                             </div>
@@ -281,7 +329,7 @@
                 </div>
             </div>
 
-            <!-- Compressor Performance Card (now filled) -->
+            <!-- Compressor Performance Card -->
             <div class="card">
                 <div class="card-content">
                     <div class="card-title">COMPRESSOR PERFORMANCE</div>
@@ -293,6 +341,7 @@
                                 <div class="donut-hole">
                                     <div class="donut-center-value">76.5%</div>
                                     <div class="donut-center-label">FTD Completed</div>
+                                    <div class="donut-center-mtd">76.5% MTD</div>
                                 </div>
                             </div>
                             <div class="graph-label ftd-label">FTD (13/17)</div>
@@ -305,7 +354,7 @@
                                     <div class="bar-label">Achieved</div>
                                 </div>
                                 <div>
-                                    <div class="bar gap-bar" style="height: 45px;"><div class="bar-value">120</div></div>
+                                    <div class="bar gap-bar" style="height: 45px;"><div class="bar-value">-120</div></div>
                                     <div class="bar-label">Gap</div>
                                 </div>
                             </div>
@@ -326,13 +375,15 @@
     <script>
         // Click interactions
         document.querySelectorAll('.card')[0].addEventListener('click', function() {
-            alert('Performance Summary\n\nFTD:\n- Holes: 685\n- Gap: 315\n- Completion: 68.50%\n\nMTD:\n- Holes: 12,465\n- Gap: 2,645\n- Completion: 82.50%');
+            alert('Performance Summary\n\nDRILLING:\nFTD:\n- Holes: 685\n- Gap: -315\n- Completion: 68.50%\n\nMTD:\n- Holes: 12,465\n- Gap: -2,645\n- Completion: 82.50%\n\nCOMPRESSOR:\nFTD:\n- Units: 13\n- Gap: -4\n- Completion: 76.47%\n\nMTD:\n- Units: 390\n- Gap: -120\n- Completion: 76.47%');
         });
+
         document.querySelectorAll('.card')[1].addEventListener('click', function() {
-            alert('Drilling Performance\n\nFTD: 68.5% completed (685/1,000 units)\nMTD: 82.5% completed (12,465/15,110 units)');
+            alert('Drilling Performance\n\nFTD: 68.5% completed (685/1,000 units)\nMTD: 82.5% completed (12,465/15,110 units)\n\nGap:\n- FTD: -315 units\n- MTD: -2,645 units');
         });
+
         document.querySelectorAll('.card')[2].addEventListener('click', function() {
-            alert('Compressor Performance\n\nFTD: 76.47% completed (13/17 units)\nMTD: 76.47% completed (390/510 units)\nGap FTD: 4 | Gap MTD: 120');
+            alert('Compressor Performance\n\nFTD: 76.47% completed (13/17 units)\nMTD: 76.47% completed (390/510 units)\n\nGap:\n- FTD: -4 units\n- MTD: -120 units');
         });
     </script>
 </body>
