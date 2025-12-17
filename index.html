@@ -83,11 +83,10 @@
             font-size: 18px;
             font-weight: 600;
             border-bottom: 1px solid #f1f5f9;
+            color: #2d3748;
         }
         .metric-table tr:last-child td { border-bottom: none; }
         .value-large { font-size: 22px; font-weight: 700; }
-        .ftd-value { color: #ea580c; }
-        .mtd-value { color: #1e40af; }
         .gap-value {
             color: #dc2626;
             font-weight: 700;
@@ -113,16 +112,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px;
-            margin-top: 15px;
+            gap: 20px;
+            margin-top: 20px;
             font-size: 18px;
             font-weight: 700;
+        }
+        .completion-label {
+            min-width: 120px;
+            text-align: right;
         }
         .completion-ftd { color: #ea580c; }
         .completion-mtd { color: #1e40af; }
         .completion-arrow {
             font-size: 30px;
             color: #64748b;
+            margin: 0 10px;
+        }
+        .completion-value {
+            min-width: 120px;
+            text-align: left;
         }
         /* Combined Graphs Card */
         .combined-graphs {
@@ -209,9 +217,9 @@
             text-align: center;
             color: #1e293b;
         }
-        .bar-label { 
-            margin-top: 8px; 
-            font-size: 14px; 
+        .bar-label {
+            margin-top: 8px;
+            font-size: 14px;
             color: #475569;
             text-align: center;
         }
@@ -248,7 +256,7 @@
         @media (max-width: 768px) {
             .dashboard-body { grid-template-columns: 1fr; }
             .combined-graphs { flex-direction: column; }
-            .completion-line { flex-direction: column; gap: 10px; }
+            .completion-line { flex-direction: column; gap: 15px; }
             .completion-arrow { transform: rotate(90deg); }
             .donut-container { width: 150px; height: 150px; }
             .donut-hole { width: 90px; height: 90px; }
@@ -274,8 +282,8 @@
                         <tbody>
                             <tr>
                                 <td><strong>Holes</strong></td>
-                                <td class="value-large ftd-value">685</td>
-                                <td class="value-large mtd-value">12,465</td>
+                                <td class="value-large">685</td>
+                                <td class="value-large">12,465</td>
                             </tr>
                             <tr>
                                 <td><strong>Gap</strong></td>
@@ -287,8 +295,8 @@
                             </tr>
                             <tr>
                                 <td><strong>COMPRESSOR</strong></td>
-                                <td class="compressor-ftd">13</td>
-                                <td class="compressor-mtd">390</td>
+                                <td>13</td>
+                                <td>390</td>
                             </tr>
                             <tr>
                                 <td><strong>Gap</strong></td>
@@ -298,14 +306,16 @@
                         </tbody>
                     </table>
                     <div class="completion-line">
-                        <span class="completion-ftd">Holes: 68.50%</span>
+                        <span class="completion-label">Holes:</span>
+                        <span class="completion-ftd">68.50%</span>
                         <span class="completion-arrow">→</span>
                         <span class="completion-mtd">82.50%</span>
                     </div>
                     <div class="completion-line">
-                        <span class="completion-ftd">Compressor: 61.70%</span>
+                        <span class="completion-label">Compressor:</span>
+                        <span class="completion-ftd">76.47%</span>
                         <span class="completion-arrow">→</span>
-                        <span class="completion-mtd">74.80%</span>
+                        <span class="completion-mtd">76.47%</span>
                     </div>
                 </div>
             </div>
@@ -379,8 +389,7 @@
         </div>
         <!-- Footer -->
         <div class="dashboard-footer">
-            Data Source: Quarry Operations System | Drilling - Daily Target: 1,000 units | Monthly Target: 15,110 units |
-            Compressor - Daily Target: 17 units | Monthly Target: 510 units
+            Quarry Performance Dashboard
         </div>
     </div>
     <script>
