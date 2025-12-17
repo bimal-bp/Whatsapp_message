@@ -19,7 +19,7 @@
         }
 
         .dashboard-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: #ffffff;
             border-radius: 12px;
@@ -47,17 +47,19 @@
 
         .dashboard-body {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 30px;
             padding: 40px;
         }
 
-        /* Left Side - Performance Metrics */
+        /* Performance Metrics Card */
         .metrics-card {
             background: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .card-title {
@@ -69,33 +71,31 @@
         }
 
         .metrics-list {
-            padding: 20px 24px;
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
         }
 
         .metric-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 0;
             transition: background 0.2s;
-        }
-
-        .metric-item:last-child {
-            border-bottom: none;
+            cursor: pointer;
         }
 
         .metric-item:hover {
             background: #f8fafc;
             border-radius: 8px;
             margin: 0 -12px;
-            padding: 20px 12px;
+            padding: 16px 12px;
         }
 
         .metric-label {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 500;
             color: #1e293b;
+            margin-bottom: 8px;
         }
 
         .ftd-label {
@@ -107,7 +107,7 @@
         }
 
         .metric-value {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 700;
             color: #0f172a;
         }
@@ -115,15 +115,12 @@
         .metric-percent {
             font-size: 18px;
             font-weight: 600;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 999px;
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .metric-percent.ftd {
             background: #fed7aa;
             color: #c2410c;
+            display: inline-block;
+            margin-top: 8px;
         }
 
         .metric-percent.mtd {
@@ -131,7 +128,7 @@
             color: #1d4ed8;
         }
 
-        /* Right Side - Graphs */
+        /* Graph Cards */
         .graph-card {
             background: #ffffff;
             border-radius: 10px;
@@ -139,6 +136,13 @@
             padding: 24px;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .graph-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
         }
 
         .graph-title {
@@ -146,6 +150,7 @@
             font-weight: 600;
             margin-bottom: 20px;
             color: #1e293b;
+            text-align: center;
         }
 
         .graph-content {
@@ -171,6 +176,11 @@
                 #fef3c7 68.5% 100%
             );
             box-shadow: 0 8px 20px rgba(234, 88, 12, 0.2);
+            transition: transform 0.4s ease;
+        }
+
+        .graph-card:hover .donut-chart {
+            transform: rotate(15deg);
         }
 
         .donut-hole {
@@ -208,7 +218,7 @@
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            gap: 80px;
+            gap: 60px;
         }
 
         .bar-group {
@@ -216,14 +226,14 @@
         }
 
         .bar {
-            width: 100px;
+            width: 90px;
             border-radius: 8px 8px 0 0;
             position: relative;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
 
-        .bar:hover {
-            transform: translateY(-8px);
+        .graph-card:hover .bar {
+            transform: scaleY(1.1);
         }
 
         .mtd-bar {
@@ -240,7 +250,7 @@
 
         .bar-value {
             position: absolute;
-            top: -30px;
+            top: -34px;
             left: 0;
             right: 0;
             font-size: 20px;
@@ -265,14 +275,20 @@
         }
 
         /* Responsiveness */
-        @media (max-width: 992px) {
+        @media (max-width: 1100px) {
             .dashboard-body {
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
 
-            .bar-container {
-                gap: 50px;
+            .donut-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .donut-hole {
+                width: 120px;
+                height: 120px;
             }
         }
     </style>
@@ -285,45 +301,37 @@
             <p>Updated: Today, 10:30 AM | Period: October 2023</p>
         </div>
 
-        <!-- Main Content -->
+        <!-- Main Content: 1 Row with 3 Columns -->
         <div class="dashboard-body">
-            <!-- Left: Performance Metrics -->
+            <!-- Column 1: Performance Metrics -->
             <div class="metrics-card">
                 <div class="card-title">PERFORMANCE METRICS</div>
                 <div class="metrics-list">
                     <div class="metric-item">
                         <div class="metric-label ftd-label">FTD Achievement</div>
-                        <div>
-                            <div class="metric-value">685</div>
-                            <div class="metric-percent ftd">68.50%</div>
-                        </div>
+                        <div class="metric-value">685</div>
+                        <div class="metric-percent">68.50%</div>
                     </div>
                     <div class="metric-item">
                         <div class="metric-label ftd-label">Gap to Target</div>
-                        <div>
-                            <div class="metric-value">315</div>
-                            <div class="metric-percent ftd">31.50%</div>
-                        </div>
+                        <div class="metric-value">315</div>
+                        <div class="metric-percent">31.50%</div>
                     </div>
                     <div class="metric-item">
                         <div class="metric-label mtd-label">MTD Achievement</div>
-                        <div>
-                            <div class="metric-value">12,465</div>
-                            <div class="metric-percent mtd">82.50%</div>
-                        </div>
+                        <div class="metric-value">12,465</div>
+                        <div class="metric-percent mtd">82.50%</div>
                     </div>
                     <div class="metric-item">
                         <div class="metric-label mtd-label">Gap to Target</div>
-                        <div>
-                            <div class="metric-value">2,645</div>
-                            <div class="metric-percent mtd">17.50%</div>
-                        </div>
+                        <div class="metric-value">2,645</div>
+                        <div class="metric-percent mtd">17.50%</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Column 1: FTD Donut Chart -->
-            <div class="graph-card">
+            <!-- Column 2: FTD Donut Chart -->
+            <div class="graph-card" id="ftd-graph">
                 <div class="graph-title">RIGHT SIDE – GRAPH 1 (FTD)</div>
                 <div class="graph-content">
                     <div class="donut-container">
@@ -336,8 +344,8 @@
                 </div>
             </div>
 
-            <!-- Right Column 2: MTD Bar Chart -->
-            <div class="graph-card">
+            <!-- Column 3: MTD Bar Chart -->
+            <div class="graph-card" id="mtd-graph">
                 <div class="graph-title">RIGHT SIDE – GRAPH 2 (MTD)</div>
                 <div class="graph-content">
                     <div class="bar-container">
@@ -365,24 +373,24 @@
     </div>
 
     <script>
-        // Interactive alerts on click
-        document.querySelector('.donut-chart').addEventListener('click', function() {
-            alert('FTD Performance Details\n\nAchieved: 685 units (68.50%)\nRemaining Gap: 315 units (31.50%)\nDaily Target: 1,000 units');
+        // Actionable: Click on FTD Graph
+        document.getElementById('ftd-graph').addEventListener('click', function() {
+            alert('FTD Performance Details\n\nAchieved: 685 units (68.50% of target)\nGap: 315 units (31.50% remaining)\nDaily Target: 1,000 units\n\nClicking this card provides quick insights into today\'s performance.');
         });
 
-        document.querySelectorAll('.mtd-bar, .gap-bar').forEach(bar => {
-            bar.addEventListener('click', function() {
-                alert('MTD Performance Details\n\nAchieved: 12,465 units (82.50%)\nRemaining Gap: 2,645 units (17.50%)\nMonthly Target: 15,110 units');
-            });
+        // Actionable: Click on MTD Graph
+        document.getElementById('mtd-graph').addEventListener('click', function() {
+            alert('MTD Performance Details\n\nAchieved: 12,465 units (82.50% of target)\nGap: 2,645 units (17.50% remaining)\nMonthly Target: 15,110 units\n\nClicking this card provides month-to-date overview.');
         });
 
-        // Hover effect on metrics for console logging (optional debugging)
+        // Optional: Click on individual metrics
         document.querySelectorAll('.metric-item').forEach(item => {
             item.addEventListener('click', function() {
                 const label = this.querySelector('.metric-label').textContent;
                 const value = this.querySelector('.metric-value').textContent;
                 const percent = this.querySelector('.metric-percent').textContent;
                 console.log(`${label}: ${value} (${percent})`);
+                // You can replace console.log with alert if needed
             });
         });
     </script>
