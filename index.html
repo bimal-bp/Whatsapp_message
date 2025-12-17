@@ -24,28 +24,12 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             overflow: hidden;
         }
-        .dashboard-header {
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
-            padding: 24px;
-            text-align: center;
-        }
-        .dashboard-header h1 {
-            font-size: 26px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-        .dashboard-header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
         .dashboard-body {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
             padding: 30px;
         }
-        /* Card Styling */
         .card {
             background: #ffffff;
             border-radius: 10px;
@@ -55,7 +39,7 @@
             flex-direction: column;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 340px;
+            height: 380px;
         }
         .card:hover {
             transform: translateY(-6px);
@@ -67,13 +51,7 @@
             display: flex;
             flex-direction: column;
         }
-        /* Data Table Card (First Column) */
-        .data-table {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        .data-title {
+        .card-title {
             font-size: 18px;
             font-weight: 700;
             color: #1e293b;
@@ -82,12 +60,8 @@
             padding-bottom: 12px;
             border-bottom: 2px solid #e2e8f0;
         }
-        .table-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+
+        /* Performance Summary Table */
         .metric-table {
             width: 100%;
             border-collapse: collapse;
@@ -100,12 +74,8 @@
             font-size: 16px;
             border-bottom: 1px solid #e2e8f0;
         }
-        .metric-table th.ftd {
-            color: #ea580c;
-        }
-        .metric-table th.mtd {
-            color: #1e40af;
-        }
+        .metric-table th.ftd { color: #ea580c; }
+        .metric-table th.mtd { color: #1e40af; }
         .metric-table td {
             text-align: center;
             padding: 16px 8px;
@@ -113,19 +83,10 @@
             font-weight: 600;
             border-bottom: 1px solid #f1f5f9;
         }
-        .metric-table tr:last-child td {
-            border-bottom: none;
-        }
-        .value-large {
-            font-size: 22px;
-            font-weight: 700;
-        }
-        .ftd-value {
-            color: #ea580c;
-        }
-        .mtd-value {
-            color: #1e40af;
-        }
+        .metric-table tr:last-child td { border-bottom: none; }
+        .value-large { font-size: 22px; font-weight: 700; }
+        .ftd-value { color: #ea580c; }
+        .mtd-value { color: #1e40af; }
         .percentage-cell {
             font-size: 16px;
             font-weight: 600;
@@ -133,42 +94,42 @@
             border-radius: 999px;
             display: inline-block;
         }
-        .percentage-ftd {
-            background: #fed7aa;
-            color: #c2410c;
+        .percentage-ftd { background: #fed7aa; color: #c2410c; }
+        .percentage-mtd { background: #dbeafe; color: #1d4ed8; }
+
+        /* Combined Graphs Card */
+        .combined-graphs {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .percentage-mtd {
-            background: #dbeafe;
-            color: #1d4ed8;
+        .graph-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        /* FTD Donut Chart */
+
+        /* FTD Donut */
         .donut-container {
             position: relative;
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 15px;
+            width: 140px;
+            height: 140px;
         }
         .donut-chart {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: conic-gradient(
-                #ea580c 0% 68.5%,
-                #fef3c7 68.5% 100%
-            );
+            background: conic-gradient(#ea580c 0% 68.5%, #fef3c7 68.5% 100%);
             box-shadow: 0 6px 16px rgba(234, 88, 12, 0.2);
-            transition: transform 0.4s ease;
         }
-        .card:hover .donut-chart {
-            transform: rotate(15deg);
-        }
+        .card:hover .donut-chart { transform: rotate(15deg); transition: transform 0.4s ease; }
         .donut-hole {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
+            width: 90px; height: 90px;
             background: white;
             border-radius: 50%;
             display: flex;
@@ -177,84 +138,55 @@
             justify-content: center;
             box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
         }
-        .donut-center-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #ea580c;
-        }
-        .donut-center-label {
-            font-size: 14px;
-            color: #64748b;
-            margin-top: 4px;
-        }
-        .graph-label {
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            color: #ea580c;
-            margin-top: 15px;
-        }
-        /* MTD Bar Chart */
+        .donut-center-value { font-size: 24px; font-weight: 700; color: #ea580c; }
+        .donut-center-label { font-size: 13px; color: #64748b; }
+
+        /* MTD Bar */
         .bar-container {
-            width: 100%;
-            height: 140px;
             display: flex;
             align-items: flex-end;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 15px;
+            gap: 30px;
+            height: 120px;
         }
         .bar {
-            width: 60px;
+            width: 50px;
             border-radius: 6px 6px 0 0;
             position: relative;
-            transition: transform 0.4s ease;
         }
-        .card:hover .bar {
-            transform: scaleY(1.1);
-        }
-        .mtd-bar {
-            height: 120px;
-            background: linear-gradient(to top, #1e40af, #60a5fa);
-            box-shadow: 0 6px 16px rgba(30, 64, 175, 0.3);
-        }
-        .gap-bar {
-            height: 40px;
-            background: linear-gradient(to top, #6b7280, #9ca3af);
-            box-shadow: 0 6px 16px rgba(107, 114, 128, 0.3);
-        }
+        .card:hover .bar { transform: scaleY(1.1); transition: transform 0.4s ease; }
+        .mtd-bar { height: 110px; background: linear-gradient(to top, #1e40af, #60a5fa); }
+        .gap-bar { height: 40px; background: linear-gradient(to top, #6b7280, #9ca3af); }
         .bar-value {
             position: absolute;
-            top: -30px;
-            left: 0;
-            right: 0;
-            font-size: 16px;
+            top: -26px;
+            left: 0; right: 0;
+            font-size: 15px;
             font-weight: 700;
-            color: #1e293b;
             text-align: center;
         }
-        .bar-label {
-            margin-top: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            color: #475569;
-            text-align: center;
-        }
-        .mtd-graph-label {
-            text-align: center;
-            font-size: 16px;
+        .bar-label { margin-top: 8px; font-size: 14px; color: #475569; }
+
+        .graph-label {
+            margin-top: 12px;
+            font-size: 15px;
             font-weight: 600;
-            color: #1e40af;
-            margin-top: 15px;
         }
-        /* Graph Cards Content */
-        .graph-card-content {
+        .ftd-label { color: #ea580c; }
+        .mtd-label { color: #1e40af; }
+
+        /* Compressor Placeholder Card */
+        .placeholder-card {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            height: 100%;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 16px;
         }
+        .placeholder-text {
+            text-align: center;
+        }
+
         /* Footer */
         .dashboard-footer {
             background: #1e293b;
@@ -263,149 +195,120 @@
             padding: 14px;
             font-size: 12px;
         }
+
         /* Responsiveness */
         @media (max-width: 1100px) {
-            .dashboard-body {
-                grid-template-columns: 1fr 1fr;
-                gap: 16px;
-            }
-            .card:first-child {
-                grid-column: 1 / span 2;
-                height: auto;
-            }
-            .card {
-                height: 320px;
-            }
+            .dashboard-body { grid-template-columns: 1fr 1fr; }
+            .card:first-child { grid-column: 1 / span 2; }
         }
         @media (max-width: 768px) {
-            .dashboard-body {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .card:first-child {
-                grid-column: auto;
-            }
-            .donut-container {
-                width: 140px;
-                height: 140px;
-            }
-            .donut-hole {
-                width: 90px;
-                height: 90px;
-            }
-            .bar-container {
-                gap: 30px;
-            }
+            .dashboard-body { grid-template-columns: 1fr; }
+            .combined-graphs { flex-direction: column; }
         }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Header -->
-        <div class="dashboard-header">
-            <h1>QUARRY PERFORMANCE DASHBOARD</h1>
-            <p>Updated: Today, 10:30 AM | Period: October 2023</p>
-        </div>
-        
-        <!-- Main Content: 3 cards in a single row -->
+        <!-- Main Content -->
         <div class="dashboard-body">
-            <!-- Data Table Card -->
-            <div class="card" id="data-table">
+            <!-- Performance Summary Table -->
+            <div class="card">
                 <div class="card-content">
-                    <div class="data-table">
-                        <div class="data-title">PERFORMANCE SUMMARY</div>
-                        <div class="table-container">
-                            <table class="metric-table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th class="ftd">FTD</th>
-                                        <th class="mtd">MTD</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Holes</strong></td>
-                                        <td class="value-large ftd-value">685</td>
-                                        <td class="value-large mtd-value">12,465</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Gap</strong></td>
-                                        <td class="ftd-value">315</td>
-                                        <td class="mtd-value">2,645</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Completion</strong></td>
-                                        <td>
-                                            <span class="percentage-cell percentage-ftd">68.50%</span>
-                                        </td>
-                                        <td>
-                                            <span class="percentage-cell percentage-mtd">82.50%</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="card-title">PERFORMANCE SUMMARY</div>
+                    <table class="metric-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="ftd">FTD</th>
+                                <th class="mtd">MTD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Holes</strong></td>
+                                <td class="value-large ftd-value">685</td>
+                                <td class="value-large mtd-value">12,465</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gap</strong></td>
+                                <td class="ftd-value">315</td>
+                                <td class="mtd-value">2,645</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Completion</strong></td>
+                                <td><span class="percentage-cell percentage-ftd">68.50%</span></td>
+                                <td><span class="percentage-cell percentage-mtd">82.50%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Combined FTD + MTD Graphs -->
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-title">DRILLING PERFORMANCE VISUALIZATION</div>
+                    <div class="combined-graphs">
+                        <!-- FTD Donut -->
+                        <div class="graph-section">
+                            <div class="donut-container">
+                                <div class="donut-chart"></div>
+                                <div class="donut-hole">
+                                    <div class="donut-center-value">68.5%</div>
+                                    <div class="donut-center-label">FTD Completed</div>
+                                </div>
+                            </div>
+                            <div class="graph-label ftd-label">FTD Performance</div>
+                        </div>
+
+                        <!-- MTD Bar -->
+                        <div class="graph-section">
+                            <div class="bar-container">
+                                <div>
+                                    <div class="bar mtd-bar"><div class="bar-value">12,465</div></div>
+                                    <div class="bar-label">Achieved</div>
+                                </div>
+                                <div>
+                                    <div class="bar gap-bar"><div class="bar-value">2,645</div></div>
+                                    <div class="bar-label">Gap</div>
+                                </div>
+                            </div>
+                            <div class="graph-label mtd-label">MTD Performance</div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- FTD Performance Chart -->
-            <div class="card" id="ftd-graph">
-                <div class="card-content graph-card-content">
-                    <div class="donut-container">
-                        <div class="donut-chart"></div>
-                        <div class="donut-hole">
-                            <div class="donut-center-value">68.5%</div>
-                            <div class="donut-center-label">FTD Completed</div>
-                        </div>
+
+            <!-- Compressor Placeholder (MTD focus) -->
+            <div class="card placeholder-card">
+                <div class="card-content">
+                    <div class="card-title">COMPRESSOR PERFORMANCE (MTD)</div>
+                    <div class="placeholder-text">
+                        <p>Compressor data<br>coming soon...</p>
+                        <p style="font-size:14px; margin-top:20px;">(MTD Target & Achievement<br>graph will be added here)</p>
                     </div>
-                    <div class="graph-label">FTD Performance</div>
-                </div>
-            </div>
-            
-            <!-- MTD Performance Chart -->
-            <div class="card" id="mtd-graph">
-                <div class="card-content graph-card-content">
-                    <div class="bar-container">
-                        <div class="bar-group">
-                            <div class="bar mtd-bar">
-                                <div class="bar-value">12,465</div>
-                            </div>
-                            <div class="bar-label">Achieved</div>
-                        </div>
-                        <div class="bar-group">
-                            <div class="bar gap-bar">
-                                <div class="bar-value">2,645</div>
-                            </div>
-                            <div class="bar-label">Gap</div>
-                        </div>
-                    </div>
-                    <div class="mtd-graph-label">MTD Performance</div>
                 </div>
             </div>
         </div>
-        
+
         <!-- Footer -->
         <div class="dashboard-footer">
             Data Source: Quarry Operations System | Daily Target: 1,000 units | Monthly Target: 15,110 units
         </div>
     </div>
-    
+
     <script>
-        // Actionable: Click on Data Table Card
-        document.getElementById('data-table').addEventListener('click', function() {
+        // Click interactions (kept for interactivity)
+        document.querySelectorAll('.card')[0].addEventListener('click', function() {
             alert('Performance Summary\n\nFTD:\n- Holes: 685\n- Gap: 315\n- Completion: 68.50%\n\nMTD:\n- Holes: 12,465\n- Gap: 2,645\n- Completion: 82.50%');
         });
-        
-        // Actionable: Click on FTD Graph
-        document.getElementById('ftd-graph').addEventListener('click', function() {
-            alert('FTD Performance Visualization\n\nVisual representation of today\'s achievement.\nOrange segment: 68.5% completed\nBeige segment: 31.5% remaining\n\nFTD Target: 1,000 units\nAchieved: 685 units\nGap: 315 units');
+
+        document.querySelectorAll('.card')[1].addEventListener('click', function() {
+            alert('Drilling Performance\n\nFTD: 68.5% completed (685/1,000 units)\nMTD: 82.5% completed (12,465/15,110 units)');
         });
-        
-        // Actionable: Click on MTD Graph
-        document.getElementById('mtd-graph').addEventListener('click', function() {
-            alert('MTD Performance Visualization\n\nBlue bar: 12,465 units achieved (82.5%)\nGray bar: 2,645 units gap (17.5%)\nMonthly target: 15,110 units\n\nMTD Completion: 82.50%');
+
+        document.querySelectorAll('.card')[2].addEventListener('click', function() {
+            alert('Compressor Performance section is under development.\nMTD data and visualization will be added soon.');
         });
     </script>
 </body>
