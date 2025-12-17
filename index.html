@@ -17,7 +17,7 @@
             color: #2d3748;
         }
         .dashboard-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: #ffffff;
             border-radius: 12px;
@@ -41,19 +41,24 @@
         }
         .dashboard-body {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             padding: 30px;
         }
-        /* Performance Metrics Card (now spans both columns) */
-        .metrics-card {
-            grid-column: span 2;
+        /* Card Styling */
+        .card {
             background: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
         .card-title {
             background: #1e293b;
@@ -61,28 +66,27 @@
             padding: 14px 20px;
             font-size: 17px;
             font-weight: 600;
+            text-align: center;
         }
-        .metrics-list {
+        .card-content {
             padding: 20px;
             flex: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+        /* Metrics Cards Styling */
         .metric-item {
-            padding: 14px;
+            padding: 10px;
             transition: background 0.2s;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        .metric-item:hover {
-            background: #f8fafc;
+            width: 100%;
+            text-align: center;
         }
         .metric-label {
             font-size: 16px;
             font-weight: 500;
-            color: #1e293b;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
         }
         .ftd-label {
             color: #ea580c;
@@ -94,6 +98,7 @@
             font-size: 32px;
             font-weight: 700;
             color: #0f172a;
+            margin-bottom: 10px;
         }
         .metric-percent {
             font-size: 16px;
@@ -103,45 +108,17 @@
             background: #fed7aa;
             color: #c2410c;
             display: inline-block;
-            margin-top: 6px;
         }
         .metric-percent.mtd {
             background: #dbeafe;
             color: #1d4ed8;
         }
-        /* Smaller Graph Cards */
-        .graph-card {
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .graph-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-        }
-        .graph-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 14px;
-            color: #1e293b;
-            text-align: center;
-        }
-        .graph-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        /* Smaller Donut Chart (FTD) */
+        /* FTD Donut Chart */
         .donut-container {
             position: relative;
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 15px;
         }
         .donut-chart {
             width: 100%;
@@ -154,7 +131,7 @@
             box-shadow: 0 6px 16px rgba(234, 88, 12, 0.2);
             transition: transform 0.4s ease;
         }
-        .graph-card:hover .donut-chart {
+        .card:hover .donut-chart {
             transform: rotate(15deg);
         }
         .donut-hole {
@@ -162,8 +139,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             background: white;
             border-radius: 50%;
             display: flex;
@@ -173,7 +150,7 @@
             box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
         }
         .donut-center-value {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: #ea580c;
         }
@@ -182,31 +159,32 @@
             color: #64748b;
             margin-top: 4px;
         }
-        /* Smaller Bar Chart (MTD) */
+        /* MTD Bar Chart */
         .bar-container {
             width: 100%;
-            height: 140px;
+            height: 120px;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            gap: 30px;
+            gap: 25px;
+            margin-bottom: 15px;
         }
         .bar {
-            width: 60px;
+            width: 50px;
             border-radius: 6px 6px 0 0;
             position: relative;
             transition: transform 0.4s ease;
         }
-        .graph-card:hover .bar {
+        .card:hover .bar {
             transform: scaleY(1.1);
         }
         .mtd-bar {
-            height: 110px;
+            height: 100px;
             background: linear-gradient(to top, #1e40af, #60a5fa);
             box-shadow: 0 6px 16px rgba(30, 64, 175, 0.3);
         }
         .gap-bar {
-            height: 40px;
+            height: 35px;
             background: linear-gradient(to top, #6b7280, #9ca3af);
             box-shadow: 0 6px 16px rgba(107, 114, 128, 0.3);
         }
@@ -215,15 +193,17 @@
             top: -28px;
             left: 0;
             right: 0;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: #1e293b;
+            text-align: center;
         }
         .bar-label {
             margin-top: 10px;
             font-size: 14px;
             font-weight: 500;
             color: #475569;
+            text-align: center;
         }
         /* Footer */
         .dashboard-footer {
@@ -234,24 +214,24 @@
             font-size: 12px;
         }
         /* Responsiveness */
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
+            .dashboard-body {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+        }
+        @media (max-width: 600px) {
             .dashboard-body {
                 grid-template-columns: 1fr;
                 gap: 16px;
             }
-            .metrics-card {
-                grid-column: span 1;
-            }
-            .metrics-list {
-                grid-template-columns: 1fr;
-            }
             .donut-container {
-                width: 140px;
-                height: 140px;
+                width: 120px;
+                height: 120px;
             }
             .donut-hole {
-                width: 80px;
-                height: 80px;
+                width: 70px;
+                height: 70px;
             }
         }
     </style>
@@ -263,38 +243,25 @@
             <h1>QUARRY PERFORMANCE DASHBOARD</h1>
             <p>Updated: Today, 10:30 AM | Period: October 2023</p>
         </div>
-        <!-- Main Content: Metrics span 2 columns, Graphs in 1 row 2 columns -->
+        
+        <!-- Main Content: 4 cards in a single row -->
         <div class="dashboard-body">
-            <!-- Performance Metrics (full width) -->
-            <div class="metrics-card">
-                <div class="card-title">PERFORMANCE METRICS</div>
-                <div class="metrics-list">
+            <!-- FTD Achievement Card -->
+            <div class="card" id="ftd-achievement">
+                <div class="card-title">FTD ACHIEVEMENT</div>
+                <div class="card-content">
                     <div class="metric-item">
-                        <div class="metric-label ftd-label">FTD Achievement</div>
+                        <div class="metric-label ftd-label">Today's Achievement</div>
                         <div class="metric-value">685</div>
                         <div class="metric-percent">68.50%</div>
                     </div>
-                    <div class="metric-item">
-                        <div class="metric-label ftd-label">Gap to Target</div>
-                        <div class="metric-value">315</div>
-                        <div class="metric-percent">31.50%</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label mtd-label">MTD Achievement</div>
-                        <div class="metric-value">12,465</div>
-                        <div class="metric-percent mtd">82.50%</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label mtd-label">Gap to Target</div>
-                        <div class="metric-value">2,645</div>
-                        <div class="metric-percent mtd">17.50%</div>
-                    </div>
                 </div>
             </div>
-            <!-- FTD Donut Chart (smaller) -->
-            <div class="graph-card" id="ftd-graph">
-                <div class="graph-title">FTD PERFORMANCE</div>
-                <div class="graph-content">
+            
+            <!-- FTD Performance Chart -->
+            <div class="card" id="ftd-graph">
+                <div class="card-title">FTD PERFORMANCE</div>
+                <div class="card-content">
                     <div class="donut-container">
                         <div class="donut-chart"></div>
                         <div class="donut-hole">
@@ -302,18 +269,32 @@
                             <div class="donut-center-label">FTD Completed</div>
                         </div>
                     </div>
+                    <div class="metric-label ftd-label">Gap to Target: 315</div>
                 </div>
             </div>
-            <!-- MTD Bar Chart (smaller) -->
-            <div class="graph-card" id="mtd-graph">
-                <div class="graph-title">MTD PERFORMANCE</div>
-                <div class="graph-content">
+            
+            <!-- MTD Achievement Card -->
+            <div class="card" id="mtd-achievement">
+                <div class="card-title">MTD ACHIEVEMENT</div>
+                <div class="card-content">
+                    <div class="metric-item">
+                        <div class="metric-label mtd-label">Month-to-Date</div>
+                        <div class="metric-value">12,465</div>
+                        <div class="metric-percent mtd">82.50%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MTD Performance Chart -->
+            <div class="card" id="mtd-graph">
+                <div class="card-title">MTD PERFORMANCE</div>
+                <div class="card-content">
                     <div class="bar-container">
                         <div class="bar-group">
                             <div class="bar mtd-bar">
                                 <div class="bar-value">12,465</div>
                             </div>
-                            <div class="bar-label">MTD Achieved</div>
+                            <div class="bar-label">Achieved</div>
                         </div>
                         <div class="bar-group">
                             <div class="bar gap-bar">
@@ -322,31 +303,36 @@
                             <div class="bar-label">Gap</div>
                         </div>
                     </div>
+                    <div class="metric-label mtd-label">Gap to Target: 2,645</div>
                 </div>
             </div>
         </div>
+        
         <!-- Footer -->
         <div class="dashboard-footer">
             Data Source: Quarry Operations System | Daily Target: 1,000 units | Monthly Target: 15,110 units
         </div>
     </div>
+    
     <script>
+        // Actionable: Click on FTD Achievement Card
+        document.getElementById('ftd-achievement').addEventListener('click', function() {
+            alert('FTD Achievement Details\n\nAchieved: 685 units\nTarget: 1,000 units\nCompletion: 68.50%\nGap: 315 units\n\nDaily performance for today.');
+        });
+        
         // Actionable: Click on FTD Graph
         document.getElementById('ftd-graph').addEventListener('click', function() {
-            alert('FTD Performance Details\n\nAchieved: 685 units (68.50% of target)\nGap: 315 units (31.50% remaining)\nDaily Target: 1,000 units\n\nClicking this card provides quick insights into today\'s performance.');
+            alert('FTD Performance Visualization\n\nVisual representation of today\'s achievement.\nOrange segment: 68.5% completed\nBeige segment: 31.5% remaining');
         });
+        
+        // Actionable: Click on MTD Achievement Card
+        document.getElementById('mtd-achievement').addEventListener('click', function() {
+            alert('MTD Achievement Details\n\nAchieved: 12,465 units\nMonthly Target: 15,110 units\nCompletion: 82.50%\nGap: 2,645 units\n\nCumulative performance this month.');
+        });
+        
         // Actionable: Click on MTD Graph
         document.getElementById('mtd-graph').addEventListener('click', function() {
-            alert('MTD Performance Details\n\nAchieved: 12,465 units (82.50% of target)\nGap: 2,645 units (17.50% remaining)\nMonthly Target: 15,110 units\n\nClicking this card provides month-to-date overview.');
-        });
-        // Optional: Click on individual metrics
-        document.querySelectorAll('.metric-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const label = this.querySelector('.metric-label').textContent;
-                const value = this.querySelector('.metric-value').textContent;
-                const percent = this.querySelector('.metric-percent').textContent;
-                alert(`${label}\n${value} (${percent})`);
-            });
+            alert('MTD Performance Visualization\n\nBlue bar: 12,465 units achieved (82.5%)\nGray bar: 2,645 units gap (17.5%)\nMonthly target: 15,110 units');
         });
     </script>
 </body>
