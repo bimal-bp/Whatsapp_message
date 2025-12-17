@@ -10,50 +10,44 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
             background: #f4f6f9;
-            padding: 30px;
+            padding: 20px;
             color: #2d3748;
         }
-
         .dashboard-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             overflow: hidden;
         }
-
         .dashboard-header {
             background: linear-gradient(135deg, #1e40af, #3b82f6);
             color: white;
-            padding: 30px;
+            padding: 24px;
             text-align: center;
         }
-
         .dashboard-header h1 {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
-
         .dashboard-header p {
-            font-size: 15px;
+            font-size: 14px;
             opacity: 0.9;
         }
-
         .dashboard-body {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 30px;
-            padding: 40px;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
         }
-
-        /* Performance Metrics Card */
+        /* Performance Metrics Card (now spans both columns) */
         .metrics-card {
+            grid-column: span 2;
             background: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -61,112 +55,94 @@
             display: flex;
             flex-direction: column;
         }
-
         .card-title {
             background: #1e293b;
             color: white;
-            padding: 16px 24px;
-            font-size: 18px;
+            padding: 14px 20px;
+            font-size: 17px;
             font-weight: 600;
         }
-
         .metrics-list {
-            padding: 24px;
+            padding: 20px;
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
-
         .metric-item {
-            padding: 16px 0;
+            padding: 14px;
             transition: background 0.2s;
             cursor: pointer;
+            border-radius: 8px;
         }
-
         .metric-item:hover {
             background: #f8fafc;
-            border-radius: 8px;
-            margin: 0 -12px;
-            padding: 16px 12px;
         }
-
         .metric-label {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 500;
             color: #1e293b;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
-
         .ftd-label {
             color: #ea580c;
         }
-
         .mtd-label {
             color: #1e40af;
         }
-
         .metric-value {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 700;
             color: #0f172a;
         }
-
         .metric-percent {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 999px;
             background: #fed7aa;
             color: #c2410c;
             display: inline-block;
-            margin-top: 8px;
+            margin-top: 6px;
         }
-
         .metric-percent.mtd {
             background: #dbeafe;
             color: #1d4ed8;
         }
-
-        /* Graph Cards */
+        /* Smaller Graph Cards */
         .graph-card {
             background: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            padding: 24px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .graph-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
-
         .graph-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
             color: #1e293b;
             text-align: center;
         }
-
         .graph-content {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-        /* Donut Chart (FTD) */
+        /* Smaller Donut Chart (FTD) */
         .donut-container {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 160px;
+            height: 160px;
         }
-
         .donut-chart {
             width: 100%;
             height: 100%;
@@ -175,21 +151,19 @@
                 #ea580c 0% 68.5%,
                 #fef3c7 68.5% 100%
             );
-            box-shadow: 0 8px 20px rgba(234, 88, 12, 0.2);
+            box-shadow: 0 6px 16px rgba(234, 88, 12, 0.2);
             transition: transform 0.4s ease;
         }
-
         .graph-card:hover .donut-chart {
             transform: rotate(15deg);
         }
-
         .donut-hole {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 130px;
-            height: 130px;
+            width: 90px;
+            height: 90px;
             background: white;
             border-radius: 50%;
             display: flex;
@@ -198,97 +172,86 @@
             justify-content: center;
             box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
         }
-
         .donut-center-value {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 700;
             color: #ea580c;
         }
-
         .donut-center-label {
-            font-size: 14px;
+            font-size: 12px;
             color: #64748b;
             margin-top: 4px;
         }
-
-        /* Bar Chart (MTD) */
+        /* Smaller Bar Chart (MTD) */
         .bar-container {
             width: 100%;
-            height: 200px;
+            height: 140px;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            gap: 60px;
+            gap: 30px;
         }
-
-        .bar-group {
-            text-align: center;
-        }
-
         .bar {
-            width: 90px;
-            border-radius: 8px 8px 0 0;
+            width: 60px;
+            border-radius: 6px 6px 0 0;
             position: relative;
             transition: transform 0.4s ease;
         }
-
         .graph-card:hover .bar {
             transform: scaleY(1.1);
         }
-
         .mtd-bar {
-            height: 160px;
+            height: 110px;
             background: linear-gradient(to top, #1e40af, #60a5fa);
-            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+            box-shadow: 0 6px 16px rgba(30, 64, 175, 0.3);
         }
-
         .gap-bar {
-            height: 50px;
+            height: 40px;
             background: linear-gradient(to top, #6b7280, #9ca3af);
-            box-shadow: 0 8px 20px rgba(107, 114, 128, 0.3);
+            box-shadow: 0 6px 16px rgba(107, 114, 128, 0.3);
         }
-
         .bar-value {
             position: absolute;
-            top: -34px;
+            top: -28px;
             left: 0;
             right: 0;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 700;
             color: #1e293b;
         }
-
         .bar-label {
-            margin-top: 12px;
-            font-size: 16px;
+            margin-top: 10px;
+            font-size: 14px;
             font-weight: 500;
             color: #475569;
         }
-
         /* Footer */
         .dashboard-footer {
             background: #1e293b;
             color: #cbd5e1;
             text-align: center;
-            padding: 16px;
-            font-size: 13px;
+            padding: 14px;
+            font-size: 12px;
         }
-
         /* Responsiveness */
-        @media (max-width: 1100px) {
+        @media (max-width: 900px) {
             .dashboard-body {
                 grid-template-columns: 1fr;
-                gap: 24px;
+                gap: 16px;
             }
-
+            .metrics-card {
+                grid-column: span 1;
+            }
+            .metrics-list {
+                grid-template-columns: 1fr;
+            }
             .donut-container {
-                width: 200px;
-                height: 200px;
+                width: 140px;
+                height: 140px;
             }
-
             .donut-hole {
-                width: 120px;
-                height: 120px;
+                width: 80px;
+                height: 80px;
             }
         }
     </style>
@@ -300,10 +263,9 @@
             <h1>QUARRY PERFORMANCE DASHBOARD</h1>
             <p>Updated: Today, 10:30 AM | Period: October 2023</p>
         </div>
-
-        <!-- Main Content: 1 Row with 3 Columns -->
+        <!-- Main Content: Metrics span 2 columns, Graphs in 1 row 2 columns -->
         <div class="dashboard-body">
-            <!-- Column 1: Performance Metrics -->
+            <!-- Performance Metrics (full width) -->
             <div class="metrics-card">
                 <div class="card-title">PERFORMANCE METRICS</div>
                 <div class="metrics-list">
@@ -329,10 +291,9 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Column 2: FTD Donut Chart -->
+            <!-- FTD Donut Chart (smaller) -->
             <div class="graph-card" id="ftd-graph">
-                <div class="graph-title">RIGHT SIDE – GRAPH 1 (FTD)</div>
+                <div class="graph-title">FTD PERFORMANCE</div>
                 <div class="graph-content">
                     <div class="donut-container">
                         <div class="donut-chart"></div>
@@ -343,10 +304,9 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Column 3: MTD Bar Chart -->
+            <!-- MTD Bar Chart (smaller) -->
             <div class="graph-card" id="mtd-graph">
-                <div class="graph-title">RIGHT SIDE – GRAPH 2 (MTD)</div>
+                <div class="graph-title">MTD PERFORMANCE</div>
                 <div class="graph-content">
                     <div class="bar-container">
                         <div class="bar-group">
@@ -365,32 +325,27 @@
                 </div>
             </div>
         </div>
-
         <!-- Footer -->
         <div class="dashboard-footer">
             Data Source: Quarry Operations System | Daily Target: 1,000 units | Monthly Target: 15,110 units
         </div>
     </div>
-
     <script>
         // Actionable: Click on FTD Graph
         document.getElementById('ftd-graph').addEventListener('click', function() {
             alert('FTD Performance Details\n\nAchieved: 685 units (68.50% of target)\nGap: 315 units (31.50% remaining)\nDaily Target: 1,000 units\n\nClicking this card provides quick insights into today\'s performance.');
         });
-
         // Actionable: Click on MTD Graph
         document.getElementById('mtd-graph').addEventListener('click', function() {
             alert('MTD Performance Details\n\nAchieved: 12,465 units (82.50% of target)\nGap: 2,645 units (17.50% remaining)\nMonthly Target: 15,110 units\n\nClicking this card provides month-to-date overview.');
         });
-
         // Optional: Click on individual metrics
         document.querySelectorAll('.metric-item').forEach(item => {
             item.addEventListener('click', function() {
                 const label = this.querySelector('.metric-label').textContent;
                 const value = this.querySelector('.metric-value').textContent;
                 const percent = this.querySelector('.metric-percent').textContent;
-                console.log(`${label}: ${value} (${percent})`);
-                // You can replace console.log with alert if needed
+                alert(`${label}\n${value} (${percent})`);
             });
         });
     </script>
