@@ -3,84 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Performance Dashboard</title>
+    <title>Quarry Performance Dashboard</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Calibri', 'Arial', sans-serif;
+            font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
         }
         
         body {
-            background: #f5f5f5;
+            background: #f8f9fa;
             padding: 20px;
         }
         
         .dashboard-container {
             display: grid;
-            grid-template-columns: 350px 1fr;
+            grid-template-columns: 300px 1fr;
             gap: 20px;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             background: white;
-            padding: 25px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            min-height: 700px;
+            padding: 20px;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            min-height: 500px;
         }
         
         .dashboard-header {
             grid-column: 1 / -1;
             text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #4472C4;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
             margin-bottom: 20px;
         }
         
         .dashboard-header h1 {
-            color: #1F4E78;
-            font-size: 28px;
+            color: #333;
+            font-size: 22px;
             margin-bottom: 5px;
+            font-weight: normal;
         }
         
         .dashboard-header p {
             color: #666;
-            font-size: 14px;
+            font-size: 12px;
         }
         
-        /* LEFT SIDE */
+        /* LEFT SIDE - TABLE */
         .left-side {
             display: flex;
             flex-direction: column;
+        }
+        
+        .metrics-table-container {
+            border: 1px solid #333;
+            border-radius: 2px;
+        }
+        
+        .table-title {
+            background: #f2f2f2;
+            padding: 8px 10px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px solid #333;
+        }
+        
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .metrics-table th,
+        .metrics-table td {
+            border: 1px solid #333;
+            padding: 8px 10px;
+        }
+        
+        .metrics-table th {
+            background: #f8f8f8;
+            font-weight: bold;
+            text-align: left;
+            color: #333;
+        }
+        
+        .metrics-table td {
+            text-align: right;
+            font-family: 'Consolas', monospace;
+        }
+        
+        .metrics-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: #333;
+            margin: 2px 0;
+        }
+        
+        .ftd-section td:first-child {
+            color: #d35400;
+        }
+        
+        .mtd-section td:first-child {
+            color: #2c3e50;
+        }
+        
+        /* RIGHT SIDE - CHARTS */
+        .right-side {
+            display: grid;
+            grid-template-rows: 200px 200px;
             gap: 20px;
         }
         
-        /* FTD Donut Chart */
-        .ftd-chart-container {
-            background: white;
-            border: 1px solid #E0E0E0;
-            border-radius: 4px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            height: 300px;
+        .graph-container {
+            border: 1px solid #333;
+            border-radius: 2px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
         
-        .chart-title {
-            text-align: center;
-            color: #404040;
-            margin-bottom: 15px;
-            font-size: 18px;
+        .graph-title {
             font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
         }
         
-        .donut-wrapper {
+        .graph-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* FTD Donut Chart */
+        .donut-chart-container {
             position: relative;
-            width: 180px;
-            height: 180px;
+            width: 150px;
+            height: 150px;
         }
         
         .donut-chart {
@@ -88,15 +156,15 @@
             height: 100%;
             border-radius: 50%;
             background: conic-gradient(
-                #ED7D31 0% 68.5%,
-                #F4B084 68.5% 100%
+                #e67e22 0% 68.5%,
+                #f39c12 68.5% 100%
             );
         }
         
         .donut-hole {
             position: absolute;
-            width: 108px;
-            height: 108px;
+            width: 90px;
+            height: 90px;
             background: white;
             border-radius: 50%;
             top: 50%;
@@ -105,260 +173,114 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid #ddd;
         }
         
         .donut-center-value {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: bold;
-            color: #ED7D31;
+            color: #e67e22;
         }
         
         .donut-center-label {
-            font-size: 12px;
+            font-size: 10px;
             color: #666;
-            margin-top: 2px;
         }
         
         .donut-label {
             position: absolute;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 3px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
-            text-align: center;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 2px;
         }
         
         .label-ftd {
             top: 25%;
-            left: 20%;
+            left: 25%;
         }
         
         .label-gap {
             top: 65%;
-            left: 70%;
+            right: 25%;
         }
         
-        /* MTD Table */
-        .mtd-table-container {
-            background: white;
-            border: 1px solid #E0E0E0;
-            border-radius: 4px;
-            padding: 15px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        
-        .table-title {
-            text-align: center;
-            color: #404040;
-            margin-bottom: 15px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        
-        .mtd-table {
+        /* MTD Bar Chart */
+        .bar-chart-container {
             width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .mtd-table th {
-            background: #DDEBF7;
-            color: #1F4E78;
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #B4C6E7;
-            font-size: 13px;
-        }
-        
-        .mtd-table td {
-            padding: 12px 10px;
-            text-align: center;
-            border: 1px solid #E0E0E0;
-            font-size: 13px;
-        }
-        
-        .metric-row {
-            background: white;
-        }
-        
-        .metric-row:hover {
-            background: #F9F9F9;
-        }
-        
-        .ftd-value {
-            color: #ED7D31;
-            font-weight: bold;
-        }
-        
-        .mtd-value {
-            color: #4472C4;
-            font-weight: bold;
-        }
-        
-        .gap-value {
-            color: #666;
-        }
-        
-        /* RIGHT SIDE */
-        .right-side {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: 300px 1fr;
-            gap: 20px;
-        }
-        
-        /* MTD Column Chart */
-        .mtd-chart-container {
-            background: white;
-            border: 1px solid #E0E0E0;
-            border-radius: 4px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            height: 120px;
             display: flex;
-            flex-direction: column;
-            height: 300px;
-        }
-        
-        .column-chart {
-            display: flex;
-            justify-content: center;
             align-items: flex-end;
-            height: 200px;
-            margin-top: 20px;
+            justify-content: center;
             gap: 60px;
+            padding: 0 20px;
         }
         
-        .column-group {
+        .bar-group {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
         
-        .column {
-            width: 70px;
-            border-radius: 3px 3px 0 0;
+        .bar {
+            width: 60px;
+            border-radius: 2px 2px 0 0;
             position: relative;
         }
         
-        .mtd-column {
-            background: #4472C4;
-            height: 160px;
+        .mtd-bar {
+            background: #2c3e50;
+            height: 100px;
         }
         
-        .gap-column {
-            background: #8FAADC;
-            height: 34px;
+        .gap-bar {
+            background: #7f8c8d;
+            height: 21px;
         }
         
-        .column-value {
+        .bar-value {
             position: absolute;
-            top: -25px;
+            top: -20px;
             left: 0;
             right: 0;
+            font-size: 11px;
             font-weight: bold;
-            color: #404040;
-            font-size: 12px;
             text-align: center;
+            color: #333;
         }
         
-        .column-label {
-            font-size: 13px;
-            color: #666;
-            font-weight: 600;
-        }
-        
-        /* PLACEHOLDERS for additional charts */
-        .chart-placeholder {
-            background: white;
-            border: 1px solid #E0E0E0;
-            border-radius: 4px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            height: 300px;
-        }
-        
-        .placeholder-title {
-            text-align: center;
-            color: #404040;
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        .placeholder-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: calc(100% - 40px);
-            color: #999;
-            font-size: 14px;
-        }
-        
-        .placeholder-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-            opacity: 0.3;
-        }
-        
-        .legend-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
+        .bar-label {
             font-size: 12px;
-            gap: 6px;
+            color: #333;
         }
         
-        .legend-color {
-            width: 14px;
-            height: 14px;
-            border-radius: 2px;
-        }
-        
-        /* Performance indicator */
-        .performance-indicator {
+        /* Footer */
+        .dashboard-footer {
             grid-column: 1 / -1;
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            padding-top: 15px;
-            border-top: 1px dashed #ddd;
-        }
-        
-        .indicator-item {
-            text-align: center;
-            padding: 0 10px;
-        }
-        
-        .indicator-value {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .indicator-label {
-            font-size: 12px;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 11px;
             color: #666;
+            text-align: center;
         }
         
         /* Responsive */
-        @media (max-width: 900px) {
+        @media (max-width: 768px) {
             .dashboard-container {
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
             
             .right-side {
-                grid-template-rows: auto;
+                grid-template-rows: auto auto;
+            }
+            
+            .bar-chart-container {
+                gap: 30px;
             }
         }
     </style>
@@ -368,195 +290,122 @@
         <!-- Header -->
         <div class="dashboard-header">
             <h1>QUARRY PERFORMANCE DASHBOARD</h1>
-            <p>Real-time Monitoring & Analytics | Updated: Today, 10:30 AM</p>
+            <p>Updated: Today, 10:30 AM | Period: October 2023</p>
         </div>
         
-        <!-- LEFT SIDE -->
+        <!-- LEFT SIDE - TABLE -->
         <div class="left-side">
-            <!-- FTD Donut Chart -->
-            <div class="ftd-chart-container">
-                <div class="chart-title">FTD (For The Day)</div>
-                <div class="donut-wrapper">
-                    <div class="donut-chart"></div>
-                    <div class="donut-hole">
-                        <div style="text-align: center;">
-                            <div class="donut-center-value">68.5%</div>
-                            <div class="donut-center-label">Completed</div>
-                        </div>
-                    </div>
-                    <div class="donut-label label-ftd">685<br>68.5%</div>
-                    <div class="donut-label label-gap">315<br>31.5%</div>
-                </div>
-                
-                <div class="legend-container">
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: #ED7D31;"></div>
-                        <span>FTD Achievement</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: #F4B084;"></div>
-                        <span>Gap</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- MTD Table -->
-            <div class="mtd-table-container">
+            <div class="metrics-table-container">
                 <div class="table-title">PERFORMANCE METRICS</div>
-                <table class="mtd-table">
+                <table class="metrics-table">
                     <thead>
                         <tr>
-                            <th>Metric</th>
-                            <th>Value</th>
-                            <th>%</th>
+                            <th style="width: 60%;">Metric</th>
+                            <th style="width: 20%;">Value</th>
+                            <th style="width: 20%;">%</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="metric-row">
+                        <tr class="ftd-section">
                             <td>FTD Achievement</td>
-                            <td class="ftd-value">685</td>
-                            <td class="ftd-value">68.5%</td>
+                            <td>685</td>
+                            <td>68.50%</td>
                         </tr>
-                        <tr class="metric-row">
-                            <td>FTD Gap</td>
-                            <td class="gap-value">315</td>
-                            <td class="gap-value">31.5%</td>
+                        <tr class="ftd-section">
+                            <td>Gap</td>
+                            <td>315</td>
+                            <td>31.50%</td>
                         </tr>
-                        <tr class="metric-row">
+                        <tr class="section-divider-row">
+                            <td colspan="3" style="padding: 0;">
+                                <div class="section-divider"></div>
+                            </td>
+                        </tr>
+                        <tr class="mtd-section">
                             <td>MTD Achievement</td>
-                            <td class="mtd-value">12,465</td>
-                            <td class="mtd-value">82.5%</td>
+                            <td>12,465</td>
+                            <td>82.50%</td>
                         </tr>
-                        <tr class="metric-row">
-                            <td>MTD Gap</td>
-                            <td class="gap-value">2,654</td>
-                            <td class="gap-value">17.5%</td>
+                        <tr class="mtd-section">
+                            <td>Gap</td>
+                            <td>2,645</td>
+                            <td>17.50%</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         
-        <!-- RIGHT SIDE -->
+        <!-- RIGHT SIDE - CHARTS -->
         <div class="right-side">
-            <!-- MTD Column Chart -->
-            <div class="mtd-chart-container">
-                <div class="chart-title">MTD (Month-to-Date)</div>
-                <div class="column-chart">
-                    <div class="column-group">
-                        <div class="column mtd-column">
-                            <div class="column-value">12,465</div>
+            <!-- FTD Donut Chart -->
+            <div class="graph-container">
+                <div class="graph-title">RIGHT SIDE – GRAPH 1 (FTD)</div>
+                <div class="graph-content">
+                    <div class="donut-chart-container">
+                        <div class="donut-chart"></div>
+                        <div class="donut-hole">
+                            <div style="text-align: center;">
+                                <div class="donut-center-value">68.5%</div>
+                                <div class="donut-center-label">FTD Completed</div>
+                            </div>
                         </div>
-                        <div class="column-label">MTD</div>
+                        <div class="donut-label label-ftd">68.5%</div>
+                        <div class="donut-label label-gap">31.5%</div>
                     </div>
-                    <div class="column-group">
-                        <div class="column gap-column">
-                            <div class="column-value">2,654</div>
+                </div>
+            </div>
+            
+            <!-- MTD Bar Chart -->
+            <div class="graph-container">
+                <div class="graph-title">RIGHT SIDE – GRAPH 2 (MTD)</div>
+                <div class="graph-content">
+                    <div class="bar-chart-container">
+                        <div class="bar-group">
+                            <div class="bar mtd-bar">
+                                <div class="bar-value">12,465</div>
+                            </div>
+                            <div class="bar-label">MTD</div>
                         </div>
-                        <div class="column-label">Gap</div>
+                        <div class="bar-group">
+                            <div class="bar gap-bar">
+                                <div class="bar-value">2,645</div>
+                            </div>
+                            <div class="bar-label">Gap</div>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="legend-container">
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: #4472C4;"></div>
-                        <span>MTD Achievement</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: #8FAADC;"></div>
-                        <span>Gap</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- PLACEHOLDERS for additional charts -->
-            <div class="chart-placeholder">
-                <div class="placeholder-title">PRODUCTIVITY TREND</div>
-                <div class="placeholder-content">
-                    <div class="placeholder-icon">📈</div>
-                    <div>Chart 3: Add your productivity metrics here</div>
-                    <div style="font-size: 12px; margin-top: 10px; color: #666;">Configure with your data</div>
-                </div>
-            </div>
-            
-            <div class="chart-placeholder">
-                <div class="placeholder-title">EQUIPMENT UTILIZATION</div>
-                <div class="placeholder-content">
-                    <div class="placeholder-icon">🚜</div>
-                    <div>Chart 4: Add equipment performance data here</div>
-                    <div style="font-size: 12px; margin-top: 10px; color: #666;">Configure with your data</div>
-                </div>
-            </div>
-            
-            <div class="chart-placeholder">
-                <div class="placeholder-title">SAFETY METRICS</div>
-                <div class="placeholder-content">
-                    <div class="placeholder-icon">🛡️</div>
-                    <div>Chart 5: Add safety performance data here</div>
-                    <div style="font-size: 12px; margin-top: 10px; color: #666;">Configure with your data</div>
                 </div>
             </div>
         </div>
         
-        <!-- Performance Indicators -->
-        <div class="performance-indicator">
-            <div class="indicator-item">
-                <div class="indicator-value" style="color: #ED7D31;">68.5%</div>
-                <div class="indicator-label">Daily Completion</div>
-            </div>
-            <div class="indicator-item">
-                <div class="indicator-value" style="color: #4472C4;">82.5%</div>
-                <div class="indicator-label">Monthly Progress</div>
-            </div>
-            <div class="indicator-item">
-                <div class="indicator-value">+14.0%</div>
-                <div class="indicator-label">MTD vs FTD</div>
-            </div>
-            <div class="indicator-item">
-                <div class="indicator-value">265</div>
-                <div class="indicator-label">Daily Avg Required</div>
-            </div>
-            <div class="indicator-item">
-                <div class="indicator-value" style="color: #70AD47;">4</div>
-                <div class="indicator-label">Remaining Days</div>
-            </div>
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <p>Data Source: Quarry Operations System | Target: 1,000 units/day | Monthly Target: 15,110 units</p>
         </div>
     </div>
 
     <script>
         // Add interactivity
-        document.querySelectorAll('.metric-row').forEach(row => {
+        document.querySelectorAll('.metrics-table tr').forEach(row => {
             row.addEventListener('click', function() {
-                const metric = this.cells[0].textContent;
-                const value = this.cells[1].textContent;
-                const percent = this.cells[2].textContent;
-                
-                // Highlight selected row
-                document.querySelectorAll('.metric-row').forEach(r => {
-                    r.style.background = '';
-                });
-                this.style.background = '#F0F7FF';
-                
-                // Show alert with details
-                alert(`Metric: ${metric}\nValue: ${value}\nPercentage: ${percent}`);
+                const cells = this.cells;
+                if (cells.length === 3) {
+                    const metric = cells[0].textContent;
+                    const value = cells[1].textContent;
+                    const percent = cells[2].textContent;
+                    
+                    console.log(`Metric: ${metric}, Value: ${value}, Percentage: ${percent}`);
+                }
             });
         });
         
         // Chart click interactions
         document.querySelector('.donut-chart').addEventListener('click', function() {
-            alert('FTD Performance\nAchieved: 685 (68.5%)\nRemaining: 315 (31.5%)');
+            alert('FTD Performance\nAchieved: 685 (68.50%)\nRemaining: 315 (31.50%)\nTarget: 1,000');
         });
         
-        document.querySelector('.column-chart').addEventListener('click', function() {
-            alert('MTD Performance\nAchieved: 12,465 (82.5%)\nRemaining: 2,654 (17.5%)');
-        });
-        
-        // Placeholder chart interactions
-        document.querySelectorAll('.placeholder-content').forEach(placeholder => {
-            placeholder.addEventListener('click', function() {
-                const title = this.parentElement.querySelector('.placeholder-title').textContent;
-                alert(`Configure ${title} with your specific metrics\n\nYou can add:\n- Line charts for trends\n- Bar charts for comparisons\n- Gauges for targets\n- Heat maps for distributions`);
-            });
+        document.querySelector('.bar-chart-container').addEventListener('click', function() {
+            alert('MTD Performance\nAchieved: 12,465 (82.50%)\nRemaining: 2,645 (17.50%)\nTarget: 15,110');
         });
     </script>
 </body>
