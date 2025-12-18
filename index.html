@@ -34,6 +34,10 @@
             font-weight: 700;
             margin-bottom: 5px;
         }
+        .dashboard-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
         .dashboard-body {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -49,28 +53,12 @@
         }
         .section-title {
             grid-column: 1 / span 3;
-            font-size: 22px;
-            font-weight: 800;
-            color: #1e293b;
-            padding: 15px 20px;
-            background: #f8fafc;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border-left: 6px solid #3b82f6;
-            display: flex;
-            align-items: center;
-        }
-        .section-title:before {
-            content: "📊";
-            margin-right: 12px;
             font-size: 20px;
-        }
-        .section-title.secondary {
-            border-left-color: #f59e0b;
-            margin-top: 25px;
-        }
-        .section-title.secondary:before {
-            content: "🚚";
+            font-weight: 700;
+            color: #1e293b;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+            margin-bottom: 10px;
         }
         .card {
             background: #ffffff;
@@ -291,20 +279,20 @@
         .day-header { background-color: #dbeafe; color: #1e40af; }
         .night-header { background-color: #1e293b; color: white; }
         .availability-header { background-color: #f0f9ff; color: #0c4a6e; }
-        .machinery-name { 
-            text-align: left; 
-            padding-left: 15px !important; 
-            font-weight: 700; 
+        .machinery-name {
+            text-align: left;
+            padding-left: 15px !important;
+            font-weight: 700;
             color: #1e293b;
         }
-        .availability-cell { 
-            font-weight: 700; 
+        .availability-cell {
+            font-weight: 700;
             font-size: 18px;
         }
         .tipper-availability { color: #3b82f6; }
         .excavator-availability { color: #10b981; }
         .loader-availability { color: #f59e0b; }
-        
+       
         /* Machinery Box 3 - Horizontal Bar Chart */
         .availability-bar-chart {
             display: flex;
@@ -339,7 +327,7 @@
             height: 100%;
             border-radius: 8px;
             transition: width 1.5s ease;
-            width: 0; /* Will be set by JS */
+            width: 0;
         }
         .availability-percentage {
             width: 65px;
@@ -383,7 +371,7 @@
         .card:nth-child(3) .card-content {
             justify-content: space-between;
         }
-        
+       
         /* Boulder Transport & Plant Section */
         .boulder-plant-section {
             grid-column: 1 / span 3;
@@ -392,22 +380,29 @@
         .boulder-plant-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 24px;
         }
         .boulder-plant-card {
             background: #ffffff;
             border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            height: 320px;
+            border-radius: 10px;
+            height: 460px;
             display: flex;
             flex-direction: column;
             font-family: Calibri, Arial, sans-serif;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .boulder-plant-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
         .boulder-plant-title {
             background: #f8fafc;
-            padding: 15px;
+            padding: 18px;
             text-align: center;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: #1e293b;
             border-bottom: 2px solid #e2e8f0;
@@ -417,83 +412,119 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
-        /* Data Tables */
+        /* Data Tables - Updated Modern Styles */
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
         }
         .data-table:last-child {
             margin-bottom: 0;
         }
         .data-table th {
-            padding: 12px 8px;
-            font-weight: bold;
+            padding: 16px 12px;
+            font-weight: 700;
             text-align: center;
-            border: 1px solid #d1d5db;
-            background-color: #f9fafb;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: #1e293b;
             font-size: 15px;
+            letter-spacing: 0.5px;
+            border: none;
+            position: relative;
+        }
+        .data-table th:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #3b82f6, transparent);
         }
         .data-table td {
-            padding: 12px 8px;
+            padding: 16px 12px;
             text-align: center;
-            border: 1px solid #d1d5db;
             font-size: 16px;
             font-weight: 600;
+            color: #334155;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+        .data-table tbody tr:hover td {
+            background-color: #f8fafc;
+        }
+        .data-table tbody tr:nth-child(even) {
+            background-color: #fafafa;
         }
         .data-table-title {
             font-size: 17px;
-            font-weight: bold;
-            margin-bottom: 12px;
+            font-weight: 700;
+            margin-bottom: 15px;
             color: #1e293b;
             text-align: center;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e5e7eb;
-            background-color: #f8fafc;
-            padding: 8px;
+            padding: 10px 0;
             border-radius: 6px;
+            background: linear-gradient(to right, #f8fafc, #f1f5f9);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .data-table-title:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -3px;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, #3b82f6, #10b981);
+            border-radius: 3px;
         }
         /* Boulder Transport Chart */
         .boulder-chart-container {
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            height: 180px;
+            height: 200px;
             margin: 20px 0;
-            padding: 0 10px;
+            padding: 0 15px;
         }
         .boulder-chart-bar-group {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
         .boulder-chart-category {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             color: #374151;
             margin-bottom: 5px;
         }
         .boulder-chart-bar {
-            width: 40px;
+            width: 45px;
             border-radius: 4px 4px 0 0;
             position: relative;
         }
         .boulder-chart-bar.transport {
-            background-color: #f59e0b;
-            margin-right: 3px;
+            background: linear-gradient(to top, #f59e0b, #fbbf24);
+            margin-right: 4px;
         }
         .boulder-chart-bar.gap {
-            background-color: #3b82f6;
-            margin-left: 3px;
+            background: linear-gradient(to top, #3b82f6, #60a5fa);
+            margin-left: 4px;
         }
         .boulder-chart-bar-value {
             position: absolute;
-            top: -25px;
+            top: -28px;
             left: 0;
             right: 0;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
             text-align: center;
             color: #1f2937;
@@ -501,65 +532,89 @@
         .boulder-chart-legend {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             margin-top: 15px;
-            font-size: 13px;
+            font-size: 14px;
         }
         .boulder-chart-legend-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
         .boulder-chart-legend-color {
-            width: 15px;
-            height: 15px;
+            width: 16px;
+            height: 16px;
             border-radius: 3px;
         }
-        .boulder-chart-legend-color.transport { background-color: #f59e0b; }
-        .boulder-chart-legend-color.gap { background-color: #3b82f6; }
-        /* Plant Report Chart */
+        .boulder-chart-legend-color.transport { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .boulder-chart-legend-color.gap { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        
+        /* Plant Report Chart - Updated with side-by-side grouping */
         .plant-chart-container {
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            height: 180px;
+            height: 220px;
             margin: 20px 0;
-            padding: 0 10px;
+            padding: 0 15px;
+            gap: 25px;
+        }
+        .plant-chart-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .plant-chart-bars {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+            height: 160px;
         }
         .plant-chart-bar {
-            width: 50px;
+            width: 55px;
             border-radius: 4px 4px 0 0;
             position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
-        .plant-chart-bar.ftd { background-color: #f59e0b; }
-        .plant-chart-bar.mtd { background-color: #1e40af; }
-        .plant-chart-bar.ftd-gap { background-color: #fb923c; }
-        .plant-chart-bar.mtd-gap { background-color: #3b82f6; }
+        .plant-chart-bar.ftd { 
+            background: linear-gradient(to top, #f59e0b, #fbbf24);
+        }
+        .plant-chart-bar.ftd-gap { 
+            background: linear-gradient(to top, #fb923c, #fdba74);
+        }
+        .plant-chart-bar.mtd { 
+            background: linear-gradient(to top, #1e40af, #3b82f6);
+        }
+        .plant-chart-bar.mtd-gap { 
+            background: linear-gradient(to top, #3b82f6, #60a5fa);
+        }
         .plant-chart-bar-value {
             position: absolute;
-            top: -25px;
+            top: -28px;
             left: 0;
             right: 0;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
             text-align: center;
             color: #1f2937;
         }
         .plant-chart-category {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             color: #374151;
             text-align: center;
-            margin-top: 8px;
+            margin-top: 10px;
         }
-        /* Footer */
-        .dashboard-footer {
-            background: #1e293b;
-            color: #cbd5e1;
-            text-align: center;
-            padding: 14px;
-            font-size: 12px;
-            line-height: 1.5;
+        .plant-chart-group-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            padding: 5px 15px;
+            background: #f8fafc;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
         }
         /* Responsiveness */
         @media (max-width: 1200px) {
@@ -587,14 +642,17 @@
                 flex-direction: column;
                 align-items: center;
                 height: auto;
-                gap: 20px;
+                gap: 25px;
             }
             .boulder-chart-bar-group {
                 flex-direction: row;
-                gap: 10px;
+                gap: 12px;
             }
             .plant-chart-bar {
                 margin-bottom: 30px;
+            }
+            .plant-chart-container {
+                flex-direction: column;
             }
         }
     </style>
@@ -602,10 +660,8 @@
 <body>
     <div class="dashboard-container">
         <!-- Header -->
-        <div class="dashboard-header">
-            <h1>Production Dashboard</h1>
-        </div>
         
+        <div class="section-title">Quarry Performance</div>
         <!-- Main Content -->
         <div class="dashboard-body">
             <!-- Performance Summary Table + Completion Line -->
@@ -725,8 +781,8 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Machinery Performance Section -->
+           
+            <!-- Machinery Section -->
             <div class="section-title">Machinery Performance</div>
             <div class="machinery-section">
                 <!-- Box 1: Machinery FTD Performance -->
@@ -767,7 +823,7 @@
                         </div>
                     </div>
                 </div>
-                
+               
                 <!-- Box 2: Machinery MTD Performance -->
                 <div class="card">
                     <div class="card-content">
@@ -818,7 +874,7 @@
                         </div>
                     </div>
                 </div>
-                
+               
                 <!-- Box 3: Machinery Availability Bar Chart -->
                 <div class="card">
                     <div class="card-content">
@@ -849,9 +905,9 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Boulder Transport & Plant Performance Section -->
-            <div class="section-title secondary">Boulder Transport & Plant Performance</div>
+           
+            <!-- Boulder Transport & Plant Section -->
+            <div class="section-title">Boulder Transport & Plant Performance</div>
             <div class="boulder-plant-section">
                 <div class="boulder-plant-container">
                     <!-- BOX 1: Data Tables -->
@@ -879,7 +935,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            
+                           
                             <div class="data-table-title">Plant</div>
                             <table class="data-table">
                                 <thead>
@@ -892,8 +948,8 @@
                                 <tbody>
                                     <tr>
                                         <td><strong>FTD</strong></td>
-                                        <td>9</td>
-                                        <td>9</td>
+                                        <td>11.5</td>
+                                        <td>6.5</td>
                                     </tr>
                                     <tr>
                                         <td><strong>MTD</strong></td>
@@ -904,15 +960,15 @@
                             </table>
                         </div>
                     </div>
-                    
+                   
                     <!-- BOX 2: Boulder Transport Graph -->
                     <div class="boulder-plant-card">
-                        <div class="boulder-plant-title">Boulder Transport Chart</div>
+                        <div class="boulder-plant-title">Boulder Transport</div>
                         <div class="boulder-plant-content">
                             <div class="boulder-chart-container">
                                 <div class="boulder-chart-bar-group">
                                     <div class="boulder-chart-category">DAY</div>
-                                    <div style="display: flex; align-items: flex-end; height: 150px;">
+                                    <div style="display: flex; align-items: flex-end; height: 160px;">
                                         <div class="boulder-chart-bar transport" style="height: 93px;">
                                             <div class="boulder-chart-bar-value">465</div>
                                         </div>
@@ -923,7 +979,7 @@
                                 </div>
                                 <div class="boulder-chart-bar-group">
                                     <div class="boulder-chart-category">NIGHT</div>
-                                    <div style="display: flex; align-items: flex-end; height: 150px;">
+                                    <div style="display: flex; align-items: flex-end; height: 160px;">
                                         <div class="boulder-chart-bar transport" style="height: 157px;">
                                             <div class="boulder-chart-bar-value">785</div>
                                         </div>
@@ -934,7 +990,7 @@
                                 </div>
                                 <div class="boulder-chart-bar-group">
                                     <div class="boulder-chart-category">GAP</div>
-                                    <div style="display: flex; align-items: flex-end; height: 150px;">
+                                    <div style="display: flex; align-items: flex-end; height: 160px;">
                                         <div class="boulder-chart-bar transport" style="height: 43px;">
                                             <div class="boulder-chart-bar-value">213</div>
                                         </div>
@@ -956,35 +1012,35 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- BOX 3: Plant Report Graph -->
+                   
+                    <!-- BOX 3: Plant Report Graph - Updated -->
                     <div class="boulder-plant-card">
-                        <div class="boulder-plant-title">Plant Report Chart</div>
+                        <div class="boulder-plant-title">Plant Report</div>
                         <div class="boulder-plant-content">
                             <div class="plant-chart-container">
-                                <div style="display: flex; flex-direction: column; align-items: center;">
-                                    <div class="plant-chart-bar ftd" style="height: 23px;">
-                                        <div class="plant-chart-bar-value">11.5</div>
+                                <div class="plant-chart-group">
+                                    <div class="plant-chart-group-label">FTD</div>
+                                    <div class="plant-chart-bars">
+                                        <div class="plant-chart-bar ftd" style="height: 60px;">
+                                            <div class="plant-chart-bar-value">11.5</div>
+                                        </div>
+                                        <div class="plant-chart-bar ftd-gap" style="height: 35px;">
+                                            <div class="plant-chart-bar-value">6.5</div>
+                                        </div>
                                     </div>
-                                    <div class="plant-chart-category">FTD</div>
+                                    <div class="plant-chart-category">FTD Hours & Gap</div>
                                 </div>
-                                <div style="display: flex; flex-direction: column; align-items: center;">
-                                    <div class="plant-chart-bar mtd" style="height: 154px;">
-                                        <div class="plant-chart-bar-value">154</div>
+                                <div class="plant-chart-group">
+                                    <div class="plant-chart-group-label">MTD</div>
+                                    <div class="plant-chart-bars">
+                                        <div class="plant-chart-bar mtd" style="height: 180px;">
+                                            <div class="plant-chart-bar-value">154</div>
+                                        </div>
+                                        <div class="plant-chart-bar mtd-gap" style="height: 100px;">
+                                            <div class="plant-chart-bar-value">46</div>
+                                        </div>
                                     </div>
-                                    <div class="plant-chart-category">MTD</div>
-                                </div>
-                                <div style="display: flex; flex-direction: column; align-items: center;">
-                                    <div class="plant-chart-bar ftd-gap" style="height: 13px;">
-                                        <div class="plant-chart-bar-value">6.5</div>
-                                    </div>
-                                    <div class="plant-chart-category">FTD GAP</div>
-                                </div>
-                                <div style="display: flex; flex-direction: column; align-items: center;">
-                                    <div class="plant-chart-bar mtd-gap" style="height: 46px;">
-                                        <div class="plant-chart-bar-value">46</div>
-                                    </div>
-                                    <div class="plant-chart-category">MTD GAP</div>
+                                    <div class="plant-chart-category">MTD Hours & Gap</div>
                                 </div>
                             </div>
                         </div>
@@ -993,18 +1049,18 @@
             </div>
         </div>
     </div>
+    
     <script>
         // Animate bar chart on page load
         document.addEventListener('DOMContentLoaded', function() {
             const bars = document.querySelectorAll('.availability-bar-fill');
             bars.forEach(bar => {
                 const percentage = bar.getAttribute('data-percentage');
-                // Set width after a small delay for animation effect
                 setTimeout(() => {
                     bar.style.width = `${percentage}%`;
                 }, 300);
             });
-            
+           
             // Click interactions for original 3 cards
             document.querySelectorAll('.card')[0].addEventListener('click', function() {
                 alert('Performance Summary\n\nDRILLING:\nFTD:\n- Holes: 685\n- Gap: -315\n\nMTD:\n- Holes: 12,465\n- Gap: -2,645 (17.5%)\n\nCOMPRESSOR:\nFTD:\n- Units: 13\n- Gap: -4\n\nMTD:\n- Units: 390\n- Gap: -120 (23.53%)');
@@ -1015,7 +1071,7 @@
             document.querySelectorAll('.card')[2].addEventListener('click', function() {
                 alert('Compressor Performance\n\nFTD: 76.47% completed (13/17 units)\nMTD: 76.47% completed (390/510 units)\n\nGap:\n- FTD: -4 units\n- MTD: -120 units (23.53%)');
             });
-            
+           
             // Click interactions for machinery cards
             document.querySelectorAll('.machinery-section .card')[0].addEventListener('click', function() {
                 alert('Machinery FTD Performance\n\nTipper:\n- Day Shift: 9 units\n- Night Shift: 8 units\n- Total: 17 units\n- Availability: 71%\n\nExcavator:\n- Day Shift: 4 units\n- Night Shift: 2 units\n- Total: 6 units\n- Availability: 60%\n\nLoader:\n- Day Shift: 2 units\n- Night Shift: 1 unit\n- Total: 3 units\n- Availability: 75%');
@@ -1026,16 +1082,16 @@
             document.querySelectorAll('.machinery-section .card')[2].addEventListener('click', function() {
                 alert('Machinery Availability Analysis\n\nTipper: 71%\n- Performance: Good\n- Target: 70%\n\nExcavator: 60%\n- Performance: Needs Improvement\n- Target: 75%\n\nLoader: 75%\n- Performance: Excellent\n- Target: 70%');
             });
-            
-            // Click interactions for new Boulder & Plant cards
+           
+            // Click interactions for Boulder & Plant cards
             document.querySelectorAll('.boulder-plant-card')[0].addEventListener('click', function() {
-                alert('Boulder Transport & Plant Data\n\nBOULDER TRANSPORT:\nFTD: 112 units\nFTD Gap: 36 units\nMTD: 653 units\nMTD Gap: 145 units\n\nPLANT:\nFTD: 9 units\nFTD Gap: 9 units\nMTD: 154 units\nMTD Gap: 46 units');
+                alert('Boulder Transport & Plant Data\n\nBOULDER TRANSPORT:\nFTD: 112 units\nFTD Gap: 36 units\nMTD: 653 units\nMTD Gap: 145 units\n\nPLANT:\nFTD: 11.5 units\nFTD Gap: 6.5 units\nMTD: 154 units\nMTD Gap: 46 units');
             });
             document.querySelectorAll('.boulder-plant-card')[1].addEventListener('click', function() {
                 alert('Boulder Transport Chart\n\nDAY:\n- Transport: 465 units\n- Gap: 45 units\n\nNIGHT:\n- Transport: 785 units\n- Gap: 76 units\n\nGAP:\n- Transport: 213 units\n- Gap: 23 units');
             });
             document.querySelectorAll('.boulder-plant-card')[2].addEventListener('click', function() {
-                alert('Plant Report Chart\n\nFTD: 11.5 units\nMTD: 154 units\nFTD GAP: 6.5 units\nMTD GAP: 46 units');
+                alert('Plant Report Chart\n\nFTD: 11.5 units\nFTD GAP: 6.5 units\n\nMTD: 154 units\nMTD GAP: 46 units');
             });
         });
     </script>
