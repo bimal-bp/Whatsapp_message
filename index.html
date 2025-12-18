@@ -34,10 +34,6 @@
             font-weight: 700;
             margin-bottom: 5px;
         }
-        .dashboard-header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
         .dashboard-body {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -53,12 +49,28 @@
         }
         .section-title {
             grid-column: 1 / span 3;
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
             color: #1e293b;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #3b82f6;
-            margin-bottom: 10px;
+            padding: 15px 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 6px solid #3b82f6;
+            display: flex;
+            align-items: center;
+        }
+        .section-title:before {
+            content: "📊";
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        .section-title.secondary {
+            border-left-color: #f59e0b;
+            margin-top: 25px;
+        }
+        .section-title.secondary:before {
+            content: "🚚";
         }
         .card {
             background: #ffffff;
@@ -372,7 +384,7 @@
             justify-content: space-between;
         }
         
-        /* NEW: Boulder Transport & Plant Section */
+        /* Boulder Transport & Plant Section */
         .boulder-plant-section {
             grid-column: 1 / span 3;
             margin-top: 10px;
@@ -431,13 +443,16 @@
             font-weight: 600;
         }
         .data-table-title {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: #1e293b;
             text-align: center;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e5e7eb;
+            background-color: #f8fafc;
+            padding: 8px;
+            border-radius: 6px;
         }
         /* Boulder Transport Chart */
         .boulder-chart-container {
@@ -589,7 +604,6 @@
         <!-- Header -->
         <div class="dashboard-header">
             <h1>Production Dashboard</h1>
-            <p>Real-time Performance Monitoring | Updated: Today</p>
         </div>
         
         <!-- Main Content -->
@@ -712,7 +726,7 @@
                 </div>
             </div>
             
-            <!-- Machinery Section -->
+            <!-- Machinery Performance Section -->
             <div class="section-title">Machinery Performance</div>
             <div class="machinery-section">
                 <!-- Box 1: Machinery FTD Performance -->
@@ -836,13 +850,13 @@
                 </div>
             </div>
             
-            <!-- NEW: Boulder Transport & Plant Section -->
-            <div class="section-title">Boulder Transport & Plant Performance</div>
+            <!-- Boulder Transport & Plant Performance Section -->
+            <div class="section-title secondary">Boulder Transport & Plant Performance</div>
             <div class="boulder-plant-section">
                 <div class="boulder-plant-container">
                     <!-- BOX 1: Data Tables -->
                     <div class="boulder-plant-card">
-                        <div class="boulder-plant-title">Boulder Transport</div>
+                        <div class="boulder-plant-title">Boulder Transport & Plant Data</div>
                         <div class="boulder-plant-content">
                             <div class="data-table-title">Boulder Transport</div>
                             <table class="data-table">
@@ -894,7 +908,7 @@
                     
                     <!-- BOX 2: Boulder Transport Graph -->
                     <div class="boulder-plant-card">
-                        <div class="boulder-plant-title">Boulder transport</div>
+                        <div class="boulder-plant-title">Boulder Transport Chart</div>
                         <div class="boulder-plant-content">
                             <div class="boulder-chart-container">
                                 <div class="boulder-chart-bar-group">
@@ -946,7 +960,7 @@
                     
                     <!-- BOX 3: Plant Report Graph -->
                     <div class="boulder-plant-card">
-                        <div class="boulder-plant-title">Plant Report</div>
+                        <div class="boulder-plant-title">Plant Report Chart</div>
                         <div class="boulder-plant-content">
                             <div class="plant-chart-container">
                                 <div style="display: flex; flex-direction: column; align-items: center;">
@@ -979,9 +993,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Footer -->
-        
     </div>
     <script>
         // Animate bar chart on page load
