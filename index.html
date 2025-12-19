@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quarry Dispatch Dashboard</title>
+    <title>Quarry Dispatch Dashboard | Professional MIS</title>
     <style>
         :root {
-            --header-yellow: #fff2cc;
-            --header-orange: #f8b88b;
-            --header-green: #d5e8d4;
-            --header-light-green: #e1f5e1;
+            --header-yellow: linear-gradient(135deg, #fff2cc 0%, #ffe699 100%);
+            --header-orange: linear-gradient(135deg, #f8b88b 0%, #f5a76c 100%);
+            --header-green: linear-gradient(135deg, #d5e8d4 0%, #b8d9a5 100%);
+            --header-light-green: linear-gradient(135deg, #e1f5e1 0%, #c8e6c9 100%);
             --total-light-green: #d9ead3;
-            --total-dark-green: #c9daf8;
+            --total-dark-green: linear-gradient(135deg, #c9daf8 0%, #a4c2f4 100%);
             --material-percent-bg: #fff2cc;
             --border-color: #d9d9d9;
-            --shadow: 0 2px 8px rgba(0,0,0,0.1);
-            --font-primary: 'Segoe UI', Roboto, Arial, sans-serif;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
+            --font-primary: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
         }
 
         * {
@@ -26,10 +31,11 @@
         }
 
         body {
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
             padding: 20px;
-            color: #333;
-            line-height: 1.5;
+            color: var(--primary-color);
+            line-height: 1.6;
+            min-height: 100vh;
         }
 
         .container {
@@ -40,43 +46,97 @@
             gap: 30px;
         }
 
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .dashboard-header .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
         .section {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
         }
 
         .section-header {
-            padding: 15px 20px;
-            font-weight: bold;
-            font-size: 1.2rem;
+            padding: 18px 25px;
+            font-weight: 700;
+            font-size: 1.25rem;
             margin: 0;
             position: sticky;
             top: 0;
             z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .section-header.yellow {
-            background-color: var(--header-yellow);
-            color: #cc0000;
+            background: var(--header-yellow);
+            color: #b33a00;
+            border-bottom: 3px solid #ffcc00;
         }
 
         .section-header.orange {
-            background-color: var(--header-orange);
+            background: var(--header-orange);
             color: #000;
-            font-weight: bold;
+            font-weight: 800;
+            border-bottom: 3px solid #e67e22;
         }
 
         .section-header.green {
-            background-color: var(--header-green);
-            color: #cc0000;
+            background: var(--header-green);
+            color: #1a5a1a;
+            border-bottom: 3px solid #27ae60;
         }
 
         .section-header.light-green {
-            background-color: var(--header-light-green);
-            color: #cc0000;
+            background: var(--header-light-green);
+            color: #1a5a1a;
+            border-bottom: 3px solid #2ecc71;
+        }
+
+        .total-badge {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         .table-container {
@@ -91,101 +151,215 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             position: sticky;
             top: 56px;
             z-index: 9;
-            font-weight: 600;
+            font-weight: 700;
             border: 1px solid var(--border-color);
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            padding: 14px 12px;
         }
 
         th, td {
-            padding: 10px 12px;
+            padding: 12px 14px;
             text-align: center;
             border: 1px solid var(--border-color);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         td.numeric {
             text-align: right;
-            font-family: 'Segoe UI', 'Roboto Mono', monospace;
+            font-family: 'Segoe UI', 'Roboto Mono', 'Courier New', monospace;
+            font-weight: 500;
+            padding-right: 20px;
         }
 
         td.date {
             text-align: center;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--primary-color);
+            background: #f8f9fa;
+        }
+
+        td.highlight {
+            background-color: #fffde7;
+            font-weight: 600;
+        }
+
+        tr:hover td:not(.date) {
+            background-color: #f8f9fa;
         }
 
         .total-row {
             background-color: var(--total-light-green);
-            font-weight: bold;
+            font-weight: 800;
+            font-size: 1rem;
         }
 
         .grand-total-row {
-            background-color: var(--total-dark-green);
-            font-weight: bold;
+            background: var(--total-dark-green);
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--primary-color);
         }
 
         .material-percent-row {
             background-color: var(--material-percent-bg);
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .controls {
             display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            padding: 20px 0;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
             position: sticky;
             top: 0;
-            background: #f5f5f5;
+            background: rgba(245, 247, 250, 0.95);
+            backdrop-filter: blur(10px);
             z-index: 100;
-            padding: 15px;
-            margin: -15px -15px 15px -15px;
-            border-bottom: 1px solid var(--border-color);
+            margin: -20px -20px 25px -20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
         }
 
         .nav-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 12px;
+            margin: 30px 0 20px;
+            flex-wrap: wrap;
         }
 
         button {
-            padding: 10px 20px;
-            background-color: #4a6fa5;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #2980b9 100%);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.2s;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
         }
 
         button:hover {
-            background-color: #3a5a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         button.print-btn {
-            background-color: #2e7d32;
+            background: linear-gradient(135deg, var(--success-color) 0%, #219653 100%);
+            box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
         }
 
         button.print-btn:hover {
-            background-color: #1b5e20;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+        }
+
+        button.nav-btn {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        button.nav-btn:hover {
+            background: linear-gradient(135deg, #7f8c8d 0%, #95a5a6 100%);
         }
 
         .scroll-indicator {
             text-align: center;
-            color: #666;
+            color: #7f8c8d;
             font-size: 0.9rem;
-            margin-top: 10px;
+            margin-top: 15px;
             font-style: italic;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .customer-name {
             text-align: left;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .ftd-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.2);
+        }
+
+        .ftd-box h3 {
+            color: #e67e22;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .stat-card .label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .stat-card .subvalue {
+            font-size: 1rem;
+            color: var(--success-color);
+            margin-top: 5px;
+            font-weight: 600;
         }
 
         @media print {
@@ -194,7 +368,7 @@
                 padding: 0;
             }
             
-            .controls, .nav-buttons, .scroll-indicator {
+            .controls, .nav-buttons, .scroll-indicator, .dashboard-header {
                 display: none;
             }
             
@@ -202,6 +376,7 @@
                 box-shadow: none;
                 border: 1px solid #000;
                 break-inside: avoid;
+                margin: 20px 0;
             }
             
             .table-container {
@@ -211,6 +386,20 @@
             table {
                 min-width: auto;
             }
+            
+            .section:hover {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -218,34 +407,81 @@
                 padding: 10px;
             }
             
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+            
             .section-header {
-                padding: 12px 15px;
+                padding: 15px 20px;
                 font-size: 1.1rem;
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
             }
             
             th, td {
-                padding: 8px 10px;
-                font-size: 0.85rem;
+                padding: 10px 12px;
+                font-size: 0.9rem;
             }
             
             .controls {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
+            }
+            
+            .control-group {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            button {
+                padding: 10px 18px;
+                font-size: 0.9rem;
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="controls">
-        <h1 style="margin-right: auto; color: #2c3e50;">🏭 Quarry Dispatch Dashboard</h1>
-        <button onclick="printPage()" class="print-btn">🖨️ Print Report</button>
-        <button onclick="scrollToTop()">⬆️ Top</button>
+        <div class="control-group">
+            <button onclick="scrollToTop()" title="Scroll to top">
+                <i class="fas fa-arrow-up"></i> Top
+            </button>
+            <button onclick="toggleDarkMode()" title="Toggle dark mode">
+                <i class="fas fa-moon"></i> Theme
+            </button>
+        </div>
+        
+        <div class="control-group">
+            <button onclick="printPage()" class="print-btn">
+                <i class="fas fa-print"></i> Print Report
+            </button>
+            <button onclick="exportToExcel()" title="Export to Excel">
+                <i class="fas fa-file-excel"></i> Export
+            </button>
+        </div>
+    </div>
+
+    <div class="dashboard-header">
+        <h1><i class="fas fa-mountain"></i> Quarry Dispatch Dashboard</h1>
+        <div class="subtitle">Professional Management Information System for Dispatch Operations</div>
+        <div class="date-badge">
+            <i class="fas fa-calendar-alt"></i> Report Date: 19-Dec-2025
+        </div>
     </div>
 
     <div class="container">
         <!-- Report 1: A-Shift Dispatched Details -->
         <div class="section" id="report1">
-            <div class="section-header yellow">A-Shift Dispatched Details</div>
+            <div class="section-header yellow">
+                <span><i class="fas fa-sun"></i> A-Shift Dispatched Details</span>
+                <span class="total-badge">Total: 45.67</span>
+            </div>
             <div class="table-container">
                 <table>
                     <thead>
@@ -265,30 +501,30 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="date">18-Dec-2025</td>
+                            <td class="date">19-Dec-2025</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
-                            <td class="numeric">22.22</td>
+                            <td class="numeric highlight">45.67</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
-                            <td class="numeric">22.22</td>
+                            <td class="numeric highlight">45.67</td>
                         </tr>
                         <tr class="total-row">
                             <td class="customer-name">Total</td>
                             <td class="numeric" id="a-10mm">0.00</td>
                             <td class="numeric" id="a-20mm">0.00</td>
                             <td class="numeric" id="a-vsand">0.00</td>
-                            <td class="numeric" id="a-psand">22.22</td>
+                            <td class="numeric" id="a-psand">45.67</td>
                             <td class="numeric" id="a-scalping">0.00</td>
                             <td class="numeric" id="a-gsb">0.00</td>
                             <td class="numeric" id="a-40mm">0.00</td>
                             <td class="numeric" id="a-50mm">0.00</td>
                             <td class="numeric" id="a-rsand">0.00</td>
-                            <td class="numeric" id="a-total">22.22</td>
+                            <td class="numeric" id="a-total">45.67</td>
                         </tr>
                     </tbody>
                 </table>
@@ -297,7 +533,10 @@
 
         <!-- Report 2: B-Shift Dispatched Details -->
         <div class="section" id="report2">
-            <div class="section-header yellow">B-Shift Dispatched Details</div>
+            <div class="section-header yellow">
+                <span><i class="fas fa-moon"></i> B-Shift Dispatched Details</span>
+                <span class="total-badge">Total: 120.45</span>
+            </div>
             <div class="table-container">
                 <table>
                     <thead>
@@ -317,39 +556,69 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="date">18-Dec-2025</td>
+                            <td class="date">19-Dec-2025</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
-                            <td class="numeric">70.58</td>
+                            <td class="numeric highlight">120.45</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
-                            <td class="numeric">70.58</td>
+                            <td class="numeric highlight">120.45</td>
                         </tr>
                         <tr class="total-row">
                             <td class="customer-name">Total</td>
                             <td class="numeric" id="b-10mm">0.00</td>
                             <td class="numeric" id="b-20mm">0.00</td>
                             <td class="numeric" id="b-vsand">0.00</td>
-                            <td class="numeric" id="b-psand">70.58</td>
+                            <td class="numeric" id="b-psand">120.45</td>
                             <td class="numeric" id="b-scalping">0.00</td>
                             <td class="numeric" id="b-gsb">0.00</td>
                             <td class="numeric" id="b-40mm">0.00</td>
                             <td class="numeric" id="b-50mm">0.00</td>
                             <td class="numeric" id="b-rsand">0.00</td>
-                            <td class="numeric" id="b-total">70.58</td>
+                            <td class="numeric" id="b-total">120.45</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Report 3: FTD Dispatch Summary -->
+        <!-- FTD Summary Box -->
         <div class="section" id="report3">
-            <div class="section-header orange">FTD Dispatched Summary (A Shift + B Shift)</div>
+            <div class="section-header orange">
+                <span><i class="fas fa-chart-line"></i> FTD Dispatched Summary (A Shift + B Shift)</span>
+                <span class="total-badge">FTD Total: 166.12</span>
+            </div>
+            
+            <div class="ftd-box">
+                <h3><i class="fas fa-calculator"></i> Full Day Total Calculation</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">A-Shift Total</div>
+                        <div class="value">45.67</div>
+                        <div class="subvalue">Morning Shift</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">B-Shift Total</div>
+                        <div class="value">120.45</div>
+                        <div class="subvalue">Evening Shift</div>
+                    </div>
+                    <div class="stat-card" style="border-left-color: #e74c3c;">
+                        <div class="label">FTD Total</div>
+                        <div class="value" style="color: #e74c3c;">166.12</div>
+                        <div class="subvalue" style="color: #e74c3c;">45.67 + 120.45</div>
+                    </div>
+                    <div class="stat-card" style="border-left-color: #9b59b6;">
+                        <div class="label">P/SAND Contribution</div>
+                        <div class="value" style="color: #9b59b6;">100%</div>
+                        <div class="subvalue">Primary Material</div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="table-container">
                 <table>
                     <thead>
@@ -369,43 +638,43 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="customer-name">A Shift</td>
+                            <td class="customer-name"><i class="fas fa-sun"></i> A Shift</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
-                            <td class="numeric">22.22</td>
+                            <td class="numeric">45.67</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
-                            <td class="numeric">22.22</td>
+                            <td class="numeric">45.67</td>
                         </tr>
                         <tr>
-                            <td class="customer-name">B Shift</td>
+                            <td class="customer-name"><i class="fas fa-moon"></i> B Shift</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
-                            <td class="numeric">70.58</td>
+                            <td class="numeric">120.45</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
                             <td class="numeric">0.00</td>
-                            <td class="numeric">70.58</td>
+                            <td class="numeric">120.45</td>
                         </tr>
                         <tr class="grand-total-row">
-                            <td class="customer-name">FTD Total</td>
+                            <td class="customer-name"><i class="fas fa-chart-bar"></i> FTD Total</td>
                             <td class="numeric" id="ftd-10mm">0.00</td>
                             <td class="numeric" id="ftd-20mm">0.00</td>
                             <td class="numeric" id="ftd-vsand">0.00</td>
-                            <td class="numeric" id="ftd-psand">92.80</td>
+                            <td class="numeric" id="ftd-psand">166.12</td>
                             <td class="numeric" id="ftd-scalping">0.00</td>
                             <td class="numeric" id="ftd-gsb">0.00</td>
                             <td class="numeric" id="ftd-40mm">0.00</td>
                             <td class="numeric" id="ftd-50mm">0.00</td>
                             <td class="numeric" id="ftd-rsand">0.00</td>
-                            <td class="numeric" id="ftd-total">92.80</td>
+                            <td class="numeric" id="ftd-total">166.12</td>
                         </tr>
                     </tbody>
                 </table>
@@ -414,7 +683,10 @@
 
         <!-- Report 4: Daily Dispatched Details -->
         <div class="section" id="report4">
-            <div class="section-header green">Dispatched Details (Date-wise: 01-12-2025 to 18-12-2025)</div>
+            <div class="section-header green">
+                <span><i class="fas fa-calendar-day"></i> Dispatched Details (Date-wise)</span>
+                <span class="total-badge">Total: 16512.15</span>
+            </div>
             <div class="table-container">
                 <table>
                     <thead>
@@ -442,7 +714,7 @@
                             <td class="numeric" id="daily-20mm">0.00</td>
                             <td class="numeric" id="daily-vsand">0.00</td>
                             <td class="numeric" id="daily-scalping">0.00</td>
-                            <td class="numeric" id="daily-psand">0.00</td>
+                            <td class="numeric" id="daily-psand">16512.15</td>
                             <td class="numeric" id="daily-40mm">0.00</td>
                             <td class="numeric" id="daily-50mm">0.00</td>
                             <td class="numeric" id="daily-gsb">0.00</td>
@@ -456,7 +728,10 @@
 
         <!-- Report 5: Customer-wise Cumulative Dispatch -->
         <div class="section" id="report5">
-            <div class="section-header light-green">DECEMBER-2025 – Customer Wise Cumulative Dispatched Details</div>
+            <div class="section-header light-green">
+                <span><i class="fas fa-users"></i> DECEMBER-2025 – Customer Wise Cumulative Dispatched Details</span>
+                <span class="total-badge">Total Customers: 5</span>
+            </div>
             <div class="table-container">
                 <table>
                     <thead>
@@ -485,26 +760,26 @@
                             <td class="numeric" id="cust-20mm">0.00</td>
                             <td class="numeric" id="cust-vsand">0.00</td>
                             <td class="numeric" id="cust-scalping">0.00</td>
-                            <td class="numeric" id="cust-psand">0.00</td>
+                            <td class="numeric" id="cust-psand">16512.15</td>
                             <td class="numeric" id="cust-40mm">0.00</td>
                             <td class="numeric" id="cust-50mm">0.00</td>
                             <td class="numeric" id="cust-gsb">0.00</td>
                             <td class="numeric" id="cust-rsand">0.00</td>
-                            <td class="numeric" id="cust-total">0.00</td>
+                            <td class="numeric" id="cust-total">16512.15</td>
                             <td class="numeric">100.00%</td>
                         </tr>
                         <tr class="material-percent-row">
-                            <td class="customer-name">Material Wise (%) Participation</td>
+                            <td class="customer-name"><i class="fas fa-chart-pie"></i> Material Wise (%) Participation</td>
                             <td class="numeric" id="mat-10mm">0.00%</td>
                             <td class="numeric" id="mat-20mm">0.00%</td>
                             <td class="numeric" id="mat-vsand">0.00%</td>
                             <td class="numeric" id="mat-scalping">0.00%</td>
-                            <td class="numeric" id="mat-psand">0.00%</td>
+                            <td class="numeric" id="mat-psand">100.00%</td>
                             <td class="numeric" id="mat-40mm">0.00%</td>
                             <td class="numeric" id="mat-50mm">0.00%</td>
                             <td class="numeric" id="mat-gsb">0.00%</td>
                             <td class="numeric" id="mat-rsand">0.00%</td>
-                            <td class="numeric" id="mat-total">0.00%</td>
+                            <td class="numeric" id="mat-total">100.00%</td>
                             <td class="numeric">-</td>
                         </tr>
                     </tfoot>
@@ -514,14 +789,26 @@
     </div>
 
     <div class="nav-buttons">
-        <button onclick="scrollToReport(1)">Report 1: A-Shift</button>
-        <button onclick="scrollToReport(2)">Report 2: B-Shift</button>
-        <button onclick="scrollToReport(3)">Report 3: FTD Summary</button>
-        <button onclick="scrollToReport(4)">Report 4: Daily Details</button>
-        <button onclick="scrollToReport(5)">Report 5: Customer-wise</button>
+        <button onclick="scrollToReport(1)" class="nav-btn">
+            <i class="fas fa-sun"></i> A-Shift
+        </button>
+        <button onclick="scrollToReport(2)" class="nav-btn">
+            <i class="fas fa-moon"></i> B-Shift
+        </button>
+        <button onclick="scrollToReport(3)" class="nav-btn">
+            <i class="fas fa-chart-line"></i> FTD Summary
+        </button>
+        <button onclick="scrollToReport(4)" class="nav-btn">
+            <i class="fas fa-calendar-day"></i> Daily Details
+        </button>
+        <button onclick="scrollToReport(5)" class="nav-btn">
+            <i class="fas fa-users"></i> Customer-wise
+        </button>
     </div>
 
-    <div class="scroll-indicator">Scroll horizontally to view full table on mobile devices</div>
+    <div class="scroll-indicator">
+        <i class="fas fa-arrows-alt-h"></i> Scroll horizontally to view full table on mobile devices
+    </div>
 
     <script>
         // Initialize data and calculations
@@ -530,29 +817,31 @@
             initializeCustomerData();
             calculateAllTotals();
             updateFTDSummary();
+            updateStats();
         });
 
-        // Sample daily data for December 1-18, 2025
+        // Updated daily data for December 1-19, 2025 with new totals
         function initializeDailyData() {
             const dailyData = [
-                { date: '01-Dec-2025', mm10: 150.5, mm20: 200.3, vsand: 180.2, scalping: 120.8, psand: 300.1, mm40: 95.7, mm50: 0, gsb: 210.4, rsand: 85.6 },
-                { date: '02-Dec-2025', mm10: 145.2, mm20: 195.8, vsand: 175.9, scalping: 118.7, psand: 295.3, mm40: 92.4, mm50: 0, gsb: 205.1, rsand: 82.9 },
-                { date: '03-Dec-2025', mm10: 160.8, mm20: 210.5, vsand: 190.3, scalping: 125.6, psand: 315.7, mm40: 98.2, mm50: 0, gsb: 220.9, rsand: 90.2 },
-                { date: '04-Dec-2025', mm10: 142.1, mm20: 188.9, vsand: 170.5, scalping: 115.4, psand: 285.6, mm40: 89.8, mm50: 0, gsb: 198.7, rsand: 80.3 },
-                { date: '05-Dec-2025', mm10: 155.7, mm20: 205.2, vsand: 185.8, scalping: 122.9, psand: 308.4, mm40: 96.3, mm50: 0, gsb: 215.6, rsand: 87.5 },
-                { date: '06-Dec-2025', mm10: 148.3, mm20: 198.6, vsand: 178.4, scalping: 119.8, psand: 298.9, mm40: 93.7, mm50: 0, gsb: 208.3, rsand: 84.1 },
-                { date: '07-Dec-2025', mm10: 165.4, mm20: 220.7, vsand: 198.6, scalping: 130.2, psand: 328.5, mm40: 102.1, mm50: 0, gsb: 230.8, rsand: 95.3 },
-                { date: '08-Dec-2025', mm10: 138.9, mm20: 182.4, vsand: 165.8, scalping: 112.3, psand: 275.2, mm40: 86.9, mm50: 0, gsb: 192.5, rsand: 78.2 },
-                { date: '09-Dec-2025', mm10: 152.6, mm20: 202.1, vsand: 183.7, scalping: 121.5, psand: 305.8, mm40: 95.2, mm50: 0, gsb: 212.9, rsand: 86.4 },
-                { date: '10-Dec-2025', mm10: 158.2, mm20: 208.8, vsand: 188.9, scalping: 124.7, psand: 312.4, mm40: 97.5, mm50: 0, gsb: 218.6, rsand: 88.9 },
-                { date: '11-Dec-2025', mm10: 143.5, mm20: 191.3, vsand: 173.2, scalping: 117.1, psand: 290.7, mm40: 91.4, mm50: 0, gsb: 203.8, rsand: 81.7 },
-                { date: '12-Dec-2025', mm10: 162.9, mm20: 215.6, vsand: 195.4, scalping: 128.3, psand: 322.8, mm40: 100.3, mm50: 0, gsb: 225.7, rsand: 92.6 },
-                { date: '13-Dec-2025', mm10: 147.8, mm20: 197.2, vsand: 177.5, scalping: 119.2, psand: 297.6, mm40: 93.1, mm50: 0, gsb: 207.4, rsand: 83.8 },
-                { date: '14-Dec-2025', mm10: 154.3, mm20: 203.9, vsand: 184.6, scalping: 122.1, psand: 306.9, mm40: 95.8, mm50: 0, gsb: 214.3, rsand: 87.1 },
-                { date: '15-Dec-2025', mm10: 140.7, mm20: 186.5, vsand: 168.9, scalping: 114.6, psand: 282.3, mm40: 88.7, mm50: 0, gsb: 196.8, rsand: 79.5 },
-                { date: '16-Dec-2025', mm10: 159.6, mm20: 210.3, vsand: 190.8, scalping: 126.5, psand: 318.7, mm40: 99.2, mm50: 0, gsb: 222.4, rsand: 91.2 },
-                { date: '17-Dec-2025', mm10: 149.4, mm20: 199.7, vsand: 179.8, scalping: 120.4, psand: 301.5, mm40: 94.3, mm50: 0, gsb: 209.8, rsand: 85.3 },
-                { date: '18-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 92.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 }
+                { date: '01-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 920.5, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '02-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 895.3, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '03-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1015.7, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '04-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 885.6, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '05-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1008.4, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '06-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 998.9, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '07-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1128.5, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '08-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 875.2, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '09-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1005.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '10-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1012.4, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '11-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 890.7, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '12-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1022.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '13-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 897.6, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '14-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 906.9, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '15-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 882.3, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '16-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 918.7, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '17-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 901.5, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '18-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 92.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { date: '19-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 166.12, mm40: 0, mm50: 0, gsb: 0, rsand: 0 }
             ];
 
             const tbody = document.getElementById('daily-data');
@@ -560,33 +849,36 @@
                 const total = day.mm10 + day.mm20 + day.vsand + day.scalping + day.psand + 
                              day.mm40 + day.mm50 + day.gsb + day.rsand;
                 
+                const isToday = day.date === '19-Dec-2025';
+                const rowClass = isToday ? 'highlight' : '';
+                
                 const row = `
                     <tr>
-                        <td class="date">${day.date}</td>
-                        <td class="numeric">${day.mm10.toFixed(2)}</td>
-                        <td class="numeric">${day.mm20.toFixed(2)}</td>
-                        <td class="numeric">${day.vsand.toFixed(2)}</td>
-                        <td class="numeric">${day.scalping.toFixed(2)}</td>
-                        <td class="numeric">${day.psand.toFixed(2)}</td>
-                        <td class="numeric">${day.mm40.toFixed(2)}</td>
-                        <td class="numeric">${day.mm50.toFixed(2)}</td>
-                        <td class="numeric">${day.gsb.toFixed(2)}</td>
-                        <td class="numeric">${day.rsand.toFixed(2)}</td>
-                        <td class="numeric">${total.toFixed(2)}</td>
+                        <td class="date ${rowClass}">${day.date}${isToday ? ' <i class="fas fa-star" style="color: #e67e22;"></i>' : ''}</td>
+                        <td class="numeric ${rowClass}">${day.mm10.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.mm20.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.vsand.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.scalping.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.psand.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.mm40.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.mm50.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.gsb.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.rsand.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${total.toFixed(2)}</td>
                     </tr>
                 `;
                 tbody.innerHTML += row;
             });
         }
 
-        // Sample customer data
+        // Sample customer data updated with P/SAND only
         function initializeCustomerData() {
             const customerData = [
-                { name: 'Customer A', mm10: 450.2, mm20: 600.8, vsand: 540.6, scalping: 360.9, psand: 900.3, mm40: 285.9, mm50: 0, gsb: 630.7, rsand: 255.4 },
-                { name: 'Customer B', mm10: 380.5, mm20: 510.2, vsand: 459.3, scalping: 306.7, psand: 765.8, mm40: 242.1, mm50: 0, gsb: 534.9, rsand: 216.8 },
-                { name: 'Customer C', mm10: 510.7, mm20: 680.9, vsand: 612.8, scalping: 408.5, psand: 1021.2, mm40: 323.4, mm50: 0, gsb: 714.2, rsand: 289.3 },
-                { name: 'Customer D', mm10: 295.3, mm20: 395.1, vsand: 355.6, scalping: 237.2, psand: 592.7, mm40: 187.5, mm50: 0, gsb: 414.8, rsand: 168.1 },
-                { name: 'Customer E', mm10: 420.8, mm20: 562.4, vsand: 506.2, scalping: 337.6, psand: 843.9, mm40: 267.2, mm50: 0, gsb: 590.4, rsand: 239.2 }
+                { name: 'Construction Corp A', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 4500.2, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { name: 'Infra Builders Ltd', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 3800.5, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { name: 'Mega Projects Inc', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 5100.7, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { name: 'Roadways Const. Co.', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 2950.3, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
+                { name: 'Urban Developers', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 4200.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 }
             ];
 
             const tbody = document.getElementById('customer-data');
@@ -596,7 +888,7 @@
                 
                 const row = `
                     <tr>
-                        <td class="customer-name">${cust.name}</td>
+                        <td class="customer-name"><i class="fas fa-building"></i> ${cust.name}</td>
                         <td class="numeric">${cust.mm10.toFixed(2)}</td>
                         <td class="numeric">${cust.mm20.toFixed(2)}</td>
                         <td class="numeric">${cust.vsand.toFixed(2)}</td>
@@ -694,7 +986,7 @@
             document.getElementById('cust-total').textContent = custTotals.total.toFixed(2);
 
             // Update material-wise percentages
-            const grandTotal = custTotals.total || 1; // Avoid division by zero
+            const grandTotal = custTotals.total || 1;
             document.getElementById('mat-10mm').textContent = ((custTotals.mm10 / grandTotal) * 100).toFixed(2) + '%';
             document.getElementById('mat-20mm').textContent = ((custTotals.mm20 / grandTotal) * 100).toFixed(2) + '%';
             document.getElementById('mat-vsand').textContent = ((custTotals.vsand / grandTotal) * 100).toFixed(2) + '%';
@@ -707,16 +999,16 @@
             document.getElementById('mat-total').textContent = '100.00%';
         }
 
-        // Update FTD Summary
+        // Update FTD Summary with new data
         function updateFTDSummary() {
             const aShift = {
-                mm10: 0, mm20: 0, vsand: 0, psand: 22.22, scalping: 0,
-                gsb: 0, mm40: 0, mm50: 0, rsand: 0, total: 22.22
+                mm10: 0, mm20: 0, vsand: 0, psand: 45.67, scalping: 0,
+                gsb: 0, mm40: 0, mm50: 0, rsand: 0, total: 45.67
             };
             
             const bShift = {
-                mm10: 0, mm20: 0, vsand: 0, psand: 70.58, scalping: 0,
-                gsb: 0, mm40: 0, mm50: 0, rsand: 0, total: 70.58
+                mm10: 0, mm20: 0, vsand: 0, psand: 120.45, scalping: 0,
+                gsb: 0, mm40: 0, mm50: 0, rsand: 0, total: 120.45
             };
 
             // Calculate FTD totals
@@ -730,6 +1022,12 @@
             document.getElementById('ftd-50mm').textContent = (aShift.mm50 + bShift.mm50).toFixed(2);
             document.getElementById('ftd-rsand').textContent = (aShift.rsand + bShift.rsand).toFixed(2);
             document.getElementById('ftd-total').textContent = (aShift.total + bShift.total).toFixed(2);
+        }
+
+        // Update statistics
+        function updateStats() {
+            // Additional stats can be added here
+            console.log("Dashboard stats updated");
         }
 
         // Navigation functions
@@ -746,6 +1044,16 @@
 
         function printPage() {
             window.print();
+        }
+
+        function exportToExcel() {
+            alert('Excel export functionality would be implemented here with a backend connection.');
+            // In a real implementation, this would generate an Excel file
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            alert('Dark mode toggle would change theme colors in a full implementation.');
         }
     </script>
 </body>
