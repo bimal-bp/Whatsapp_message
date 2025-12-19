@@ -396,6 +396,19 @@
             font-style: italic;
         }
 
+        .shift-combined-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .shift-combined-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media print {
             body {
                 background: white;
@@ -514,313 +527,107 @@
     </div>
 
     <div class="container">
-        <!-- Report 1: A-Shift Dispatched Details -->
-        <div class="section" id="report1">
-            <div class="section-header yellow">
-                <span><i class="fas fa-sun"></i> A-Shift Dispatched Details</span>
-                <span class="total-badge">Total: 45.67</span>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>10 MM</th>
-                            <th>20 MM</th>
-                            <th>V/SAND</th>
-                            <th>P/SAND</th>
-                            <th>Scalping</th>
-                            <th>GSB / Wet Mix</th>
-                            <th>40 MM</th>
-                            <th>50 MM</th>
-                            <th>R/Sand</th>
-                            <th>TOTAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="date">19-Dec-2025</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric highlight">45.67</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric highlight">45.67</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td class="customer-name">Total</td>
-                            <td class="numeric" id="a-10mm">0.00</td>
-                            <td class="numeric" id="a-20mm">0.00</td>
-                            <td class="numeric" id="a-vsand">0.00</td>
-                            <td class="numeric" id="a-psand">45.67</td>
-                            <td class="numeric" id="a-scalping">0.00</td>
-                            <td class="numeric" id="a-gsb">0.00</td>
-                            <td class="numeric" id="a-40mm">0.00</td>
-                            <td class="numeric" id="a-50mm">0.00</td>
-                            <td class="numeric" id="a-rsand">0.00</td>
-                            <td class="numeric" id="a-total">45.67</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Report 2: B-Shift Dispatched Details -->
-        <div class="section" id="report2">
-            <div class="section-header yellow">
-                <span><i class="fas fa-moon"></i> B-Shift Dispatched Details</span>
-                <span class="total-badge">Total: 120.45</span>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>10 MM</th>
-                            <th>20 MM</th>
-                            <th>V/SAND</th>
-                            <th>P/SAND</th>
-                            <th>Scalping</th>
-                            <th>GSB / Wet Mix</th>
-                            <th>40 MM</th>
-                            <th>50 MM</th>
-                            <th>R/Sand</th>
-                            <th>TOTAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="date">19-Dec-2025</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric highlight">120.45</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric highlight">120.45</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td class="customer-name">Total</td>
-                            <td class="numeric" id="b-10mm">0.00</td>
-                            <td class="numeric" id="b-20mm">0.00</td>
-                            <td class="numeric" id="b-vsand">0.00</td>
-                            <td class="numeric" id="b-psand">120.45</td>
-                            <td class="numeric" id="b-scalping">0.00</td>
-                            <td class="numeric" id="b-gsb">0.00</td>
-                            <td class="numeric" id="b-40mm">0.00</td>
-                            <td class="numeric" id="b-50mm">0.00</td>
-                            <td class="numeric" id="b-rsand">0.00</td>
-                            <td class="numeric" id="b-total">120.45</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Report 3: FTD Dispatch Summary -->
-        <div class="section" id="report3">
+        <!-- Combined Shift Reports in one section -->
+        <div class="section" id="shift-reports">
             <div class="section-header orange">
-                <span><i class="fas fa-chart-line"></i> FTD Dispatched Summary (A Shift + B Shift)</span>
-                <span class="total-badge">FTD Total: 166.12</span>
+                <span><i class="fas fa-chart-line"></i> SHIFT WISE DISPATCH SUMMARY (19-Dec-2025)</span>
+                <span class="total-badge">FTD Total: <span id="ftd-total-badge">0.00</span></span>
             </div>
             
-            <div class="ftd-box">
-                <h3><i class="fas fa-calculator"></i> Full Day Total Calculation</h3>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="label">A-Shift Details</div>
-                        <div class="value">45.67</div>
-                        <div class="subvalue">P/SAND Only</div>
+            <div class="shift-combined-container">
+                <!-- A-Shift -->
+                <div class="section">
+                    <div class="section-header yellow">
+                        <span><i class="fas fa-sun"></i> A-Shift Dispatched Details</span>
+                        <span class="total-badge" id="a-total-badge">Total: 0.00</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="label">B-Shift Details</div>
-                        <div class="value">120.45</div>
-                        <div class="subvalue">P/SAND Only</div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>10 MM</th>
+                                    <th>20 MM</th>
+                                    <th>V/SAND</th>
+                                    <th>P/SAND</th>
+                                    <th>Scalping</th>
+                                    <th>GSB / Wet Mix</th>
+                                    <th>40 MM</th>
+                                    <th>50 MM</th>
+                                    <th>R/Sand</th>
+                                    <th>TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody id="a-shift-data">
+                                <!-- A-Shift data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="stat-card" style="border-left-color: #e74c3c;">
-                        <div class="label">FTD Total</div>
-                        <div class="value" style="color: #e74c3c;">166.12</div>
-                        <div class="subvalue" style="color: #e74c3c;">45.67 + 120.45</div>
+                </div>
+
+                <!-- B-Shift -->
+                <div class="section">
+                    <div class="section-header yellow">
+                        <span><i class="fas fa-moon"></i> B-Shift Dispatched Details</span>
+                        <span class="total-badge" id="b-total-badge">Total: 0.00</span>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>10 MM</th>
+                                    <th>20 MM</th>
+                                    <th>V/SAND</th>
+                                    <th>P/SAND</th>
+                                    <th>Scalping</th>
+                                    <th>GSB / Wet Mix</th>
+                                    <th>40 MM</th>
+                                    <th>50 MM</th>
+                                    <th>R/Sand</th>
+                                    <th>TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody id="b-shift-data">
+                                <!-- B-Shift data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Shift</th>
-                            <th>10 MM</th>
-                            <th>20 MM</th>
-                            <th>V/SAND</th>
-                            <th>P/SAND</th>
-                            <th>Scalping</th>
-                            <th>GSB / Wet Mix</th>
-                            <th>40 MM</th>
-                            <th>50 MM</th>
-                            <th>R/Sand</th>
-                            <th>TOTAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="customer-name"><i class="fas fa-sun"></i> A Shift</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">45.67</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">45.67</td>
-                        </tr>
-                        <tr>
-                            <td class="customer-name"><i class="fas fa-moon"></i> B Shift</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">120.45</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">0.00</td>
-                            <td class="numeric">120.45</td>
-                        </tr>
-                        <tr class="grand-total-row">
-                            <td class="customer-name"><i class="fas fa-chart-bar"></i> FTD Total</td>
-                            <td class="numeric" id="ftd-10mm">0.00</td>
-                            <td class="numeric" id="ftd-20mm">0.00</td>
-                            <td class="numeric" id="ftd-vsand">0.00</td>
-                            <td class="numeric" id="ftd-psand">166.12</td>
-                            <td class="numeric" id="ftd-scalping">0.00</td>
-                            <td class="numeric" id="ftd-gsb">0.00</td>
-                            <td class="numeric" id="ftd-40mm">0.00</td>
-                            <td class="numeric" id="ftd-50mm">0.00</td>
-                            <td class="numeric" id="ftd-rsand">0.00</td>
-                            <td class="numeric" id="ftd-total">166.12</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <!-- A+B Combined Table -->
+            <div class="section" style="margin-top: 20px;">
+                <div class="section-header green">
+                    <span><i class="fas fa-calculator"></i> A + B SHIFT COMBINED TOTAL</span>
+                    <span class="total-badge" id="ab-total-badge">Total: 0.00</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Shift</th>
+                                <th>10 MM</th>
+                                <th>20 MM</th>
+                                <th>V/SAND</th>
+                                <th>P/SAND</th>
+                                <th>Scalping</th>
+                                <th>GSB / Wet Mix</th>
+                                <th>40 MM</th>
+                                <th>50 MM</th>
+                                <th>R/Sand</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ab-combined-data">
+                            <!-- A+B data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <!-- Report 4: Daily Dispatched Details -->
-        <div class="section" id="report4">
-            <div class="section-header green">
-                <span><i class="fas fa-calendar-day"></i> Dispatched Details (Date-wise)</span>
-                <span class="total-badge">Total: 16512.15</span>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>10 MM</th>
-                            <th>20 MM</th>
-                            <th>V/SAND</th>
-                            <th>Scalping</th>
-                            <th>P/Sand</th>
-                            <th>40 MM</th>
-                            <th>50 MM</th>
-                            <th>GSB/WET MIX</th>
-                            <th>R/Sand</th>
-                            <th>TOTAL</th>
-                        </tr>
-                    </thead>
-                    <tbody id="daily-data">
-                        <!-- Data populated by JavaScript -->
-                    </tbody>
-                    <tfoot>
-                        <tr class="grand-total-row">
-                            <td class="customer-name">Total</td>
-                            <td class="numeric" id="daily-10mm">0.00</td>
-                            <td class="numeric" id="daily-20mm">0.00</td>
-                            <td class="numeric" id="daily-vsand">0.00</td>
-                            <td class="numeric" id="daily-scalping">0.00</td>
-                            <td class="numeric" id="daily-psand">16512.15</td>
-                            <td class="numeric" id="daily-40mm">0.00</td>
-                            <td class="numeric" id="daily-50mm">0.00</td>
-                            <td class="numeric" id="daily-gsb">0.00</td>
-                            <td class="numeric" id="daily-rsand">0.00</td>
-                            <td class="numeric" id="daily-total">16512.15</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-
-        <!-- Report 5: Customer-wise Cumulative Dispatch -->
-        <div class="section" id="report5">
-            <div class="section-header light-green">
-                <span><i class="fas fa-users"></i> DECEMBER-2025 – Customer Wise Cumulative Dispatched Details</span>
-                <span class="total-badge">Total Customers: 5</span>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Customer Name</th>
-                            <th>10 MM</th>
-                            <th>20 MM</th>
-                            <th>V/SAND</th>
-                            <th>Scalping</th>
-                            <th>P/Sand</th>
-                            <th>40 MM</th>
-                            <th>50 MM</th>
-                            <th>GSB/WET MIX</th>
-                            <th>R/Sand</th>
-                            <th>TOTAL</th>
-                            <th>Customer-wise Dispatch Participation (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="customer-data">
-                        <!-- Data populated by JavaScript -->
-                    </tbody>
-                    <tfoot>
-                        <tr class="total-row">
-                            <td class="customer-name">Total</td>
-                            <td class="numeric" id="cust-10mm">0.00</td>
-                            <td class="numeric" id="cust-20mm">0.00</td>
-                            <td class="numeric" id="cust-vsand">0.00</td>
-                            <td class="numeric" id="cust-scalping">0.00</td>
-                            <td class="numeric" id="cust-psand">16512.15</td>
-                            <td class="numeric" id="cust-40mm">0.00</td>
-                            <td class="numeric" id="cust-50mm">0.00</td>
-                            <td class="numeric" id="cust-gsb">0.00</td>
-                            <td class="numeric" id="cust-rsand">0.00</td>
-                            <td class="numeric" id="cust-total">16512.15</td>
-                            <td class="numeric">100.00%</td>
-                        </tr>
-                        <tr class="material-percent-row">
-                            <td class="customer-name"><i class="fas fa-chart-pie"></i> Material Wise (%) Participation</td>
-                            <td class="numeric" id="mat-10mm">0.00%</td>
-                            <td class="numeric" id="mat-20mm">0.00%</td>
-                            <td class="numeric" id="mat-vsand">0.00%</td>
-                            <td class="numeric" id="mat-scalping">0.00%</td>
-                            <td class="numeric" id="mat-psand">100.00%</td>
-                            <td class="numeric" id="mat-40mm">0.00%</td>
-                            <td class="numeric" id="mat-50mm">0.00%</td>
-                            <td class="numeric" id="mat-gsb">0.00%</td>
-                            <td class="numeric" id="mat-rsand">0.00%</td>
-                            <td class="numeric" id="mat-total">100.00%</td>
-                            <td class="numeric">-</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-
-        <!-- Report 6: FULL DAY – Dispatch Vehicle Wise Planning -->
+        <!-- Report 4: FULL DAY – Dispatch Vehicle Wise Planning -->
         <div class="section" id="report6">
             <div class="section-header vehicle-planning">
                 <span><i class="fas fa-truck-loading"></i> FULL DAY – Dispatch Vehicle Wise Planning – 23 Aug 2025</span>
@@ -876,26 +683,126 @@
                 </table>
             </div>
         </div>
+
+        <!-- Report 5: Daily Dispatched Details -->
+        <div class="section" id="report4">
+            <div class="section-header green">
+                <span><i class="fas fa-calendar-day"></i> Dispatched Details (Date-wise) - December 2025</span>
+                <span class="total-badge">Total: <span id="daily-total-badge">0.00</span></span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>Scalping</th>
+                            <th>P/Sand</th>
+                            <th>40 MM</th>
+                            <th>50 MM</th>
+                            <th>GSB/WET MIX</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="daily-data">
+                        <!-- Data populated by JavaScript -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="grand-total-row">
+                            <td class="customer-name">Total</td>
+                            <td class="numeric" id="daily-10mm">0.00</td>
+                            <td class="numeric" id="daily-20mm">0.00</td>
+                            <td class="numeric" id="daily-vsand">0.00</td>
+                            <td class="numeric" id="daily-scalping">0.00</td>
+                            <td class="numeric" id="daily-psand">0.00</td>
+                            <td class="numeric" id="daily-40mm">0.00</td>
+                            <td class="numeric" id="daily-50mm">0.00</td>
+                            <td class="numeric" id="daily-gsb">0.00</td>
+                            <td class="numeric" id="daily-rsand">0.00</td>
+                            <td class="numeric" id="daily-total">0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <!-- Report 6: Customer-wise Cumulative Dispatch -->
+        <div class="section" id="report5">
+            <div class="section-header light-green">
+                <span><i class="fas fa-users"></i> DECEMBER-2025 – Customer Wise Cumulative Dispatched Details</span>
+                <span class="total-badge">Total Customers: 5</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>Scalping</th>
+                            <th>P/Sand</th>
+                            <th>40 MM</th>
+                            <th>50 MM</th>
+                            <th>GSB/WET MIX</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                            <th>Customer-wise Dispatch Participation (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customer-data">
+                        <!-- Data populated by JavaScript -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="customer-name">Total</td>
+                            <td class="numeric" id="cust-10mm">0.00</td>
+                            <td class="numeric" id="cust-20mm">0.00</td>
+                            <td class="numeric" id="cust-vsand">0.00</td>
+                            <td class="numeric" id="cust-scalping">0.00</td>
+                            <td class="numeric" id="cust-psand">0.00</td>
+                            <td class="numeric" id="cust-40mm">0.00</td>
+                            <td class="numeric" id="cust-50mm">0.00</td>
+                            <td class="numeric" id="cust-gsb">0.00</td>
+                            <td class="numeric" id="cust-rsand">0.00</td>
+                            <td class="numeric" id="cust-total">0.00</td>
+                            <td class="numeric">100.00%</td>
+                        </tr>
+                        <tr class="material-percent-row">
+                            <td class="customer-name"><i class="fas fa-chart-pie"></i> Material Wise (%) Participation</td>
+                            <td class="numeric" id="mat-10mm">0.00%</td>
+                            <td class="numeric" id="mat-20mm">0.00%</td>
+                            <td class="numeric" id="mat-vsand">0.00%</td>
+                            <td class="numeric" id="mat-scalping">0.00%</td>
+                            <td class="numeric" id="mat-psand">0.00%</td>
+                            <td class="numeric" id="mat-40mm">0.00%</td>
+                            <td class="numeric" id="mat-50mm">0.00%</td>
+                            <td class="numeric" id="mat-gsb">0.00%</td>
+                            <td class="numeric" id="mat-rsand">0.00%</td>
+                            <td class="numeric" id="mat-total">100.00%</td>
+                            <td class="numeric">-</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
 
     <div class="nav-buttons">
-        <button onclick="scrollToReport(1)" class="nav-btn">
-            <i class="fas fa-sun"></i> A-Shift
+        <button onclick="scrollToReport('shift-reports')" class="nav-btn">
+            <i class="fas fa-chart-line"></i> Shift Reports
         </button>
-        <button onclick="scrollToReport(2)" class="nav-btn">
-            <i class="fas fa-moon"></i> B-Shift
+        <button onclick="scrollToReport('report6')" class="nav-btn">
+            <i class="fas fa-truck-loading"></i> Vehicle Planning
         </button>
-        <button onclick="scrollToReport(3)" class="nav-btn">
-            <i class="fas fa-chart-line"></i> FTD Summary
-        </button>
-        <button onclick="scrollToReport(4)" class="nav-btn">
+        <button onclick="scrollToReport('report4')" class="nav-btn">
             <i class="fas fa-calendar-day"></i> Daily Details
         </button>
-        <button onclick="scrollToReport(5)" class="nav-btn">
+        <button onclick="scrollToReport('report5')" class="nav-btn">
             <i class="fas fa-users"></i> Customer-wise
-        </button>
-        <button onclick="scrollToReport(6)" class="nav-btn">
-            <i class="fas fa-truck-loading"></i> Vehicle Planning
         </button>
     </div>
 
@@ -906,101 +813,291 @@
     <script>
         // Initialize data and calculations
         document.addEventListener('DOMContentLoaded', function() {
+            generateShiftData();
             initializeDailyData();
             initializeCustomerData();
             initializeVehiclePlanningData();
             calculateAllTotals();
-            updateFTDSummary();
             updateStats();
         });
 
-        // Daily data for December 1-19, 2025
-        function initializeDailyData() {
-            const dailyData = [
-                { date: '01-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 920.5, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '02-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 895.3, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '03-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1015.7, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '04-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 885.6, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '05-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1008.4, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '06-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 998.9, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '07-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1128.5, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '08-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 875.2, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '09-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1005.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '10-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1012.4, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '11-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 890.7, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '12-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 1022.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '13-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 897.6, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '14-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 906.9, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '15-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 882.3, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '16-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 918.7, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '17-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 901.5, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '18-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 92.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { date: '19-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 166.12, mm40: 0, mm50: 0, gsb: 0, rsand: 0 }
-            ];
+        // Generate random data for shifts
+        function generateShiftData() {
+            // Generate A-Shift data with random values for all columns
+            const aShiftData = {
+                date: '19-Dec-2025',
+                mm10: parseFloat((Math.random() * 50).toFixed(2)),
+                mm20: parseFloat((Math.random() * 60).toFixed(2)),
+                vsand: parseFloat((Math.random() * 40).toFixed(2)),
+                psand: parseFloat((Math.random() * 80).toFixed(2)),
+                scalping: parseFloat((Math.random() * 30).toFixed(2)),
+                gsb: parseFloat((Math.random() * 25).toFixed(2)),
+                mm40: parseFloat((Math.random() * 35).toFixed(2)),
+                mm50: parseFloat((Math.random() * 20).toFixed(2)),
+                rsand: parseFloat((Math.random() * 45).toFixed(2))
+            };
 
+            // Generate B-Shift data with random values for all columns
+            const bShiftData = {
+                date: '19-Dec-2025',
+                mm10: parseFloat((Math.random() * 60).toFixed(2)),
+                mm20: parseFloat((Math.random() * 70).toFixed(2)),
+                vsand: parseFloat((Math.random() * 50).toFixed(2)),
+                psand: parseFloat((Math.random() * 90).toFixed(2)),
+                scalping: parseFloat((Math.random() * 40).toFixed(2)),
+                gsb: parseFloat((Math.random() * 35).toFixed(2)),
+                mm40: parseFloat((Math.random() * 45).toFixed(2)),
+                mm50: parseFloat((Math.random() * 30).toFixed(2)),
+                rsand: parseFloat((Math.random() * 55).toFixed(2))
+            };
+
+            // Calculate totals
+            const aTotal = Object.values(aShiftData).slice(1).reduce((a, b) => a + b, 0);
+            const bTotal = Object.values(bShiftData).slice(1).reduce((a, b) => a + b, 0);
+            const abTotal = aTotal + bTotal;
+
+            // Update A-Shift display
+            const aShiftTbody = document.getElementById('a-shift-data');
+            aShiftTbody.innerHTML = `
+                <tr>
+                    <td class="date">${aShiftData.date}</td>
+                    <td class="numeric">${aShiftData.mm10.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.mm20.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.vsand.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.psand.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.scalping.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.gsb.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.mm40.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.mm50.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.rsand.toFixed(2)}</td>
+                    <td class="numeric highlight">${aTotal.toFixed(2)}</td>
+                </tr>
+            `;
+            document.getElementById('a-total-badge').textContent = `Total: ${aTotal.toFixed(2)}`;
+
+            // Update B-Shift display
+            const bShiftTbody = document.getElementById('b-shift-data');
+            bShiftTbody.innerHTML = `
+                <tr>
+                    <td class="date">${bShiftData.date}</td>
+                    <td class="numeric">${bShiftData.mm10.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.mm20.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.vsand.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.psand.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.scalping.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.gsb.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.mm40.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.mm50.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.rsand.toFixed(2)}</td>
+                    <td class="numeric highlight">${bTotal.toFixed(2)}</td>
+                </tr>
+            `;
+            document.getElementById('b-total-badge').textContent = `Total: ${bTotal.toFixed(2)}`;
+
+            // Update A+B Combined display
+            const abCombinedTbody = document.getElementById('ab-combined-data');
+            abCombinedTbody.innerHTML = `
+                <tr>
+                    <td class="customer-name"><i class="fas fa-sun"></i> A Shift</td>
+                    <td class="numeric">${aShiftData.mm10.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.mm20.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.vsand.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.psand.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.scalping.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.gsb.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.mm40.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.mm50.toFixed(2)}</td>
+                    <td class="numeric">${aShiftData.rsand.toFixed(2)}</td>
+                    <td class="numeric">${aTotal.toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td class="customer-name"><i class="fas fa-moon"></i> B Shift</td>
+                    <td class="numeric">${bShiftData.mm10.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.mm20.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.vsand.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.psand.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.scalping.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.gsb.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.mm40.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.mm50.toFixed(2)}</td>
+                    <td class="numeric">${bShiftData.rsand.toFixed(2)}</td>
+                    <td class="numeric">${bTotal.toFixed(2)}</td>
+                </tr>
+                <tr class="grand-total-row">
+                    <td class="customer-name"><i class="fas fa-chart-bar"></i> A + B Total</td>
+                    <td class="numeric">${(aShiftData.mm10 + bShiftData.mm10).toFixed(2)}</td>
+                    <td class="numeric">${(aShiftData.mm20 + bShiftData.mm20).toFixed(2)}</td>
+                    <td class="numeric">${(aShiftData.vsand + bShiftData.vsand).toFixed(2)}</td>
+                    <td class="numeric">${(aShiftData.psand + bShiftData.psand).toFixed(2)}</td>
+                    <td class="numeric">${(aShiftData.scalping + bShiftData.scalping).toFixed(2)}</td>
+                    <td class="numeric">${(aShiftData.gsb + bShiftData.gsb).toFixed(2)}</td>
+                    <td class="numeric">${(aShiftData.mm40 + bShiftData.mm40).toFixed(2)}</td>
+                    <td class="numeric">${(aShiftData.mm50 + bShiftData.mm50).toFixed(2)}</td>
+                    <td class="numeric">${(aShiftData.rsand + bShiftData.rsand).toFixed(2)}</td>
+                    <td class="numeric">${abTotal.toFixed(2)}</td>
+                </tr>
+            `;
+            
+            document.getElementById('ab-total-badge').textContent = `Total: ${abTotal.toFixed(2)}`;
+            document.getElementById('ftd-total-badge').textContent = abTotal.toFixed(2);
+        }
+
+        // Daily data for December 1-19, 2025 with random values for all columns
+        function initializeDailyData() {
             const tbody = document.getElementById('daily-data');
-            dailyData.forEach(day => {
+            let totalMm10 = 0, totalMm20 = 0, totalVsand = 0, totalScalping = 0, totalPsand = 0;
+            let totalMm40 = 0, totalMm50 = 0, totalGsb = 0, totalRsand = 0, grandTotal = 0;
+
+            for (let i = 1; i <= 19; i++) {
+                const day = {
+                    date: `${i}-Dec-2025`,
+                    mm10: parseFloat((Math.random() * 200).toFixed(2)),
+                    mm20: parseFloat((Math.random() * 180).toFixed(2)),
+                    vsand: parseFloat((Math.random() * 150).toFixed(2)),
+                    scalping: parseFloat((Math.random() * 100).toFixed(2)),
+                    psand: parseFloat((Math.random() * 250).toFixed(2)),
+                    mm40: parseFloat((Math.random() * 120).toFixed(2)),
+                    mm50: parseFloat((Math.random() * 90).toFixed(2)),
+                    gsb: parseFloat((Math.random() * 140).toFixed(2)),
+                    rsand: parseFloat((Math.random() * 110).toFixed(2))
+                };
+
                 const total = day.mm10 + day.mm20 + day.vsand + day.scalping + day.psand + 
                              day.mm40 + day.mm50 + day.gsb + day.rsand;
                 
-                const isToday = day.date === '19-Dec-2025';
+                const isToday = i === 19;
                 const rowClass = isToday ? 'highlight' : '';
                 
+                // Update totals
+                totalMm10 += day.mm10;
+                totalMm20 += day.mm20;
+                totalVsand += day.vsand;
+                totalScalping += day.scalping;
+                totalPsand += day.psand;
+                totalMm40 += day.mm40;
+                totalMm50 += day.mm50;
+                totalGsb += day.gsb;
+                totalRsand += day.rsand;
+                grandTotal += total;
+
                 const row = `
                     <tr>
                         <td class="date ${rowClass}">${day.date}${isToday ? ' <i class="fas fa-star" style="color: #e67e22;"></i>' : ''}</td>
-                        <td class="numeric ${rowClass}">${day.mm10 === 0 ? '' : day.mm10.toFixed(2)}</td>
-                        <td class="numeric ${rowClass}">${day.mm20 === 0 ? '' : day.mm20.toFixed(2)}</td>
-                        <td class="numeric ${rowClass}">${day.vsand === 0 ? '' : day.vsand.toFixed(2)}</td>
-                        <td class="numeric ${rowClass}">${day.scalping === 0 ? '' : day.scalping.toFixed(2)}</td>
-                        <td class="numeric ${rowClass}">${day.psand === 0 ? '' : day.psand.toFixed(2)}</td>
-                        <td class="numeric ${rowClass}">${day.mm40 === 0 ? '' : day.mm40.toFixed(2)}</td>
-                        <td class="numeric ${rowClass}">${day.mm50 === 0 ? '' : day.mm50.toFixed(2)}</td>
-                        <td class="numeric ${rowClass}">${day.gsb === 0 ? '' : day.gsb.toFixed(2)}</td>
-                        <td class="numeric ${rowClass}">${day.rsand === 0 ? '' : day.rsand.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.mm10.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.mm20.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.vsand.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.scalping.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.psand.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.mm40.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.mm50.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.gsb.toFixed(2)}</td>
+                        <td class="numeric ${rowClass}">${day.rsand.toFixed(2)}</td>
                         <td class="numeric ${rowClass}">${total.toFixed(2)}</td>
                     </tr>
                 `;
                 tbody.innerHTML += row;
-            });
+            }
+
+            // Update total row
+            document.getElementById('daily-10mm').textContent = totalMm10.toFixed(2);
+            document.getElementById('daily-20mm').textContent = totalMm20.toFixed(2);
+            document.getElementById('daily-vsand').textContent = totalVsand.toFixed(2);
+            document.getElementById('daily-scalping').textContent = totalScalping.toFixed(2);
+            document.getElementById('daily-psand').textContent = totalPsand.toFixed(2);
+            document.getElementById('daily-40mm').textContent = totalMm40.toFixed(2);
+            document.getElementById('daily-50mm').textContent = totalMm50.toFixed(2);
+            document.getElementById('daily-gsb').textContent = totalGsb.toFixed(2);
+            document.getElementById('daily-rsand').textContent = totalRsand.toFixed(2);
+            document.getElementById('daily-total').textContent = grandTotal.toFixed(2);
+            document.getElementById('daily-total-badge').textContent = grandTotal.toFixed(2);
         }
 
-        // Customer data updated with P/SAND only
+        // Customer data with random values for all columns
         function initializeCustomerData() {
             const customerData = [
-                { name: 'Construction Corp A', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 4500.2, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { name: 'Infra Builders Ltd', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 3800.5, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { name: 'Mega Projects Inc', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 5100.7, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { name: 'Roadways Const. Co.', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 2950.3, mm40: 0, mm50: 0, gsb: 0, rsand: 0 },
-                { name: 'Urban Developers', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 4200.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 }
+                { name: 'Construction Corp A' },
+                { name: 'Infra Builders Ltd' },
+                { name: 'Mega Projects Inc' },
+                { name: 'Roadways Const. Co.' },
+                { name: 'Urban Developers' }
             ];
 
             const tbody = document.getElementById('customer-data');
-            customerData.forEach(cust => {
-                const total = cust.mm10 + cust.mm20 + cust.vsand + cust.scalping + cust.psand + 
-                             cust.mm40 + cust.mm50 + cust.gsb + cust.rsand;
+            let totalMm10 = 0, totalMm20 = 0, totalVsand = 0, totalScalping = 0, totalPsand = 0;
+            let totalMm40 = 0, totalMm50 = 0, totalGsb = 0, totalRsand = 0, grandTotal = 0;
+
+            customerData.forEach((cust, index) => {
+                const custData = {
+                    mm10: parseFloat((Math.random() * 1500).toFixed(2)),
+                    mm20: parseFloat((Math.random() * 1200).toFixed(2)),
+                    vsand: parseFloat((Math.random() * 1800).toFixed(2)),
+                    scalping: parseFloat((Math.random() * 800).toFixed(2)),
+                    psand: parseFloat((Math.random() * 2500).toFixed(2)),
+                    mm40: parseFloat((Math.random() * 900).toFixed(2)),
+                    mm50: parseFloat((Math.random() * 600).toFixed(2)),
+                    gsb: parseFloat((Math.random() * 1400).toFixed(2)),
+                    rsand: parseFloat((Math.random() * 1000).toFixed(2))
+                };
+
+                const total = custData.mm10 + custData.mm20 + custData.vsand + custData.scalping + custData.psand + 
+                             custData.mm40 + custData.mm50 + custData.gsb + custData.rsand;
                 
+                // Update totals
+                totalMm10 += custData.mm10;
+                totalMm20 += custData.mm20;
+                totalVsand += custData.vsand;
+                totalScalping += custData.scalping;
+                totalPsand += custData.psand;
+                totalMm40 += custData.mm40;
+                totalMm50 += custData.mm50;
+                totalGsb += custData.gsb;
+                totalRsand += custData.rsand;
+                grandTotal += total;
+
                 const row = `
                     <tr>
                         <td class="customer-name"><i class="fas fa-building"></i> ${cust.name}</td>
-                        <td class="numeric">${cust.mm10 === 0 ? '' : cust.mm10.toFixed(2)}</td>
-                        <td class="numeric">${cust.mm20 === 0 ? '' : cust.mm20.toFixed(2)}</td>
-                        <td class="numeric">${cust.vsand === 0 ? '' : cust.vsand.toFixed(2)}</td>
-                        <td class="numeric">${cust.scalping === 0 ? '' : cust.scalping.toFixed(2)}</td>
-                        <td class="numeric">${cust.psand === 0 ? '' : cust.psand.toFixed(2)}</td>
-                        <td class="numeric">${cust.mm40 === 0 ? '' : cust.mm40.toFixed(2)}</td>
-                        <td class="numeric">${cust.mm50 === 0 ? '' : cust.mm50.toFixed(2)}</td>
-                        <td class="numeric">${cust.gsb === 0 ? '' : cust.gsb.toFixed(2)}</td>
-                        <td class="numeric">${cust.rsand === 0 ? '' : cust.rsand.toFixed(2)}</td>
+                        <td class="numeric">${custData.mm10.toFixed(2)}</td>
+                        <td class="numeric">${custData.mm20.toFixed(2)}</td>
+                        <td class="numeric">${custData.vsand.toFixed(2)}</td>
+                        <td class="numeric">${custData.scalping.toFixed(2)}</td>
+                        <td class="numeric">${custData.psand.toFixed(2)}</td>
+                        <td class="numeric">${custData.mm40.toFixed(2)}</td>
+                        <td class="numeric">${custData.mm50.toFixed(2)}</td>
+                        <td class="numeric">${custData.gsb.toFixed(2)}</td>
+                        <td class="numeric">${custData.rsand.toFixed(2)}</td>
                         <td class="numeric">${total.toFixed(2)}</td>
-                        <td class="numeric">${((total / 16512.15) * 100).toFixed(2)}%</td>
+                        <td class="numeric">${((total / grandTotal) * 100).toFixed(2)}%</td>
                     </tr>
                 `;
                 tbody.innerHTML += row;
             });
+
+            // Update totals in footer
+            document.getElementById('cust-10mm').textContent = totalMm10.toFixed(2);
+            document.getElementById('cust-20mm').textContent = totalMm20.toFixed(2);
+            document.getElementById('cust-vsand').textContent = totalVsand.toFixed(2);
+            document.getElementById('cust-scalping').textContent = totalScalping.toFixed(2);
+            document.getElementById('cust-psand').textContent = totalPsand.toFixed(2);
+            document.getElementById('cust-40mm').textContent = totalMm40.toFixed(2);
+            document.getElementById('cust-50mm').textContent = totalMm50.toFixed(2);
+            document.getElementById('cust-gsb').textContent = totalGsb.toFixed(2);
+            document.getElementById('cust-rsand').textContent = totalRsand.toFixed(2);
+            document.getElementById('cust-total').textContent = grandTotal.toFixed(2);
+
+            // Update material-wise percentages
+            document.getElementById('mat-10mm').textContent = ((totalMm10 / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-20mm').textContent = ((totalMm20 / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-vsand').textContent = ((totalVsand / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-scalping').textContent = ((totalScalping / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-psand').textContent = ((totalPsand / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-40mm').textContent = ((totalMm40 / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-50mm').textContent = ((totalMm50 / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-gsb').textContent = ((totalGsb / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-rsand').textContent = ((totalRsand / grandTotal) * 100).toFixed(2) + '%';
         }
 
-        // Vehicle Planning Data
+        // Vehicle Planning Data (kept same as original)
         function initializeVehiclePlanningData() {
             const vehicleData = [
                 {
@@ -1082,120 +1179,8 @@
 
         // Calculate all totals
         function calculateAllTotals() {
-            // Daily totals
-            const dailyRows = document.querySelectorAll('#daily-data tr');
-            const dailyTotals = {
-                mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 0,
-                mm40: 0, mm50: 0, gsb: 0, rsand: 0, total: 0
-            };
-
-            dailyRows.forEach(row => {
-                const cells = row.querySelectorAll('td.numeric');
-                dailyTotals.mm10 += parseFloat(cells[0].textContent) || 0;
-                dailyTotals.mm20 += parseFloat(cells[1].textContent) || 0;
-                dailyTotals.vsand += parseFloat(cells[2].textContent) || 0;
-                dailyTotals.scalping += parseFloat(cells[3].textContent) || 0;
-                dailyTotals.psand += parseFloat(cells[4].textContent) || 0;
-                dailyTotals.mm40 += parseFloat(cells[5].textContent) || 0;
-                dailyTotals.mm50 += parseFloat(cells[6].textContent) || 0;
-                dailyTotals.gsb += parseFloat(cells[7].textContent) || 0;
-                dailyTotals.rsand += parseFloat(cells[8].textContent) || 0;
-            });
-
-            dailyTotals.total = dailyTotals.mm10 + dailyTotals.mm20 + dailyTotals.vsand + 
-                               dailyTotals.scalping + dailyTotals.psand + dailyTotals.mm40 + 
-                               dailyTotals.mm50 + dailyTotals.gsb + dailyTotals.rsand;
-
-            // Update daily totals display
-            document.getElementById('daily-10mm').textContent = dailyTotals.mm10 === 0 ? '' : dailyTotals.mm10.toFixed(2);
-            document.getElementById('daily-20mm').textContent = dailyTotals.mm20 === 0 ? '' : dailyTotals.mm20.toFixed(2);
-            document.getElementById('daily-vsand').textContent = dailyTotals.vsand === 0 ? '' : dailyTotals.vsand.toFixed(2);
-            document.getElementById('daily-scalping').textContent = dailyTotals.scalping === 0 ? '' : dailyTotals.scalping.toFixed(2);
-            document.getElementById('daily-psand').textContent = dailyTotals.psand === 0 ? '' : dailyTotals.psand.toFixed(2);
-            document.getElementById('daily-40mm').textContent = dailyTotals.mm40 === 0 ? '' : dailyTotals.mm40.toFixed(2);
-            document.getElementById('daily-50mm').textContent = dailyTotals.mm50 === 0 ? '' : dailyTotals.mm50.toFixed(2);
-            document.getElementById('daily-gsb').textContent = dailyTotals.gsb === 0 ? '' : dailyTotals.gsb.toFixed(2);
-            document.getElementById('daily-rsand').textContent = dailyTotals.rsand === 0 ? '' : dailyTotals.rsand.toFixed(2);
-            document.getElementById('daily-total').textContent = dailyTotals.total.toFixed(2);
-
-            // Customer totals
-            const customerRows = document.querySelectorAll('#customer-data tr');
-            const custTotals = {
-                mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 0,
-                mm40: 0, mm50: 0, gsb: 0, rsand: 0, total: 0
-            };
-
-            customerRows.forEach(row => {
-                const cells = row.querySelectorAll('td.numeric');
-                for(let i = 0; i < 9; i++) {
-                    const value = parseFloat(cells[i].textContent) || 0;
-                    switch(i) {
-                        case 0: custTotals.mm10 += value; break;
-                        case 1: custTotals.mm20 += value; break;
-                        case 2: custTotals.vsand += value; break;
-                        case 3: custTotals.scalping += value; break;
-                        case 4: custTotals.psand += value; break;
-                        case 5: custTotals.mm40 += value; break;
-                        case 6: custTotals.mm50 += value; break;
-                        case 7: custTotals.gsb += value; break;
-                        case 8: custTotals.rsand += value; break;
-                    }
-                }
-            });
-
-            custTotals.total = custTotals.mm10 + custTotals.mm20 + custTotals.vsand + 
-                              custTotals.scalping + custTotals.psand + custTotals.mm40 + 
-                              custTotals.mm50 + custTotals.gsb + custTotals.rsand;
-
-            // Update customer totals
-            document.getElementById('cust-10mm').textContent = custTotals.mm10 === 0 ? '' : custTotals.mm10.toFixed(2);
-            document.getElementById('cust-20mm').textContent = custTotals.mm20 === 0 ? '' : custTotals.mm20.toFixed(2);
-            document.getElementById('cust-vsand').textContent = custTotals.vsand === 0 ? '' : custTotals.vsand.toFixed(2);
-            document.getElementById('cust-scalping').textContent = custTotals.scalping === 0 ? '' : custTotals.scalping.toFixed(2);
-            document.getElementById('cust-psand').textContent = custTotals.psand === 0 ? '' : custTotals.psand.toFixed(2);
-            document.getElementById('cust-40mm').textContent = custTotals.mm40 === 0 ? '' : custTotals.mm40.toFixed(2);
-            document.getElementById('cust-50mm').textContent = custTotals.mm50 === 0 ? '' : custTotals.mm50.toFixed(2);
-            document.getElementById('cust-gsb').textContent = custTotals.gsb === 0 ? '' : custTotals.gsb.toFixed(2);
-            document.getElementById('cust-rsand').textContent = custTotals.rsand === 0 ? '' : custTotals.rsand.toFixed(2);
-            document.getElementById('cust-total').textContent = custTotals.total.toFixed(2);
-
-            // Update material-wise percentages
-            const grandTotal = custTotals.total || 1;
-            document.getElementById('mat-10mm').textContent = ((custTotals.mm10 / grandTotal) * 100).toFixed(2) + '%';
-            document.getElementById('mat-20mm').textContent = ((custTotals.mm20 / grandTotal) * 100).toFixed(2) + '%';
-            document.getElementById('mat-vsand').textContent = ((custTotals.vsand / grandTotal) * 100).toFixed(2) + '%';
-            document.getElementById('mat-scalping').textContent = ((custTotals.scalping / grandTotal) * 100).toFixed(2) + '%';
-            document.getElementById('mat-psand').textContent = ((custTotals.psand / grandTotal) * 100).toFixed(2) + '%';
-            document.getElementById('mat-40mm').textContent = ((custTotals.mm40 / grandTotal) * 100).toFixed(2) + '%';
-            document.getElementById('mat-50mm').textContent = ((custTotals.mm50 / grandTotal) * 100).toFixed(2) + '%';
-            document.getElementById('mat-gsb').textContent = ((custTotals.gsb / grandTotal) * 100).toFixed(2) + '%';
-            document.getElementById('mat-rsand').textContent = ((custTotals.rsand / grandTotal) * 100).toFixed(2) + '%';
-            document.getElementById('mat-total').textContent = '100.00%';
-        }
-
-        // Update FTD Summary with new data
-        function updateFTDSummary() {
-            const aShift = {
-                mm10: 0, mm20: 0, vsand: 0, psand: 45.67, scalping: 0,
-                gsb: 0, mm40: 0, mm50: 0, rsand: 0, total: 45.67
-            };
-            
-            const bShift = {
-                mm10: 0, mm20: 0, vsand: 0, psand: 120.45, scalping: 0,
-                gsb: 0, mm40: 0, mm50: 0, rsand: 0, total: 120.45
-            };
-
-            // Calculate FTD totals
-            document.getElementById('ftd-10mm').textContent = (aShift.mm10 + bShift.mm10) === 0 ? '' : (aShift.mm10 + bShift.mm10).toFixed(2);
-            document.getElementById('ftd-20mm').textContent = (aShift.mm20 + bShift.mm20) === 0 ? '' : (aShift.mm20 + bShift.mm20).toFixed(2);
-            document.getElementById('ftd-vsand').textContent = (aShift.vsand + bShift.vsand) === 0 ? '' : (aShift.vsand + bShift.vsand).toFixed(2);
-            document.getElementById('ftd-psand').textContent = (aShift.psand + bShift.psand) === 0 ? '' : (aShift.psand + bShift.psand).toFixed(2);
-            document.getElementById('ftd-scalping').textContent = (aShift.scalping + bShift.scalping) === 0 ? '' : (aShift.scalping + bShift.scalping).toFixed(2);
-            document.getElementById('ftd-gsb').textContent = (aShift.gsb + bShift.gsb) === 0 ? '' : (aShift.gsb + bShift.gsb).toFixed(2);
-            document.getElementById('ftd-40mm').textContent = (aShift.mm40 + bShift.mm40) === 0 ? '' : (aShift.mm40 + bShift.mm40).toFixed(2);
-            document.getElementById('ftd-50mm').textContent = (aShift.mm50 + bShift.mm50) === 0 ? '' : (aShift.mm50 + bShift.mm50).toFixed(2);
-            document.getElementById('ftd-rsand').textContent = (aShift.rsand + bShift.rsand) === 0 ? '' : (aShift.rsand + bShift.rsand).toFixed(2);
-            document.getElementById('ftd-total').textContent = (aShift.total + bShift.total).toFixed(2);
+            // Already calculated inline
+            console.log("All totals calculated");
         }
 
         // Update statistics
@@ -1204,8 +1189,8 @@
         }
 
         // Navigation functions
-        function scrollToReport(reportNumber) {
-            const report = document.getElementById(`report${reportNumber}`);
+        function scrollToReport(reportId) {
+            const report = document.getElementById(reportId);
             if (report) {
                 report.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
@@ -1226,6 +1211,21 @@
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             alert('Dark mode toggle would change theme colors in a full implementation.');
+        }
+
+        // Add refresh functionality to regenerate data
+        function refreshData() {
+            document.getElementById('a-shift-data').innerHTML = '';
+            document.getElementById('b-shift-data').innerHTML = '';
+            document.getElementById('ab-combined-data').innerHTML = '';
+            document.getElementById('daily-data').innerHTML = '';
+            document.getElementById('customer-data').innerHTML = '';
+            
+            generateShiftData();
+            initializeDailyData();
+            initializeCustomerData();
+            calculateAllTotals();
+            updateStats();
         }
     </script>
 </body>
