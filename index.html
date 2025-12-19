@@ -3,583 +3,750 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quarry / Crusher Dispatch Reports - December 2025</title>
+    <title>Quarry Dispatch Dashboard</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: #f5f5f5;
+        :root {
+            --header-yellow: #fff2cc;
+            --header-orange: #f8b88b;
+            --header-green: #d5e8d4;
+            --header-light-green: #e1f5e1;
+            --total-light-green: #d9ead3;
+            --total-dark-green: #c9daf8;
+            --material-percent-bg: #fff2cc;
+            --border-color: #d9d9d9;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --font-primary: 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-primary);
+        }
+
+        body {
+            background-color: #f5f5f5;
             padding: 20px;
             color: #333;
+            line-height: 1.5;
         }
+
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
-        h1 {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .print-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            z-index: 1000;
-        }
-        .print-btn:hover {
-            background: #0056b3;
-        }
-        .report-section {
-            margin-bottom: 60px;
+
+        .section {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
         }
-        .report-header {
-            padding: 15px;
-            margin: -20px -20px 20px -20px;
-            border-radius: 10px 10px 0 0;
-            text-align: center;
-            font-size: 24px;
+
+        .section-header {
+            padding: 15px 20px;
             font-weight: bold;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: right;
-        }
-        th {
-            background-color: #f0f0f0;
+            font-size: 1.2rem;
+            margin: 0;
             position: sticky;
             top: 0;
             z-index: 10;
         }
-        th:first-child, td:first-child {
+
+        .section-header.yellow {
+            background-color: var(--header-yellow);
+            color: #cc0000;
+        }
+
+        .section-header.orange {
+            background-color: var(--header-orange);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .section-header.green {
+            background-color: var(--header-green);
+            color: #cc0000;
+        }
+
+        .section-header.light-green {
+            background-color: var(--header-light-green);
+            color: #cc0000;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1200px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 56px;
+            z-index: 9;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 10px 12px;
             text-align: center;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
         }
-        th:nth-child(1), td:nth-child(1) {
-            text-align: center;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .total-row {
-            font-weight: bold;
-            background-color: #d4edda !important;
-        }
-        .grand-total-row {
-            font-weight: bold;
-            background-color: #198754 !important;
-            color: white;
-        }
-        .yellow-total {
-            background-color: #ffff99 !important;
-            font-weight: bold;
-        }
-        .numeric {
+
+        td.numeric {
             text-align: right;
+            font-family: 'Segoe UI', 'Roboto Mono', monospace;
         }
+
+        td.date {
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .total-row {
+            background-color: var(--total-light-green);
+            font-weight: bold;
+        }
+
+        .grand-total-row {
+            background-color: var(--total-dark-green);
+            font-weight: bold;
+        }
+
+        .material-percent-row {
+            background-color: var(--material-percent-bg);
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background: #f5f5f5;
+            z-index: 100;
+            padding: 15px;
+            margin: -15px -15px 15px -15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #3a5a8a;
+        }
+
+        button.print-btn {
+            background-color: #2e7d32;
+        }
+
+        button.print-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        .scroll-indicator {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .customer-name {
+            text-align: left;
+            font-weight: 500;
+        }
+
         @media print {
-            body { padding: 0; background: white; }
-            .print-btn { display: none; }
-            .report-section {
-                box-shadow: none;
-                page-break-after: always;
-                margin-bottom: 0;
+            body {
+                background: white;
+                padding: 0;
             }
-            .report-section:last-child { page-break-after: avoid; }
-            .container { max-width: none; }
+            
+            .controls, .nav-buttons, .scroll-indicator {
+                display: none;
+            }
+            
+            .section {
+                box-shadow: none;
+                border: 1px solid #000;
+                break-inside: avoid;
+            }
+            
+            .table-container {
+                overflow: visible;
+            }
+            
+            table {
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .section-header {
+                padding: 12px 15px;
+                font-size: 1.1rem;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="controls">
+        <h1 style="margin-right: auto; color: #2c3e50;">🏭 Quarry Dispatch Dashboard</h1>
+        <button onclick="printPage()" class="print-btn">🖨️ Print Report</button>
+        <button onclick="scrollToTop()">⬆️ Top</button>
+    </div>
+
     <div class="container">
-        <h1>Quarry / Crusher Dispatch Reports<br>December 2025 (as of 19-Dec-2025)</h1>
-        <button class="print-btn" onclick="window.print()">Print Reports</button>
-
-        <!-- Report 1: A-Shift -->
-        <div class="report-section" id="a-shift">
-            <div class="report-header" style="background:#ffff99; color:#cc0000;">
-                A-Shift Dispatched Details
+        <!-- Report 1: A-Shift Dispatched Details -->
+        <div class="section" id="report1">
+            <div class="section-header yellow">A-Shift Dispatched Details</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>P/SAND</th>
+                            <th>Scalping</th>
+                            <th>GSB / Wet Mix</th>
+                            <th>40 MM</th>
+                            <th>50 MM</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="date">18-Dec-2025</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">22.22</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">22.22</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td class="customer-name">Total</td>
+                            <td class="numeric" id="a-10mm">0.00</td>
+                            <td class="numeric" id="a-20mm">0.00</td>
+                            <td class="numeric" id="a-vsand">0.00</td>
+                            <td class="numeric" id="a-psand">22.22</td>
+                            <td class="numeric" id="a-scalping">0.00</td>
+                            <td class="numeric" id="a-gsb">0.00</td>
+                            <td class="numeric" id="a-40mm">0.00</td>
+                            <td class="numeric" id="a-50mm">0.00</td>
+                            <td class="numeric" id="a-rsand">0.00</td>
+                            <td class="numeric" id="a-total">22.22</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>10 MM</th>
-                        <th>20 MM</th>
-                        <th>V/SAND</th>
-                        <th>P/SAND</th>
-                        <th>Scalping</th>
-                        <th>GSB / Wet Mix</th>
-                        <th>40 MM</th>
-                        <th>50 MM</th>
-                        <th>R/Sand</th>
-                        <th>TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody id="a-shift-body">
-                    <!-- Data rows will be inserted by JS -->
-                </tbody>
-                <tfoot>
-                    <tr class="total-row">
-                        <td>Total</td>
-                        <td class="a-total-10mm">0.00</td>
-                        <td class="a-total-20mm">0.00</td>
-                        <td class="a-total-vsand">0.00</td>
-                        <td class="a-total-psand">0.00</td>
-                        <td class="a-total-scalping">0.00</td>
-                        <td class="a-total-gsb">0.00</td>
-                        <td class="a-total-40mm">0.00</td>
-                        <td class="a-total-50mm">0.00</td>
-                        <td class="a-total-rsand">0.00</td>
-                        <td class="a-total-total">0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
 
-        <!-- Report 2: B-Shift -->
-        <div class="report-section" id="b-shift">
-            <div class="report-header" style="background:#ffff99; color:#cc0000;">
-                B-Shift Dispatched Details
+        <!-- Report 2: B-Shift Dispatched Details -->
+        <div class="section" id="report2">
+            <div class="section-header yellow">B-Shift Dispatched Details</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>P/SAND</th>
+                            <th>Scalping</th>
+                            <th>GSB / Wet Mix</th>
+                            <th>40 MM</th>
+                            <th>50 MM</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="date">18-Dec-2025</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">70.58</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">70.58</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td class="customer-name">Total</td>
+                            <td class="numeric" id="b-10mm">0.00</td>
+                            <td class="numeric" id="b-20mm">0.00</td>
+                            <td class="numeric" id="b-vsand">0.00</td>
+                            <td class="numeric" id="b-psand">70.58</td>
+                            <td class="numeric" id="b-scalping">0.00</td>
+                            <td class="numeric" id="b-gsb">0.00</td>
+                            <td class="numeric" id="b-40mm">0.00</td>
+                            <td class="numeric" id="b-50mm">0.00</td>
+                            <td class="numeric" id="b-rsand">0.00</td>
+                            <td class="numeric" id="b-total">70.58</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>10 MM</th>
-                        <th>20 MM</th>
-                        <th>V/SAND</th>
-                        <th>P/SAND</th>
-                        <th>Scalping</th>
-                        <th>GSB / Wet Mix</th>
-                        <th>40 MM</th>
-                        <th>50 MM</th>
-                        <th>R/Sand</th>
-                        <th>TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody id="b-shift-body">
-                    <!-- Data rows will be inserted by JS -->
-                </tbody>
-                <tfoot>
-                    <tr class="total-row">
-                        <td>Total</td>
-                        <td class="b-total-10mm">0.00</td>
-                        <td class="b-total-20mm">0.00</td>
-                        <td class="b-total-vsand">0.00</td>
-                        <td class="b-total-psand">0.00</td>
-                        <td class="b-total-scalping">0.00</td>
-                        <td class="b-total-gsb">0.00</td>
-                        <td class="b-total-40mm">0.00</td>
-                        <td class="b-total-50mm">0.00</td>
-                        <td class="b-total-rsand">0.00</td>
-                        <td class="b-total-total">0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
 
-        <!-- Report 3: FTD Summary -->
-        <div class="report-section" id="ftd-summary">
-            <div class="report-header" style="background:#ffb366; color:black;">
-                FTD Dispatched Summary (A Shift + B Shift)
+        <!-- Report 3: FTD Dispatch Summary -->
+        <div class="section" id="report3">
+            <div class="section-header orange">FTD Dispatched Summary (A Shift + B Shift)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shift</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>P/SAND</th>
+                            <th>Scalping</th>
+                            <th>GSB / Wet Mix</th>
+                            <th>40 MM</th>
+                            <th>50 MM</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="customer-name">A Shift</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">22.22</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">22.22</td>
+                        </tr>
+                        <tr>
+                            <td class="customer-name">B Shift</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">70.58</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">70.58</td>
+                        </tr>
+                        <tr class="grand-total-row">
+                            <td class="customer-name">FTD Total</td>
+                            <td class="numeric" id="ftd-10mm">0.00</td>
+                            <td class="numeric" id="ftd-20mm">0.00</td>
+                            <td class="numeric" id="ftd-vsand">0.00</td>
+                            <td class="numeric" id="ftd-psand">92.80</td>
+                            <td class="numeric" id="ftd-scalping">0.00</td>
+                            <td class="numeric" id="ftd-gsb">0.00</td>
+                            <td class="numeric" id="ftd-40mm">0.00</td>
+                            <td class="numeric" id="ftd-50mm">0.00</td>
+                            <td class="numeric" id="ftd-rsand">0.00</td>
+                            <td class="numeric" id="ftd-total">92.80</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>10 MM</th>
-                        <th>20 MM</th>
-                        <th>V/SAND</th>
-                        <th>P/SAND</th>
-                        <th>Scalping</th>
-                        <th>GSB / Wet Mix</th>
-                        <th>40 MM</th>
-                        <th>50 MM</th>
-                        <th>R/Sand</th>
-                        <th>TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>19-Dec-2025</td>
-                        <td id="ftd-10mm">0.00</td>
-                        <td id="ftd-20mm">0.00</td>
-                        <td id="ftd-vsand">0.00</td>
-                        <td id="ftd-psand">0.00</td>
-                        <td id="ftd-scalping">0.00</td>
-                        <td id="ftd-gsb">0.00</td>
-                        <td id="ftd-40mm">0.00</td>
-                        <td id="ftd-50mm">0.00</td>
-                        <td id="ftd-rsand">0.00</td>
-                        <td id="ftd-total">0.00</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr class="grand-total-row">
-                        <td>Grand Total</td>
-                        <td id="ftd-grand-10mm">0.00</td>
-                        <td id="ftd-grand-20mm">0.00</td>
-                        <td id="ftd-grand-vsand">0.00</td>
-                        <td id="ftd-grand-psand">0.00</td>
-                        <td id="ftd-grand-scalping">0.00</td>
-                        <td id="ftd-grand-gsb">0.00</td>
-                        <td id="ftd-grand-40mm">0.00</td>
-                        <td id="ftd-grand-50mm">0.00</td>
-                        <td id="ftd-grand-rsand">0.00</td>
-                        <td id="ftd-grand-total">0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
 
         <!-- Report 4: Daily Dispatched Details -->
-        <div class="report-section" id="daily-details">
-            <div class="report-header" style="background:#99cc99; color:#cc0000;">
-                Dispatched Details
+        <div class="section" id="report4">
+            <div class="section-header green">Dispatched Details (Date-wise: 01-12-2025 to 18-12-2025)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>Scalping</th>
+                            <th>P/Sand</th>
+                            <th>40 MM</th>
+                            <th>50 MM</th>
+                            <th>GSB/WET MIX</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="daily-data">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="grand-total-row">
+                            <td class="customer-name">Total</td>
+                            <td class="numeric" id="daily-10mm">0.00</td>
+                            <td class="numeric" id="daily-20mm">0.00</td>
+                            <td class="numeric" id="daily-vsand">0.00</td>
+                            <td class="numeric" id="daily-scalping">0.00</td>
+                            <td class="numeric" id="daily-psand">0.00</td>
+                            <td class="numeric" id="daily-40mm">0.00</td>
+                            <td class="numeric" id="daily-50mm">0.00</td>
+                            <td class="numeric" id="daily-gsb">0.00</td>
+                            <td class="numeric" id="daily-rsand">0.00</td>
+                            <td class="numeric" id="daily-total">16512.15</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>10 MM</th>
-                        <th>20 MM</th>
-                        <th>V/SAND</th>
-                        <th>Scalping</th>
-                        <th>P/Sand</th>
-                        <th>40 MM</th>
-                        <th>50 MM</th>
-                        <th>GSB/WET MIX</th>
-                        <th>R/Sand</th>
-                        <th>TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody id="daily-body">
-                    <!-- Rows from 01 to 19 Dec 2025 -->
-                </tbody>
-                <tfoot>
-                    <tr class="total-row">
-                        <td>Total</td>
-                        <td id="daily-total-10mm">0.00</td>
-                        <td id="daily-total-20mm">0.00</td>
-                        <td id="daily-total-vsand">0.00</td>
-                        <td id="daily-total-scalping">0.00</td>
-                        <td id="daily-total-psand">0.00</td>
-                        <td id="daily-total-40mm">0.00</td>
-                        <td id="daily-total-50mm">0.00</td>
-                        <td id="daily-total-gsb">0.00</td>
-                        <td id="daily-total-rsand">0.00</td>
-                        <td id="daily-total-total">0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
 
-        <!-- Report 5: Customer-wise Cumulative -->
-        <div class="report-section" id="customer-wise">
-            <div class="report-header" style="background:#e6f3e6; color:#cc0000;">
-                DECEMBER-2025 – Customer Wise Cumulative Dispatched Details
+        <!-- Report 5: Customer-wise Cumulative Dispatch -->
+        <div class="section" id="report5">
+            <div class="section-header light-green">DECEMBER-2025 – Customer Wise Cumulative Dispatched Details</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>Scalping</th>
+                            <th>P/Sand</th>
+                            <th>40 MM</th>
+                            <th>50 MM</th>
+                            <th>GSB/WET MIX</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                            <th>Customer-wise Dispatch Participation (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customer-data">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="customer-name">Total</td>
+                            <td class="numeric" id="cust-10mm">0.00</td>
+                            <td class="numeric" id="cust-20mm">0.00</td>
+                            <td class="numeric" id="cust-vsand">0.00</td>
+                            <td class="numeric" id="cust-scalping">0.00</td>
+                            <td class="numeric" id="cust-psand">0.00</td>
+                            <td class="numeric" id="cust-40mm">0.00</td>
+                            <td class="numeric" id="cust-50mm">0.00</td>
+                            <td class="numeric" id="cust-gsb">0.00</td>
+                            <td class="numeric" id="cust-rsand">0.00</td>
+                            <td class="numeric" id="cust-total">0.00</td>
+                            <td class="numeric">100.00%</td>
+                        </tr>
+                        <tr class="material-percent-row">
+                            <td class="customer-name">Material Wise (%) Participation</td>
+                            <td class="numeric" id="mat-10mm">0.00%</td>
+                            <td class="numeric" id="mat-20mm">0.00%</td>
+                            <td class="numeric" id="mat-vsand">0.00%</td>
+                            <td class="numeric" id="mat-scalping">0.00%</td>
+                            <td class="numeric" id="mat-psand">0.00%</td>
+                            <td class="numeric" id="mat-40mm">0.00%</td>
+                            <td class="numeric" id="mat-50mm">0.00%</td>
+                            <td class="numeric" id="mat-gsb">0.00%</td>
+                            <td class="numeric" id="mat-rsand">0.00%</td>
+                            <td class="numeric" id="mat-total">0.00%</td>
+                            <td class="numeric">-</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="text-align:left;">Customer Name</th>
-                        <th>10 MM</th>
-                        <th>20 MM</th>
-                        <th>V/SAND</th>
-                        <th>Scalping</th>
-                        <th>P/Sand</th>
-                        <th>40 MM</th>
-                        <th>50 MM</th>
-                        <th>GSB/WET MIX</th>
-                        <th>R/Sand</th>
-                        <th>TOTAL</th>
-                        <th>Customer-wise Dispatch Participation (%)</th>
-                    </tr>
-                </thead>
-                <tbody id="customer-body">
-                    <!-- Customer rows -->
-                </tbody>
-                <tfoot>
-                    <tr class="yellow-total">
-                        <td>Total</td>
-                        <td id="cust-total-10mm">0.00</td>
-                        <td id="cust-total-20mm">0.00</td>
-                        <td id="cust-total-vsand">0.00</td>
-                        <td id="cust-total-scalping">0.00</td>
-                        <td id="cust-total-psand">0.00</td>
-                        <td id="cust-total-40mm">0.00</td>
-                        <td id="cust-total-50mm">0.00</td>
-                        <td id="cust-total-gsb">0.00</td>
-                        <td id="cust-total-rsand">0.00</td>
-                        <td id="cust-grand-total">0.00</td>
-                        <td>100.00%</td>
-                    </tr>
-                    <tr class="total-row">
-                        <td>Material Wise (%) Participation</td>
-                        <td id="mat-pct-10mm">0.00%</td>
-                        <td id="mat-pct-20mm">0.00%</td>
-                        <td id="mat-pct-vsand">0.00%</td>
-                        <td id="mat-pct-scalping">0.00%</td>
-                        <td id="mat-pct-psand">0.00%</td>
-                        <td id="mat-pct-40mm">0.00%</td>
-                        <td id="mat-pct-50mm">0.00%</td>
-                        <td id="mat-pct-gsb">0.00%</td>
-                        <td id="mat-pct-rsand">0.00%</td>
-                        <td>100.00%</td>
-                        <td>-</td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
     </div>
 
+    <div class="nav-buttons">
+        <button onclick="scrollToReport(1)">Report 1: A-Shift</button>
+        <button onclick="scrollToReport(2)">Report 2: B-Shift</button>
+        <button onclick="scrollToReport(3)">Report 3: FTD Summary</button>
+        <button onclick="scrollToReport(4)">Report 4: Daily Details</button>
+        <button onclick="scrollToReport(5)">Report 5: Customer-wise</button>
+    </div>
+
+    <div class="scroll-indicator">Scroll horizontally to view full table on mobile devices</div>
+
     <script>
-        // Helper to format numbers
-        function fmt(n) {
-            return Number(n).toFixed(2);
+        // Initialize data and calculations
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDailyData();
+            initializeCustomerData();
+            calculateAllTotals();
+            updateFTDSummary();
+        });
+
+        // Sample daily data for December 1-18, 2025
+        function initializeDailyData() {
+            const dailyData = [
+                { date: '01-Dec-2025', mm10: 150.5, mm20: 200.3, vsand: 180.2, scalping: 120.8, psand: 300.1, mm40: 95.7, mm50: 0, gsb: 210.4, rsand: 85.6 },
+                { date: '02-Dec-2025', mm10: 145.2, mm20: 195.8, vsand: 175.9, scalping: 118.7, psand: 295.3, mm40: 92.4, mm50: 0, gsb: 205.1, rsand: 82.9 },
+                { date: '03-Dec-2025', mm10: 160.8, mm20: 210.5, vsand: 190.3, scalping: 125.6, psand: 315.7, mm40: 98.2, mm50: 0, gsb: 220.9, rsand: 90.2 },
+                { date: '04-Dec-2025', mm10: 142.1, mm20: 188.9, vsand: 170.5, scalping: 115.4, psand: 285.6, mm40: 89.8, mm50: 0, gsb: 198.7, rsand: 80.3 },
+                { date: '05-Dec-2025', mm10: 155.7, mm20: 205.2, vsand: 185.8, scalping: 122.9, psand: 308.4, mm40: 96.3, mm50: 0, gsb: 215.6, rsand: 87.5 },
+                { date: '06-Dec-2025', mm10: 148.3, mm20: 198.6, vsand: 178.4, scalping: 119.8, psand: 298.9, mm40: 93.7, mm50: 0, gsb: 208.3, rsand: 84.1 },
+                { date: '07-Dec-2025', mm10: 165.4, mm20: 220.7, vsand: 198.6, scalping: 130.2, psand: 328.5, mm40: 102.1, mm50: 0, gsb: 230.8, rsand: 95.3 },
+                { date: '08-Dec-2025', mm10: 138.9, mm20: 182.4, vsand: 165.8, scalping: 112.3, psand: 275.2, mm40: 86.9, mm50: 0, gsb: 192.5, rsand: 78.2 },
+                { date: '09-Dec-2025', mm10: 152.6, mm20: 202.1, vsand: 183.7, scalping: 121.5, psand: 305.8, mm40: 95.2, mm50: 0, gsb: 212.9, rsand: 86.4 },
+                { date: '10-Dec-2025', mm10: 158.2, mm20: 208.8, vsand: 188.9, scalping: 124.7, psand: 312.4, mm40: 97.5, mm50: 0, gsb: 218.6, rsand: 88.9 },
+                { date: '11-Dec-2025', mm10: 143.5, mm20: 191.3, vsand: 173.2, scalping: 117.1, psand: 290.7, mm40: 91.4, mm50: 0, gsb: 203.8, rsand: 81.7 },
+                { date: '12-Dec-2025', mm10: 162.9, mm20: 215.6, vsand: 195.4, scalping: 128.3, psand: 322.8, mm40: 100.3, mm50: 0, gsb: 225.7, rsand: 92.6 },
+                { date: '13-Dec-2025', mm10: 147.8, mm20: 197.2, vsand: 177.5, scalping: 119.2, psand: 297.6, mm40: 93.1, mm50: 0, gsb: 207.4, rsand: 83.8 },
+                { date: '14-Dec-2025', mm10: 154.3, mm20: 203.9, vsand: 184.6, scalping: 122.1, psand: 306.9, mm40: 95.8, mm50: 0, gsb: 214.3, rsand: 87.1 },
+                { date: '15-Dec-2025', mm10: 140.7, mm20: 186.5, vsand: 168.9, scalping: 114.6, psand: 282.3, mm40: 88.7, mm50: 0, gsb: 196.8, rsand: 79.5 },
+                { date: '16-Dec-2025', mm10: 159.6, mm20: 210.3, vsand: 190.8, scalping: 126.5, psand: 318.7, mm40: 99.2, mm50: 0, gsb: 222.4, rsand: 91.2 },
+                { date: '17-Dec-2025', mm10: 149.4, mm20: 199.7, vsand: 179.8, scalping: 120.4, psand: 301.5, mm40: 94.3, mm50: 0, gsb: 209.8, rsand: 85.3 },
+                { date: '18-Dec-2025', mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 92.8, mm40: 0, mm50: 0, gsb: 0, rsand: 0 }
+            ];
+
+            const tbody = document.getElementById('daily-data');
+            dailyData.forEach(day => {
+                const total = day.mm10 + day.mm20 + day.vsand + day.scalping + day.psand + 
+                             day.mm40 + day.mm50 + day.gsb + day.rsand;
+                
+                const row = `
+                    <tr>
+                        <td class="date">${day.date}</td>
+                        <td class="numeric">${day.mm10.toFixed(2)}</td>
+                        <td class="numeric">${day.mm20.toFixed(2)}</td>
+                        <td class="numeric">${day.vsand.toFixed(2)}</td>
+                        <td class="numeric">${day.scalping.toFixed(2)}</td>
+                        <td class="numeric">${day.psand.toFixed(2)}</td>
+                        <td class="numeric">${day.mm40.toFixed(2)}</td>
+                        <td class="numeric">${day.mm50.toFixed(2)}</td>
+                        <td class="numeric">${day.gsb.toFixed(2)}</td>
+                        <td class="numeric">${day.rsand.toFixed(2)}</td>
+                        <td class="numeric">${total.toFixed(2)}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
         }
 
-        // Sample data - you can expand or replace with real data
-        const aShiftData = [
-            {date: "19-Dec-2025", p10: 0, p20: 0, vsand: 0, psand: 45.67, scalping: 0, gsb: 0, p40: 0, p50: 0, rsand: 0},
-            // Add more days if needed
-        ];
+        // Sample customer data
+        function initializeCustomerData() {
+            const customerData = [
+                { name: 'Customer A', mm10: 450.2, mm20: 600.8, vsand: 540.6, scalping: 360.9, psand: 900.3, mm40: 285.9, mm50: 0, gsb: 630.7, rsand: 255.4 },
+                { name: 'Customer B', mm10: 380.5, mm20: 510.2, vsand: 459.3, scalping: 306.7, psand: 765.8, mm40: 242.1, mm50: 0, gsb: 534.9, rsand: 216.8 },
+                { name: 'Customer C', mm10: 510.7, mm20: 680.9, vsand: 612.8, scalping: 408.5, psand: 1021.2, mm40: 323.4, mm50: 0, gsb: 714.2, rsand: 289.3 },
+                { name: 'Customer D', mm10: 295.3, mm20: 395.1, vsand: 355.6, scalping: 237.2, psand: 592.7, mm40: 187.5, mm50: 0, gsb: 414.8, rsand: 168.1 },
+                { name: 'Customer E', mm10: 420.8, mm20: 562.4, vsand: 506.2, scalping: 337.6, psand: 843.9, mm40: 267.2, mm50: 0, gsb: 590.4, rsand: 239.2 }
+            ];
 
-        const bShiftData = [
-            {date: "19-Dec-2025", p10: 0, p20: 0, vsand: 0, psand: 120.45, scalping: 0, gsb: 0, p40: 0, p50: 0, rsand: 0},
-        ];
-
-        // Populate A-Shift
-        const aBody = document.getElementById('a-shift-body');
-        let aTotals = {p10:0, p20:0, vsand:0, psand:0, scalping:0, gsb:0, p40:0, p50:0, rsand:0, total:0};
-        aShiftData.forEach(row => {
-            const tr = document.createElement('tr');
-            const rowTotal = row.p10 + row.p20 + row.vsand + row.psand + row.scalping + row.gsb + row.p40 + row.p50 + row.rsand;
-            tr.innerHTML = `
-                <td>${row.date}</td>
-                <td>${fmt(row.p10)}</td>
-                <td>${fmt(row.p20)}</td>
-                <td>${fmt(row.vsand)}</td>
-                <td>${fmt(row.psand)}</td>
-                <td>${fmt(row.scalping)}</td>
-                <td>${fmt(row.gsb)}</td>
-                <td>${fmt(row.p40)}</td>
-                <td>${fmt(row.p50)}</td>
-                <td>${fmt(row.rsand)}</td>
-                <td>${fmt(rowTotal)}</td>
-            `;
-            aBody.appendChild(tr);
-
-            // Accumulate totals
-            aTotals.p10 += row.p10;
-            aTotals.p20 += row.p20;
-            aTotals.vsand += row.vsand;
-            aTotals.psand += row.psand;
-            aTotals.scalping += row.scalping;
-            aTotals.gsb += row.gsb;
-            aTotals.p40 += row.p40;
-            aTotals.p50 += row.p50;
-            aTotals.rsand += row.rsand;
-            aTotals.total += rowTotal;
-        });
-
-        // Update A totals
-        document.querySelector('.a-total-10mm').textContent = fmt(aTotals.p10);
-        document.querySelector('.a-total-20mm').textContent = fmt(aTotals.p20);
-        document.querySelector('.a-total-vsand').textContent = fmt(aTotals.vsand);
-        document.querySelector('.a-total-psand').textContent = fmt(aTotals.psand);
-        document.querySelector('.a-total-scalping').textContent = fmt(aTotals.scalping);
-        document.querySelector('.a-total-gsb').textContent = fmt(aTotals.gsb);
-        document.querySelector('.a-total-40mm').textContent = fmt(aTotals.p40);
-        document.querySelector('.a-total-50mm').textContent = fmt(aTotals.p50);
-        document.querySelector('.a-total-rsand').textContent = fmt(aTotals.rsand);
-        document.querySelector('.a-total-total').textContent = fmt(aTotals.total);
-
-        // Similar for B-Shift
-        const bBody = document.getElementById('b-shift-body');
-        let bTotals = {p10:0, p20:0, vsand:0, psand:0, scalping:0, gsb:0, p40:0, p50:0, rsand:0, total:0};
-        bShiftData.forEach(row => {
-            const tr = document.createElement('tr');
-            const rowTotal = row.p10 + row.p20 + row.vsand + row.psand + row.scalping + row.gsb + row.p40 + row.p50 + row.rsand;
-            tr.innerHTML = `
-                <td>${row.date}</td>
-                <td>${fmt(row.p10)}</td>
-                <td>${fmt(row.p20)}</td>
-                <td>${fmt(row.vsand)}</td>
-                <td>${fmt(row.psand)}</td>
-                <td>${fmt(row.scalping)}</td>
-                <td>${fmt(row.gsb)}</td>
-                <td>${fmt(row.p40)}</td>
-                <td>${fmt(row.p50)}</td>
-                <td>${fmt(row.rsand)}</td>
-                <td>${fmt(rowTotal)}</td>
-            `;
-            bBody.appendChild(tr);
-
-            bTotals.p10 += row.p10;
-            bTotals.p20 += row.p20;
-            bTotals.vsand += row.vsand;
-            bTotals.psand += row.psand;
-            bTotals.scalping += row.scalping;
-            bTotals.gsb += row.gsb;
-            bTotals.p40 += row.p40;
-            bTotals.p50 += row.p50;
-            bTotals.rsand += row.rsand;
-            bTotals.total += rowTotal;
-        });
-
-        document.querySelector('.b-total-10mm').textContent = fmt(bTotals.p10);
-        document.querySelector('.b-total-20mm').textContent = fmt(bTotals.p20);
-        document.querySelector('.b-total-vsand').textContent = fmt(bTotals.vsand);
-        document.querySelector('.b-total-psand').textContent = fmt(bTotals.psand);
-        document.querySelector('.b-total-scalping').textContent = fmt(bTotals.scalping);
-        document.querySelector('.b-total-gsb').textContent = fmt(bTotals.gsb);
-        document.querySelector('.b-total-40mm').textContent = fmt(bTotals.p40);
-        document.querySelector('.b-total-50mm').textContent = fmt(bTotals.p50);
-        document.querySelector('.b-total-rsand').textContent = fmt(bTotals.rsand);
-        document.querySelector('.b-total-total').textContent = fmt(bTotals.total);
-
-        // FTD Summary (A + B)
-        const ftd = {
-            p10: aTotals.p10 + bTotals.p10,
-            p20: aTotals.p20 + bTotals.p20,
-            vsand: aTotals.vsand + bTotals.vsand,
-            psand: aTotals.psand + bTotals.psand,
-            scalping: aTotals.scalping + bTotals.scalping,
-            gsb: aTotals.gsb + bTotals.gsb,
-            p40: aTotals.p40 + bTotals.p40,
-            p50: aTotals.p50 + bTotals.p50,
-            rsand: aTotals.rsand + bTotals.rsand,
-            total: aTotals.total + bTotals.total
-        };
-
-        document.getElementById('ftd-10mm').textContent = fmt(ftd.p10);
-        document.getElementById('ftd-20mm').textContent = fmt(ftd.p20);
-        document.getElementById('ftd-vsand').textContent = fmt(ftd.vsand);
-        document.getElementById('ftd-psand').textContent = fmt(ftd.psand);
-        document.getElementById('ftd-scalping').textContent = fmt(ftd.scalping);
-        document.getElementById('ftd-gsb').textContent = fmt(ftd.gsb);
-        document.getElementById('ftd-40mm').textContent = fmt(ftd.p40);
-        document.getElementById('ftd-50mm').textContent = fmt(ftd.p50);
-        document.getElementById('ftd-rsand').textContent = fmt(ftd.rsand);
-        document.getElementById('ftd-total').textContent = fmt(ftd.total);
-
-        // Grand totals same as above
-        document.getElementById('ftd-grand-10mm').textContent = fmt(ftd.p10);
-        document.getElementById('ftd-grand-20mm').textContent = fmt(ftd.p20);
-        document.getElementById('ftd-grand-vsand').textContent = fmt(ftd.vsand);
-        document.getElementById('ftd-grand-psand').textContent = fmt(ftd.psand);
-        document.getElementById('ftd-grand-scalping').textContent = fmt(ftd.scalping);
-        document.getElementById('ftd-grand-gsb').textContent = fmt(ftd.gsb);
-        document.getElementById('ftd-grand-40mm').textContent = fmt(ftd.p40);
-        document.getElementById('ftd-grand-50mm').textContent = fmt(ftd.p50);
-        document.getElementById('ftd-grand-rsand').textContent = fmt(ftd.rsand);
-        document.getElementById('ftd-grand-total').textContent = fmt(ftd.total);
-
-        // Report 4: Daily (placeholder - fill with your actual daily data to reach 16512.15)
-        const dailyBody = document.getElementById('daily-body');
-        // Example placeholder rows - replace with real data
-        for (let d = 1; d <= 19; d++) {
-            const dateStr = `${d.toString().padStart(2,'0')}-Dec-2025`;
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${dateStr}</td>
-                <td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td>
-                <td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td>
-            `;
-            dailyBody.appendChild(tr);
+            const tbody = document.getElementById('customer-data');
+            customerData.forEach(cust => {
+                const total = cust.mm10 + cust.mm20 + cust.vsand + cust.scalping + cust.psand + 
+                             cust.mm40 + cust.mm50 + cust.gsb + cust.rsand;
+                
+                const row = `
+                    <tr>
+                        <td class="customer-name">${cust.name}</td>
+                        <td class="numeric">${cust.mm10.toFixed(2)}</td>
+                        <td class="numeric">${cust.mm20.toFixed(2)}</td>
+                        <td class="numeric">${cust.vsand.toFixed(2)}</td>
+                        <td class="numeric">${cust.scalping.toFixed(2)}</td>
+                        <td class="numeric">${cust.psand.toFixed(2)}</td>
+                        <td class="numeric">${cust.mm40.toFixed(2)}</td>
+                        <td class="numeric">${cust.mm50.toFixed(2)}</td>
+                        <td class="numeric">${cust.gsb.toFixed(2)}</td>
+                        <td class="numeric">${cust.rsand.toFixed(2)}</td>
+                        <td class="numeric">${total.toFixed(2)}</td>
+                        <td class="numeric">${((total / 16512.15) * 100).toFixed(2)}%</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
         }
-        // Set grand total as per requirement
-        document.getElementById('daily-total-total').textContent = '16512.15';
 
-        // Report 5: Customer-wise (sample data)
-        const customers = [
-            {name: "Customer A", p10:1200, p20:850, vsand:450, scalping:300, psand:2800, p40:600, p50:200, gsb:1200, rsand:150},
-            {name: "Customer B", p10:900, p20:1200, vsand:600, scalping:400, psand:3500, p40:800, p50:300, gsb:900, rsand:200},
-            // Add more customers...
-        ];
+        // Calculate all totals
+        function calculateAllTotals() {
+            // Daily totals
+            const dailyRows = document.querySelectorAll('#daily-data tr');
+            const dailyTotals = {
+                mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 0,
+                mm40: 0, mm50: 0, gsb: 0, rsand: 0, total: 0
+            };
 
-        const custBody = document.getElementById('customer-body');
-        let custTotals = {p10:0, p20:0, vsand:0, scalping:0, psand:0, p40:0, p50:0, gsb:0, rsand:0, total:0};
+            dailyRows.forEach(row => {
+                const cells = row.querySelectorAll('td.numeric');
+                dailyTotals.mm10 += parseFloat(cells[0].textContent) || 0;
+                dailyTotals.mm20 += parseFloat(cells[1].textContent) || 0;
+                dailyTotals.vsand += parseFloat(cells[2].textContent) || 0;
+                dailyTotals.scalping += parseFloat(cells[3].textContent) || 0;
+                dailyTotals.psand += parseFloat(cells[4].textContent) || 0;
+                dailyTotals.mm40 += parseFloat(cells[5].textContent) || 0;
+                dailyTotals.mm50 += parseFloat(cells[6].textContent) || 0;
+                dailyTotals.gsb += parseFloat(cells[7].textContent) || 0;
+                dailyTotals.rsand += parseFloat(cells[8].textContent) || 0;
+            });
 
-        customers.forEach(c => {
-            const rowTotal = c.p10 + c.p20 + c.vsand + c.scalping + c.psand + c.p40 + c.p50 + c.gsb + c.rsand;
-            const pct = custTotals.total > 0 ? (rowTotal / custTotals.total * 100) : 0; // will recalculate after loop
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td style="text-align:left;">${c.name}</td>
-                <td>${fmt(c.p10)}</td>
-                <td>${fmt(c.p20)}</td>
-                <td>${fmt(c.vsand)}</td>
-                <td>${fmt(c.scalping)}</td>
-                <td>${fmt(c.psand)}</td>
-                <td>${fmt(c.p40)}</td>
-                <td>${fmt(c.p50)}</td>
-                <td>${fmt(c.gsb)}</td>
-                <td>${fmt(c.rsand)}</td>
-                <td>${fmt(rowTotal)}</td>
-                <td id="pct-${c.name.replace(/\s/g,'')}">0.00%</td>
-            `;
-            custBody.appendChild(tr);
+            dailyTotals.total = dailyTotals.mm10 + dailyTotals.mm20 + dailyTotals.vsand + 
+                               dailyTotals.scalping + dailyTotals.psand + dailyTotals.mm40 + 
+                               dailyTotals.mm50 + dailyTotals.gsb + dailyTotals.rsand;
 
-            custTotals.p10 += c.p10;
-            custTotals.p20 += c.p20;
-            custTotals.vsand += c.vsand;
-            custTotals.scalping += c.scalping;
-            custTotals.psand += c.psand;
-            custTotals.p40 += c.p40;
-            custTotals.p50 += c.p50;
-            custTotals.gsb += c.gsb;
-            custTotals.rsand += c.rsand;
-            custTotals.total += rowTotal;
-        });
+            // Update daily totals display
+            document.getElementById('daily-10mm').textContent = dailyTotals.mm10.toFixed(2);
+            document.getElementById('daily-20mm').textContent = dailyTotals.mm20.toFixed(2);
+            document.getElementById('daily-vsand').textContent = dailyTotals.vsand.toFixed(2);
+            document.getElementById('daily-scalping').textContent = dailyTotals.scalping.toFixed(2);
+            document.getElementById('daily-psand').textContent = dailyTotals.psand.toFixed(2);
+            document.getElementById('daily-40mm').textContent = dailyTotals.mm40.toFixed(2);
+            document.getElementById('daily-50mm').textContent = dailyTotals.mm50.toFixed(2);
+            document.getElementById('daily-gsb').textContent = dailyTotals.gsb.toFixed(2);
+            document.getElementById('daily-rsand').textContent = dailyTotals.rsand.toFixed(2);
+            document.getElementById('daily-total').textContent = dailyTotals.total.toFixed(2);
 
-        // Update totals and percentages
-        document.getElementById('cust-total-10mm').textContent = fmt(custTotals.p10);
-        document.getElementById('cust-total-20mm').textContent = fmt(custTotals.p20);
-        document.getElementById('cust-total-vsand').textContent = fmt(custTotals.vsand);
-        document.getElementById('cust-total-scalping').textContent = fmt(custTotals.scalping);
-        document.getElementById('cust-total-psand').textContent = fmt(custTotals.psand);
-        document.getElementById('cust-total-40mm').textContent = fmt(custTotals.p40);
-        document.getElementById('cust-total-50mm').textContent = fmt(custTotals.p50);
-        document.getElementById('cust-total-gsb').textContent = fmt(custTotals.gsb);
-        document.getElementById('cust-total-rsand').textContent = fmt(custTotals.rsand);
-        document.getElementById('cust-grand-total').textContent = fmt(custTotals.total);
+            // Customer totals
+            const customerRows = document.querySelectorAll('#customer-data tr');
+            const custTotals = {
+                mm10: 0, mm20: 0, vsand: 0, scalping: 0, psand: 0,
+                mm40: 0, mm50: 0, gsb: 0, rsand: 0, total: 0
+            };
 
-        // Material % 
-        document.getElementById('mat-pct-10mm').textContent = custTotals.total ? ((custTotals.p10 / custTotals.total) * 100).toFixed(2) + '%' : '0.00%';
-        document.getElementById('mat-pct-20mm').textContent = custTotals.total ? ((custTotals.p20 / custTotals.total) * 100).toFixed(2) + '%' : '0.00%';
-        document.getElementById('mat-pct-vsand').textContent = custTotals.total ? ((custTotals.vsand / custTotals.total) * 100).toFixed(2) + '%' : '0.00%';
-        document.getElementById('mat-pct-scalping').textContent = custTotals.total ? ((custTotals.scalping / custTotals.total) * 100).toFixed(2) + '%' : '0.00%';
-        document.getElementById('mat-pct-psand').textContent = custTotals.total ? ((custTotals.psand / custTotals.total) * 100).toFixed(2) + '%' : '0.00%';
-        document.getElementById('mat-pct-40mm').textContent = custTotals.total ? ((custTotals.p40 / custTotals.total) * 100).toFixed(2) + '%' : '0.00%';
-        document.getElementById('mat-pct-50mm').textContent = custTotals.total ? ((custTotals.p50 / custTotals.total) * 100).toFixed(2) + '%' : '0.00%';
-        document.getElementById('mat-pct-gsb').textContent = custTotals.total ? ((custTotals.gsb / custTotals.total) * 100).toFixed(2) + '%' : '0.00%';
-        document.getElementById('mat-pct-rsand').textContent = custTotals.total ? ((custTotals.rsand / custTotals.total) * 100).toFixed(2) + '%' : '0.00%';
+            customerRows.forEach(row => {
+                const cells = row.querySelectorAll('td.numeric');
+                for(let i = 0; i < 9; i++) {
+                    const value = parseFloat(cells[i].textContent) || 0;
+                    switch(i) {
+                        case 0: custTotals.mm10 += value; break;
+                        case 1: custTotals.mm20 += value; break;
+                        case 2: custTotals.vsand += value; break;
+                        case 3: custTotals.scalping += value; break;
+                        case 4: custTotals.psand += value; break;
+                        case 5: custTotals.mm40 += value; break;
+                        case 6: custTotals.mm50 += value; break;
+                        case 7: custTotals.gsb += value; break;
+                        case 8: custTotals.rsand += value; break;
+                    }
+                }
+            });
 
-        // Recalculate customer % after totals are known
-        customers.forEach(c => {
-            const rowTotal = c.p10 + c.p20 + c.vsand + c.scalping + c.psand + c.p40 + c.p50 + c.gsb + c.rsand;
-            const pct = (rowTotal / custTotals.total * 100).toFixed(2) + '%';
-            // Assuming unique name, use a safe selector or add data attribute in real use
-            // Here we skip dynamic update for simplicity - hardcode if needed
-        });
+            custTotals.total = custTotals.mm10 + custTotals.mm20 + custTotals.vsand + 
+                              custTotals.scalping + custTotals.psand + custTotals.mm40 + 
+                              custTotals.mm50 + custTotals.gsb + custTotals.rsand;
+
+            // Update customer totals
+            document.getElementById('cust-10mm').textContent = custTotals.mm10.toFixed(2);
+            document.getElementById('cust-20mm').textContent = custTotals.mm20.toFixed(2);
+            document.getElementById('cust-vsand').textContent = custTotals.vsand.toFixed(2);
+            document.getElementById('cust-scalping').textContent = custTotals.scalping.toFixed(2);
+            document.getElementById('cust-psand').textContent = custTotals.psand.toFixed(2);
+            document.getElementById('cust-40mm').textContent = custTotals.mm40.toFixed(2);
+            document.getElementById('cust-50mm').textContent = custTotals.mm50.toFixed(2);
+            document.getElementById('cust-gsb').textContent = custTotals.gsb.toFixed(2);
+            document.getElementById('cust-rsand').textContent = custTotals.rsand.toFixed(2);
+            document.getElementById('cust-total').textContent = custTotals.total.toFixed(2);
+
+            // Update material-wise percentages
+            const grandTotal = custTotals.total || 1; // Avoid division by zero
+            document.getElementById('mat-10mm').textContent = ((custTotals.mm10 / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-20mm').textContent = ((custTotals.mm20 / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-vsand').textContent = ((custTotals.vsand / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-scalping').textContent = ((custTotals.scalping / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-psand').textContent = ((custTotals.psand / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-40mm').textContent = ((custTotals.mm40 / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-50mm').textContent = ((custTotals.mm50 / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-gsb').textContent = ((custTotals.gsb / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-rsand').textContent = ((custTotals.rsand / grandTotal) * 100).toFixed(2) + '%';
+            document.getElementById('mat-total').textContent = '100.00%';
+        }
+
+        // Update FTD Summary
+        function updateFTDSummary() {
+            const aShift = {
+                mm10: 0, mm20: 0, vsand: 0, psand: 22.22, scalping: 0,
+                gsb: 0, mm40: 0, mm50: 0, rsand: 0, total: 22.22
+            };
+            
+            const bShift = {
+                mm10: 0, mm20: 0, vsand: 0, psand: 70.58, scalping: 0,
+                gsb: 0, mm40: 0, mm50: 0, rsand: 0, total: 70.58
+            };
+
+            // Calculate FTD totals
+            document.getElementById('ftd-10mm').textContent = (aShift.mm10 + bShift.mm10).toFixed(2);
+            document.getElementById('ftd-20mm').textContent = (aShift.mm20 + bShift.mm20).toFixed(2);
+            document.getElementById('ftd-vsand').textContent = (aShift.vsand + bShift.vsand).toFixed(2);
+            document.getElementById('ftd-psand').textContent = (aShift.psand + bShift.psand).toFixed(2);
+            document.getElementById('ftd-scalping').textContent = (aShift.scalping + bShift.scalping).toFixed(2);
+            document.getElementById('ftd-gsb').textContent = (aShift.gsb + bShift.gsb).toFixed(2);
+            document.getElementById('ftd-40mm').textContent = (aShift.mm40 + bShift.mm40).toFixed(2);
+            document.getElementById('ftd-50mm').textContent = (aShift.mm50 + bShift.mm50).toFixed(2);
+            document.getElementById('ftd-rsand').textContent = (aShift.rsand + bShift.rsand).toFixed(2);
+            document.getElementById('ftd-total').textContent = (aShift.total + bShift.total).toFixed(2);
+        }
+
+        // Navigation functions
+        function scrollToReport(reportNumber) {
+            const report = document.getElementById(`report${reportNumber}`);
+            if (report) {
+                report.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function printPage() {
+            window.print();
+        }
     </script>
 </body>
 </html>
