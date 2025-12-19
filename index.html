@@ -706,23 +706,7 @@
                 </div>
                 
                 <!-- Full Row Action Buttons for A-Shift -->
-                <div class="full-row-actions">
-                    <button class="action-btn add-row" onclick="openAddRowModal('a-shift')">
-                        <i class="fas fa-plus-circle"></i> Add A-Shift Row
-                    </button>
-                    <button class="action-btn edit-row" onclick="editAllRows('a-shift')">
-                        <i class="fas fa-edit"></i> Edit All Rows
-                    </button>
-                    <button class="action-btn delete-row" onclick="deleteAllRows('a-shift')">
-                        <i class="fas fa-trash-alt"></i> Clear All Rows
-                    </button>
-                    <button class="action-btn refresh" onclick="refreshShiftData('a-shift')">
-                        <i class="fas fa-sync-alt"></i> Refresh Data
-                    </button>
-                    <button class="action-btn export" onclick="exportShiftData('a-shift')">
-                        <i class="fas fa-download"></i> Export A-Shift
-                    </button>
-                </div>
+                
                 
                 <div class="table-container">
                     <table>
@@ -757,23 +741,7 @@
                 </div>
                 
                 <!-- Full Row Action Buttons for B-Shift -->
-                <div class="full-row-actions">
-                    <button class="action-btn add-row" onclick="openAddRowModal('b-shift')">
-                        <i class="fas fa-plus-circle"></i> Add B-Shift Row
-                    </button>
-                    <button class="action-btn edit-row" onclick="editAllRows('b-shift')">
-                        <i class="fas fa-edit"></i> Edit All Rows
-                    </button>
-                    <button class="action-btn delete-row" onclick="deleteAllRows('b-shift')">
-                        <i class="fas fa-trash-alt"></i> Clear All Rows
-                    </button>
-                    <button class="action-btn refresh" onclick="refreshShiftData('b-shift')">
-                        <i class="fas fa-sync-alt"></i> Refresh Data
-                    </button>
-                    <button class="action-btn export" onclick="exportShiftData('b-shift')">
-                        <i class="fas fa-download"></i> Export B-Shift
-                    </button>
-                </div>
+                
                 
                 <div class="table-container">
                     <table>
@@ -1249,32 +1217,7 @@
             
             const abCombinedTbody = document.getElementById('ab-combined-data');
             abCombinedTbody.innerHTML = `
-                <tr>
-                    <td class="customer-name"><i class="fas fa-sun"></i> A Shift Total</td>
-                    <td class="numeric">${aCols.mm10.toFixed(2)}</td>
-                    <td class="numeric">${aCols.mm20.toFixed(2)}</td>
-                    <td class="numeric">${aCols.vsand.toFixed(2)}</td>
-                    <td class="numeric">${aCols.psand.toFixed(2)}</td>
-                    <td class="numeric">${aCols.scalping.toFixed(2)}</td>
-                    <td class="numeric">${aCols.gsb.toFixed(2)}</td>
-                    <td class="numeric">${aCols.mm40.toFixed(2)}</td>
-                    <td class="numeric">${aCols.mm50.toFixed(2)}</td>
-                    <td class="numeric">${aCols.rsand.toFixed(2)}</td>
-                    <td class="numeric">${aTotal.toFixed(2)}</td>
-                </tr>
-                <tr>
-                    <td class="customer-name"><i class="fas fa-moon"></i> B Shift Total</td>
-                    <td class="numeric">${bCols.mm10.toFixed(2)}</td>
-                    <td class="numeric">${bCols.mm20.toFixed(2)}</td>
-                    <td class="numeric">${bCols.vsand.toFixed(2)}</td>
-                    <td class="numeric">${bCols.psand.toFixed(2)}</td>
-                    <td class="numeric">${bCols.scalping.toFixed(2)}</td>
-                    <td class="numeric">${bCols.gsb.toFixed(2)}</td>
-                    <td class="numeric">${bCols.mm40.toFixed(2)}</td>
-                    <td class="numeric">${bCols.mm50.toFixed(2)}</td>
-                    <td class="numeric">${bCols.rsand.toFixed(2)}</td>
-                    <td class="numeric">${bTotal.toFixed(2)}</td>
-                </tr>
+                
                 <tr class="grand-total-row">
                     <td class="customer-name"><i class="fas fa-chart-bar"></i> A + B Total</td>
                     <td class="numeric">${(aCols.mm10 + bCols.mm10).toFixed(2)}</td>
