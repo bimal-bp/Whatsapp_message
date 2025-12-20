@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quarry Dispatch Dashboard | 25-Dec-2025</title>
+    <title>Quarry Dispatch Dashboard | December 2025</title>
     <style>
         :root {
             --header-yellow: linear-gradient(135deg, #fff2cc 0%, #ffe699 100%);
             --header-orange: linear-gradient(135deg, #f8b88b 0%, #f5a76c 100%);
             --header-green: linear-gradient(135deg, #d5e8d4 0%, #b8d9a5 100%);
+            --header-light-green: linear-gradient(135deg, #e1f5e1 0%, #c8e6c9 100%);
+            --header-vehicle-planning: linear-gradient(135deg, #f2f2f2 0%, #e6e6e6 100%);
+            --total-light-green: #d9ead3;
             --total-dark-green: linear-gradient(135deg, #c9daf8 0%, #a4c2f4 100%);
+            --material-percent-bg: #fff2cc;
             --border-color: #d9d9d9;
             --shadow: 0 4px 12px rgba(0,0,0,0.08);
             --primary-color: #2c3e50;
@@ -65,15 +69,21 @@
         .section-header.orange { background: var(--header-orange); color: #000; border-bottom: 4px solid #e67e22; }
         .section-header.yellow { background: var(--header-yellow); color: #b33a00; border-bottom: 4px solid #ffcc00; }
         .section-header.green { background: var(--header-green); color: #1a5a1a; border-bottom: 4px solid #27ae60; }
+        .section-header.light-green { background: var(--header-light-green); color: #1a5a1a; border-bottom: 4px solid #2ecc71; }
+        .section-header.vehicle-planning { background: var(--header-vehicle-planning); color: #000; font-weight: 800; border-bottom: 4px solid #666; }
         .total-badge {
             background: rgba(0,0,0,0.1);
             padding: 6px 14px;
             border-radius: 20px;
             font-weight: 600;
         }
+        .table-container {
+            overflow-x: auto;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 1000px;
         }
         th, td {
             padding: 12px 14px;
@@ -101,14 +111,27 @@
             background-color: #fffde7;
             font-weight: 700;
         }
+        td.client-name {
+            text-align: left;
+            font-weight: 600;
+            background: #f3e5f5;
+            padding-left: 20px;
+        }
         .grand-total-row {
             background: var(--total-dark-green);
             font-weight: 800;
             font-size: 1.1rem;
         }
+        .total-row {
+            background: var(--total-light-green);
+            font-weight: 800;
+        }
+        .trips-row {
+            background: #fff2cc;
+            font-weight: 800;
+        }
         @media (max-width: 768px) {
-            table { font-size: 0.9rem; }
-            th, td { padding: 8px; }
+            th, td { padding: 8px; font-size: 0.9rem; }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -118,10 +141,11 @@
         <div class="dashboard-header">
             <h1><i class="fas fa-mountain"></i> Quarry Dispatch Dashboard</h1>
             <div class="subtitle">Professional Management Information System</div>
-            <div class="date-badge"><i class="fas fa-calendar-alt"></i> Report Date: 25-Dec-2025</div>
+            <div class="date-badge"><i class="fas fa-calendar-alt"></i> Current Report: 20-Dec-2025</div>
         </div>
 
-        <div class="section" id="shift-reports">
+        <!-- 1. SHIFT WISE DISPATCH SUMMARY (25-Dec-2025) -->
+        <div class="section">
             <div class="section-header orange">
                 <span><i class="fas fa-chart-line"></i> SHIFT WISE DISPATCH SUMMARY (25-Dec-2025)</span>
                 <span class="total-badge">FTD Total: 4129 MT</span>
@@ -277,6 +301,374 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <!-- 2. FULL DAY – Dispatch Vehicle Wise Planning – 23 Aug 2025 -->
+        <div class="section">
+            <div class="section-header vehicle-planning">
+                <span><i class="fas fa-truck-loading"></i> FULL DAY – Dispatch Vehicle Wise Planning – 23 Aug 2025</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client Details</th>
+                            <th>Unit</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>Scalping</th>
+                            <th>P/Sand</th>
+                            <th>40 MM</th>
+                            <th>GSB / WET MIX</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2" class="client-name">L & T P2 – Rambali</td>
+                            <td>Total Tonnage (MT)</td>
+                            <td class="numeric">99.96</td>
+                            <td class="numeric"></td>
+                            <td class="numeric">67.70</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">167.66</td>
+                        </tr>
+                        <tr class="trips-row">
+                            <td>Total Trips</td>
+                            <td class="numeric">2</td>
+                            <td class="numeric"></td>
+                            <td class="numeric">2</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">4</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="client-name">ACC RMC – Gajuwaka</td>
+                            <td>Total Tonnage (MT)</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">22.80</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">22.80</td>
+                        </tr>
+                        <tr class="trips-row">
+                            <td>Total Trips</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">1</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">1</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="client-name">Prasant Maravaram</td>
+                            <td>Total Tonnage (MT)</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">5.20</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">5.20</td>
+                        </tr>
+                        <tr class="trips-row">
+                            <td>Total Trips</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">1</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">1</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="client-name">MK Builders – Madhurwada</td>
+                            <td>Total Tonnage (MT)</td>
+                            <td class="numeric">41.06</td>
+                            <td class="numeric"></td>
+                            <td class="numeric">41.27</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">82.33</td>
+                        </tr>
+                        <tr class="trips-row">
+                            <td>Total Trips</td>
+                            <td class="numeric">1</td>
+                            <td class="numeric"></td>
+                            <td class="numeric">1</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">2</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="client-name">Prasad Makavaram</td>
+                            <td>Total Tonnage (MT)</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">6.11</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">6.11</td>
+                        </tr>
+                        <tr class="trips-row">
+                            <td>Total Trips</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">1</td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric"></td>
+                            <td class="numeric">1</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>GRAND TOTAL (TONNAGE)</td>
+                            <td>MT</td>
+                            <td class="numeric">141.02</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">131.77</td>
+                            <td class="numeric">11.31</td>
+                            <td class="numeric">6.11</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">0.00</td>
+                            <td class="numeric">284.10</td>
+                        </tr>
+                        <tr class="trips-row">
+                            <td>TOTAL TRIPS</td>
+                            <td>Trips</td>
+                            <td class="numeric">3</td>
+                            <td class="numeric">0</td>
+                            <td class="numeric">4</td>
+                            <td class="numeric">2</td>
+                            <td class="numeric">1</td>
+                            <td class="numeric">0</td>
+                            <td class="numeric">0</td>
+                            <td class="numeric">0</td>
+                            <td class="numeric">9</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. Dispatched Details (Date-wise) - December 2025 -->
+        <div class="section">
+            <div class="section-header green">
+                <span><i class="fas fa-calendar-day"></i> Dispatched Details (Date-wise) - December 2025</span>
+                <span class="total-badge">Total: 13311.93 MT</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>Scalping</th>
+                            <th>P/Sand</th>
+                            <th>40 MM</th>
+                            <th>50 MM</th>
+                            <th>GSB/WET MIX</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="date">1-Dec-2025</td><td class="numeric">148.88</td><td class="numeric">126.90</td><td class="numeric">62.94</td><td class="numeric">28.70</td><td class="numeric">3.99</td><td class="numeric">62.25</td><td class="numeric">60.88</td><td class="numeric">53.93</td><td class="numeric">15.93</td><td class="numeric highlight">564.40</td></tr>
+                        <tr><td class="date">2-Dec-2025</td><td class="numeric">83.00</td><td class="numeric">108.44</td><td class="numeric">7.12</td><td class="numeric">78.99</td><td class="numeric">198.38</td><td class="numeric">86.87</td><td class="numeric">60.01</td><td class="numeric">82.21</td><td class="numeric">41.86</td><td class="numeric highlight">746.88</td></tr>
+                        <tr><td class="date">3-Dec-2025</td><td class="numeric">110.86</td><td class="numeric">118.24</td><td class="numeric">109.82</td><td class="numeric">47.53</td><td class="numeric">70.05</td><td class="numeric">67.19</td><td class="numeric">51.29</td><td class="numeric">47.65</td><td class="numeric">69.98</td><td class="numeric highlight">692.61</td></tr>
+                        <tr><td class="date">4-Dec-2025</td><td class="numeric">114.29</td><td class="numeric">95.97</td><td class="numeric">112.97</td><td class="numeric">66.70</td><td class="numeric">76.65</td><td class="numeric">96.59</td><td class="numeric">4.19</td><td class="numeric">115.78</td><td class="numeric">105.35</td><td class="numeric highlight">788.49</td></tr>
+                        <tr><td class="date">5-Dec-2025</td><td class="numeric">98.26</td><td class="numeric">68.08</td><td class="numeric">107.19</td><td class="numeric">70.67</td><td class="numeric">147.01</td><td class="numeric">41.17</td><td class="numeric">70.62</td><td class="numeric">132.15</td><td class="numeric">40.79</td><td class="numeric highlight">775.94</td></tr>
+                        <tr><td class="date">6-Dec-2025</td><td class="numeric">13.58</td><td class="numeric">176.39</td><td class="numeric">120.18</td><td class="numeric">20.45</td><td class="numeric">155.58</td><td class="numeric">49.91</td><td class="numeric">41.12</td><td class="numeric">33.86</td><td class="numeric">1.27</td><td class="numeric highlight">612.34</td></tr>
+                        <tr><td class="date">7-Dec-2025</td><td class="numeric">51.65</td><td class="numeric">62.61</td><td class="numeric">85.37</td><td class="numeric">59.78</td><td class="numeric">47.53</td><td class="numeric">26.43</td><td class="numeric">72.93</td><td class="numeric">106.40</td><td class="numeric">93.35</td><td class="numeric highlight">606.05</td></tr>
+                        <tr><td class="date">8-Dec-2025</td><td class="numeric">159.86</td><td class="numeric">149.99</td><td class="numeric">0.10</td><td class="numeric">36.71</td><td class="numeric">104.98</td><td class="numeric">36.26</td><td class="numeric">76.25</td><td class="numeric">123.60</td><td class="numeric">26.83</td><td class="numeric highlight">714.58</td></tr>
+                        <tr><td class="date">9-Dec-2025</td><td class="numeric">0.84</td><td class="numeric">134.03</td><td class="numeric">17.16</td><td class="numeric">78.12</td><td class="numeric">48.27</td><td class="numeric">104.56</td><td class="numeric">53.68</td><td class="numeric">75.39</td><td class="numeric">48.61</td><td class="numeric highlight">560.66</td></tr>
+                        <tr><td class="date">10-Dec-2025</td><td class="numeric">66.93</td><td class="numeric">162.20</td><td class="numeric">101.42</td><td class="numeric">79.22</td><td class="numeric">145.04</td><td class="numeric">75.36</td><td class="numeric">78.37</td><td class="numeric">87.30</td><td class="numeric">61.68</td><td class="numeric highlight">857.52</td></tr>
+                        <tr><td class="date">11-Dec-2025</td><td class="numeric">54.31</td><td class="numeric">174.60</td><td class="numeric">127.15</td><td class="numeric">83.31</td><td class="numeric">54.59</td><td class="numeric">80.22</td><td class="numeric">74.11</td><td class="numeric">55.95</td><td class="numeric">104.16</td><td class="numeric highlight">808.40</td></tr>
+                        <tr><td class="date">12-Dec-2025</td><td class="numeric">165.11</td><td class="numeric">95.14</td><td class="numeric">118.16</td><td class="numeric">89.56</td><td class="numeric">112.64</td><td class="numeric">55.07</td><td class="numeric">12.39</td><td class="numeric">18.01</td><td class="numeric">101.83</td><td class="numeric highlight">767.91</td></tr>
+                        <tr><td class="date">13-Dec-2025</td><td class="numeric">66.32</td><td class="numeric">129.47</td><td class="numeric">16.99</td><td class="numeric">94.30</td><td class="numeric">41.03</td><td class="numeric">76.20</td><td class="numeric">19.16</td><td class="numeric">107.90</td><td class="numeric">7.27</td><td class="numeric highlight">558.64</td></tr>
+                        <tr><td class="date">14-Dec-2025</td><td class="numeric">13.76</td><td class="numeric">165.07</td><td class="numeric">64.90</td><td class="numeric">96.09</td><td class="numeric">162.79</td><td class="numeric">118.98</td><td class="numeric">84.80</td><td class="numeric">71.93</td><td class="numeric">65.14</td><td class="numeric highlight">843.46</td></tr>
+                        <tr><td class="date">15-Dec-2025</td><td class="numeric">152.02</td><td class="numeric">92.44</td><td class="numeric">91.93</td><td class="numeric">18.42</td><td class="numeric">170.59</td><td class="numeric">2.12</td><td class="numeric">24.70</td><td class="numeric">31.17</td><td class="numeric">67.96</td><td class="numeric highlight">651.35</td></tr>
+                        <tr><td class="date">16-Dec-2025</td><td class="numeric">117.10</td><td class="numeric">64.32</td><td class="numeric">53.00</td><td class="numeric">76.79</td><td class="numeric">227.24</td><td class="numeric">108.55</td><td class="numeric">65.35</td><td class="numeric">130.10</td><td class="numeric">84.19</td><td class="numeric highlight">926.64</td></tr>
+                        <tr><td class="date">17-Dec-2025</td><td class="numeric">94.44</td><td class="numeric">166.03</td><td class="numeric">132.80</td><td class="numeric">62.05</td><td class="numeric">46.45</td><td class="numeric">52.32</td><td class="numeric">7.52</td><td class="numeric">77.70</td><td class="numeric">88.61</td><td class="numeric highlight">727.92</td></tr>
+                        <tr><td class="date">18-Dec-2025</td><td class="numeric">69.06</td><td class="numeric">46.77</td><td class="numeric">46.70</td><td class="numeric">16.13</td><td class="numeric">96.27</td><td class="numeric">36.11</td><td class="numeric">57.85</td><td class="numeric">51.80</td><td class="numeric">93.76</td><td class="numeric highlight">514.45</td></tr>
+                        <tr><td class="date">19-Dec-2025</td><td class="numeric">45.34</td><td class="numeric">40.03</td><td class="numeric">73.57</td><td class="numeric">41.04</td><td class="numeric">198.01</td><td class="numeric">93.64</td><td class="numeric">34.75</td><td class="numeric">52.94</td><td class="numeric">14.37</td><td class="numeric highlight">593.69</td></tr>
+                        <tr class="grand-total-row">
+                            <td>Total</td>
+                            <td class="numeric">1625.61</td>
+                            <td class="numeric">2176.72</td>
+                            <td class="numeric">1449.47</td>
+                            <td class="numeric">1144.56</td>
+                            <td class="numeric">2107.09</td>
+                            <td class="numeric">1269.80</td>
+                            <td class="numeric">949.97</td>
+                            <td class="numeric">1455.77</td>
+                            <td class="numeric">1132.94</td>
+                            <td class="numeric">13311.93</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. Customer Wise Cumulative Dispatched Details -->
+        <div class="section">
+            <div class="section-header light-green">
+                <span><i class="fas fa-users"></i> DECEMBER-2025 – Customer Wise Cumulative Dispatched Details</span>
+                <span class="total-badge">Total Customers: 5</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>10 MM</th>
+                            <th>20 MM</th>
+                            <th>V/SAND</th>
+                            <th>Scalping</th>
+                            <th>P/Sand</th>
+                            <th>40 MM</th>
+                            <th>50 MM</th>
+                            <th>GSB/WET MIX</th>
+                            <th>R/Sand</th>
+                            <th>TOTAL</th>
+                            <th>Customer-wise Dispatch Participation (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="client-name">Construction Corp A</td>
+                            <td class="numeric">263.02</td>
+                            <td class="numeric">739.75</td>
+                            <td class="numeric">778.30</td>
+                            <td class="numeric">722.42</td>
+                            <td class="numeric">2436.62</td>
+                            <td class="numeric">893.53</td>
+                            <td class="numeric">116.86</td>
+                            <td class="numeric">315.18</td>
+                            <td class="numeric">847.68</td>
+                            <td class="numeric">7113.36</td>
+                            <td class="numeric">20.21%</td>
+                        </tr>
+                        <tr>
+                            <td class="client-name">Infra Builders Ltd</td>
+                            <td class="numeric">862.98</td>
+                            <td class="numeric">299.97</td>
+                            <td class="numeric">1430.21</td>
+                            <td class="numeric">145.06</td>
+                            <td class="numeric">2142.76</td>
+                            <td class="numeric">839.20</td>
+                            <td class="numeric">438.87</td>
+                            <td class="numeric">673.59</td>
+                            <td class="numeric">563.23</td>
+                            <td class="numeric">7395.87</td>
+                            <td class="numeric">21.02%</td>
+                        </tr>
+                        <tr>
+                            <td class="client-name">Mega Projects Inc</td>
+                            <td class="numeric">1098.50</td>
+                            <td class="numeric">382.03</td>
+                            <td class="numeric">1521.09</td>
+                            <td class="numeric">361.27</td>
+                            <td class="numeric">1454.64</td>
+                            <td class="numeric">674.30</td>
+                            <td class="numeric">150.20</td>
+                            <td class="numeric">1133.48</td>
+                            <td class="numeric">731.92</td>
+                            <td class="numeric">7507.43</td>
+                            <td class="numeric">21.33%</td>
+                        </tr>
+                        <tr>
+                            <td class="client-name">Roadways Const. Co.</td>
+                            <td class="numeric">859.82</td>
+                            <td class="numeric">832.52</td>
+                            <td class="numeric">334.75</td>
+                            <td class="numeric">576.95</td>
+                            <td class="numeric">321.41</td>
+                            <td class="numeric">198.87</td>
+                            <td class="numeric">598.30</td>
+                            <td class="numeric">641.10</td>
+                            <td class="numeric">550.89</td>
+                            <td class="numeric">4914.61</td>
+                            <td class="numeric">13.97%</td>
+                        </tr>
+                        <tr>
+                            <td class="client-name">Urban Developers</td>
+                            <td class="numeric">1106.61</td>
+                            <td class="numeric">1110.79</td>
+                            <td class="numeric">1422.60</td>
+                            <td class="numeric">693.18</td>
+                            <td class="numeric">1273.77</td>
+                            <td class="numeric">386.82</td>
+                            <td class="numeric">272.17</td>
+                            <td class="numeric">1085.55</td>
+                            <td class="numeric">910.84</td>
+                            <td class="numeric">8262.33</td>
+                            <td class="numeric">23.48%</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>Total</td>
+                            <td class="numeric">4190.93</td>
+                            <td class="numeric">3365.06</td>
+                            <td class="numeric">5486.95</td>
+                            <td class="numeric">2498.88</td>
+                            <td class="numeric">7629.20</td>
+                            <td class="numeric">2992.72</td>
+                            <td class="numeric">1576.40</td>
+                            <td class="numeric">3848.90</td>
+                            <td class="numeric">3604.56</td>
+                            <td class="numeric">35193.60</td>
+                            <td class="numeric">100.00%</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>Material Wise (%) Participation</td>
+                            <td class="numeric">11.91%</td>
+                            <td class="numeric">9.56%</td>
+                            <td class="numeric">15.59%</td>
+                            <td class="numeric">7.10%</td>
+                            <td class="numeric">21.68%</td>
+                            <td class="numeric">8.50%</td>
+                            <td class="numeric">4.48%</td>
+                            <td class="numeric">10.94%</td>
+                            <td class="numeric">10.24%</td>
+                            <td class="numeric">100.00%</td>
+                            <td class="numeric">-</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
